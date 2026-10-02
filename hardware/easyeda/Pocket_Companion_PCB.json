@@ -1,0 +1,95 @@
+{
+  "head": {
+    "docType": "3",
+    "editorVersion": "6.5.40",
+    "c_para": {
+      "name": "Pocket_Companion_PCB",
+      "dimensions": "52mm x 38mm",
+      "layers": 2,
+      "thickness": 1.6,
+      "copper_weight": "1oz",
+      "surface_finish": "HASL with lead",
+      "color": "Purple"
+    }
+  },
+  "outline": {
+    "width": 52.0,
+    "height": 38.0,
+    "corner_radius": 3.0
+  },
+  "layers": [
+    "TopLayer",
+    "BottomLayer",
+    "TopSilkScreen",
+    "BottomSilkScreen",
+    "TopSolderMask",
+    "BottomSolderMask",
+    "BoardOutline"
+  ],
+  "components": [
+    {
+      "id": "J1",
+      "name": "OLED Header",
+      "x": 26.0,
+      "y": 8.0,
+      "side": "Top",
+      "rotation": 0
+    },
+    {
+      "id": "SW1",
+      "name": "BTN_LEFT",
+      "x": 12.0,
+      "y": 30.0,
+      "side": "Top",
+      "rotation": 0
+    },
+    {
+      "id": "SW2",
+      "name": "BTN_ACTION",
+      "x": 26.0,
+      "y": 30.0,
+      "side": "Top",
+      "rotation": 0
+    },
+    {
+      "id": "SW3",
+      "name": "BTN_RIGHT",
+      "x": 40.0,
+      "y": 30.0,
+      "side": "Top",
+      "rotation": 0
+    },
+    {
+      "id": "BZ1",
+      "name": "Buzzer",
+      "x": 44.0,
+      "y": 14.0,
+      "side": "Top",
+      "rotation": 0
+    },
+    {
+      "id": "U1",
+      "name": "RP2040-Zero",
+      "x": 26.0,
+      "y": 18.0,
+      "side": "Bottom",
+      "rotation": 180
+    },
+    {
+      "id": "SW_PWR",
+      "name": "Power Switch",
+      "x": 6.0,
+      "y": 12.0,
+      "side": "Top",
+      "rotation": 90
+    },
+    {
+      "id": "BAT1",
+      "name": "JST Port",
+      "x": 6.0,
+      "y": 24.0,
+      "side": "Top",
+      "rotation": 0
+    }
+  ]
+}

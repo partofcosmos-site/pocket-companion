@@ -71,3 +71,14 @@ Fits well within a low-cost $30 budget tier:
    - Copy `adafruit_ssd1306.mpy` and `adafruit_framebuf.mpy` (or `displayio`) into the `lib/` folder on `CIRCUITPY`.
 4. **Run Code:**
    - Copy `code.py` to the root of the `CIRCUITPY` drive.
+
+---
+
+## 🛠️ Hardware & PCB Fabrication
+
+The custom 52mm × 38mm PCB files and manufacturing Gerbers are located under `/hardware`:
+
+- **EasyEDA Schematic Source:** [`hardware/easyeda/Pocket_Companion_Schematic.json`](hardware/easyeda/Pocket_Companion_Schematic.json)
+- **EasyEDA PCB Layout:** [`hardware/easyeda/Pocket_Companion_PCB.json`](hardware/easyeda/Pocket_Companion_PCB.json)
+- **Manufacturing Gerbers (JLCPCB Ready):** [`hardware/gerbers/Gerber_Pocket_Companion_v1.zip`](hardware/gerbers/Gerber_Pocket_Companion_v1.zip)
+

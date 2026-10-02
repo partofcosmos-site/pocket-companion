@@ -1,0 +1,174 @@
+{
+  "head": {
+    "docType": "1",
+    "editorVersion": "6.5.40",
+    "c_para": {
+      "name": "Pocket_Companion_Schematic",
+      "author": "Debanjan Biswas (partofcosmos-site)",
+      "version": "v1.0",
+      "date": "2026-10-02"
+    }
+  },
+  "canvas": "CA~1200~800~#FFFFFF~yes~#000000~10~10~yes~#008000~none~mm~1~1~0~0~0",
+  "components": [
+    {
+      "id": "U1",
+      "name": "Waveshare RP2040-Zero",
+      "package": "MODULE-SMD_RP2040-ZERO",
+      "lcsc": "C2058836",
+      "pins": {
+        "GP0": {
+          "net": "OLED_SDA",
+          "pin": "1"
+        },
+        "GP1": {
+          "net": "OLED_SCL",
+          "pin": "2"
+        },
+        "GP2": {
+          "net": "BTN_LEFT",
+          "pin": "3"
+        },
+        "GP3": {
+          "net": "BTN_ACTION",
+          "pin": "4"
+        },
+        "GP4": {
+          "net": "BTN_RIGHT",
+          "pin": "5"
+        },
+        "GP5": {
+          "net": "BUZZER_PWM",
+          "pin": "6"
+        },
+        "3V3": {
+          "net": "+3V3",
+          "pin": "7"
+        },
+        "GND": {
+          "net": "GND",
+          "pin": "8"
+        },
+        "5V": {
+          "net": "VBUS_IN",
+          "pin": "9"
+        }
+      }
+    },
+    {
+      "id": "J1",
+      "name": "0.96 inch SSD1306 OLED Header",
+      "package": "HDR-M-2.54_1x4",
+      "lcsc": "C22453",
+      "pins": {
+        "1": {
+          "name": "GND",
+          "net": "GND"
+        },
+        "2": {
+          "name": "VCC",
+          "net": "+3V3"
+        },
+        "3": {
+          "name": "SCL",
+          "net": "OLED_SCL"
+        },
+        "4": {
+          "name": "SDA",
+          "net": "OLED_SDA"
+        }
+      }
+    },
+    {
+      "id": "SW1",
+      "name": "Tactile Button - Left",
+      "package": "SW-TH_4P-L6.0-W6.0-P4.50-LS",
+      "lcsc": "C318884",
+      "pins": {
+        "1": {
+          "net": "BTN_LEFT"
+        },
+        "2": {
+          "net": "GND"
+        }
+      }
+    },
+    {
+      "id": "SW2",
+      "name": "Tactile Button - Action",
+      "package": "SW-TH_4P-L6.0-W6.0-P4.50-LS",
+      "lcsc": "C318884",
+      "pins": {
+        "1": {
+          "net": "BTN_ACTION"
+        },
+        "2": {
+          "net": "GND"
+        }
+      }
+    },
+    {
+      "id": "SW3",
+      "name": "Tactile Button - Right",
+      "package": "SW-TH_4P-L6.0-W6.0-P4.50-LS",
+      "lcsc": "C318884",
+      "pins": {
+        "1": {
+          "net": "BTN_RIGHT"
+        },
+        "2": {
+          "net": "GND"
+        }
+      }
+    },
+    {
+      "id": "BZ1",
+      "name": "Passive Piezo Buzzer 3.3V-5V",
+      "package": "BUZZER-TH_BD9.0-P5.0",
+      "lcsc": "C96395",
+      "pins": {
+        "1": {
+          "name": "+",
+          "net": "BUZZER_PWM"
+        },
+        "2": {
+          "name": "-",
+          "net": "GND"
+        }
+      }
+    },
+    {
+      "id": "SW_PWR",
+      "name": "Slide Switch SPDT",
+      "package": "SW-TH_SS-12D00G3",
+      "lcsc": "C432128",
+      "pins": {
+        "1": {
+          "net": "NC"
+        },
+        "2": {
+          "net": "VBUS_IN"
+        },
+        "3": {
+          "net": "VBAT"
+        }
+      }
+    },
+    {
+      "id": "BAT1",
+      "name": "JST-PH 2.0mm Battery Port",
+      "package": "CONN-TH_JST-B2B-PH-K-S",
+      "lcsc": "C131337",
+      "pins": {
+        "1": {
+          "name": "+",
+          "net": "VBAT"
+        },
+        "2": {
+          "name": "-",
+          "net": "GND"
+        }
+      }
+    }
+  ]
+}
