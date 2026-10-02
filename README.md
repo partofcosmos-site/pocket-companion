@@ -1,5 +1,7 @@
 # Pocket Companion 🎮
 
+![Pocket Companion Hardware Preview](assets/pocket_companion_preview.jpg)
+
 A low-friction, pocket-sized (approx. 45 mm × 35 mm) handheld device combining a virtual pet, a quick reflex micro-game, and a distraction-free study timer.
 
 Built for beginners — runs on **CircuitPython** with **zero C++ required**.
