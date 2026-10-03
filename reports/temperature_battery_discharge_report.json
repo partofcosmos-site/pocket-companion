@@ -229,8 +229,8 @@
     "verified_all_stages": true
   },
   "memory_metrics": {
-    "peak_heap_kb": 8.43,
-    "final_delta_kb": 7.87,
+    "peak_heap_kb": 8.55,
+    "final_delta_kb": 8.0,
     "zero_memory_leak": true
   }
 }

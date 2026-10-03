@@ -2,14 +2,14 @@
   "status": "PASSED",
   "benchmark_name": "Low-Power Sleep & Interrupt Wake-Up Latency",
   "total_cycles": 1000,
-  "elapsed_seconds": 0.219,
+  "elapsed_seconds": 0.676,
   "wake_latency_metrics": {
-    "mean_latency_us": 49.91,
-    "median_latency_us": 49.88,
-    "p95_latency_us": 66.66,
-    "p99_latency_us": 66.79,
-    "min_latency_us": 32.98,
-    "max_latency_us": 67.85,
+    "mean_latency_us": 56.4,
+    "median_latency_us": 56.12,
+    "p95_latency_us": 72.57,
+    "p99_latency_us": 75.03,
+    "min_latency_us": 38.67,
+    "max_latency_us": 78.73,
     "sub_millisecond_verified": true
   },
   "power_profile": {
@@ -18,13 +18,13 @@
     "current_savings_pct": 97.56
   },
   "interrupt_distribution": {
-    "LEFT": 329,
-    "ACT": 324,
-    "RIGHT": 347
+    "LEFT": 345,
+    "ACT": 329,
+    "RIGHT": 326
   },
   "memory_metrics": {
-    "peak_heap_kb": 51.55,
-    "final_delta_kb": 3.47,
+    "peak_heap_kb": 51.7,
+    "final_delta_kb": 3.64,
     "zero_memory_leak": true
   }
 }
