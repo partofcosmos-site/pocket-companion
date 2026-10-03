@@ -178,7 +178,7 @@
 
 #table(
   columns: (1.8fr, 1.3fr, 1.4fr, 1.5fr, 1.1fr),
-  inset: 4.5pt,
+  inset: 3.5pt,
   stroke: 0.5pt + rgb("#cbd5e1"),
   fill: (col, row) => if row == 0 { rgb("#f1f5f9") } else { none },
   align: (left, left, left, left, center),
@@ -198,18 +198,18 @@
   [TP4056 Module Rails], [$17.50$ mm internal span], [Standard TP4056 breakout], [$0.25$ mm guide rail slide clearance], [PASS (Snap-In)]
 )
 
-#v(4pt)
+#v(2pt)
 
 // --- Section 5: Mesh Topology & Volumetric Data ---
 #text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[5. Watertight Mesh Topologies & Volumetric Audit]
 
 #grid(
   columns: (1fr, 1.2fr),
-  gutter: 10pt,
+  gutter: 8pt,
   [
     #table(
       columns: (1.6fr, 0.9fr, 1fr, 1fr),
-      inset: 4pt,
+      inset: 3.5pt,
       stroke: 0.5pt + rgb("#cbd5e1"),
       fill: (col, row) => if row == 0 { rgb("#f1f5f9") } else { none },
       align: (left, center, center, center),
@@ -224,24 +224,26 @@
     )
   ],
   [
-    #box(stroke: 0.5pt + rgb("#cbd5e1"), inset: 6pt, radius: 2pt, width: 100%, fill: rgb("#f8fafc"))[
-      #text(8pt, weight: "bold")[Bambu Lab X1C / Prusa MK4 Single-Plate Print Feasibility] \
-      #v(2pt)
-      - *Array Envelope:* $121.0 times 85.0 times 11.1$ mm (Footprint: $102.85 "cm"^2$)
-      - *Bed Occupation:* $24.7\%$ of Prusa MK4 ($250 times 210$ mm); $19.5\%$ of Bambu X1C ($256 times 256$ mm).
-      - *Support Requirement:* *0% supports required*. Base shell rests on outer floor; lid rests inverted on flat cosmetic face ($180^degree$); button caps rest on dished tops.
-      - *Estimated Fabrication Time:* $42$ minutes at $0.20$ mm layer height.
+    #box(stroke: 0.5pt + rgb("#cbd5e1"), inset: 5pt, radius: 2pt, width: 100%, fill: rgb("#f8fafc"))[
+      #text(7.5pt, weight: "bold")[Bambu Lab X1C / Prusa MK4 Single-Plate Print Feasibility] \
+      #v(1pt)
+      #text(7pt)[
+        - *Array Envelope:* $121.0 times 85.0 times 11.1$ mm (Footprint: $102.85 "cm"^2$)
+        - *Bed Occupation:* $24.7\%$ of Prusa MK4 ($250 times 210$ mm); $19.5\%$ of Bambu X1C.
+        - *Support Requirement:* *0% supports required*. 100% flat surface orientation.
+        - *Estimated Fabrication Time:* $42$ minutes at $0.20$ mm layer height.
+      ]
     ]
   ]
 )
 
-#v(4pt)
+#v(2pt)
 
 // --- Section 6: Exploded Assembly & Internal Component Proof ---
 #text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[6. Exploded Assembly Verification & Layer Breakdown]
 
 #align(center)[
-  #image("renders/exploded_view.png", width: 85%) \
+  #image("renders/exploded_view.png", width: 68%) \
   #text(7pt, weight: "bold")[Figure 4: Exploded Multi-Tier Hardware Assembly ($1920 times 1080$ High-Resolution Projection)] \
   #text(6.5pt, fill: rgb("#64748b"))[Tier 1: Base Shell • Tier 2: LiPo Battery & TP4056 • Tier 3: Main PCB • Tier 4: Lid Bezel • Tier 5: 3x Buttons • Tier 6: M2 Fasteners]
 ]
