@@ -16,13 +16,13 @@ The enclosure is engineered specifically to house the custom **52.0 × 38.0 mm**
 | **PCB Dimensions** | **52.0 × 38.0 × 1.6 mm** | Direct drop-in fit from EasyEDA Gerber files |
 | **Internal Cavity** | **52.5 × 38.5 × 15.5 mm** | 0.25 mm nominal clearance perimeter |
 | **Wall Thickness** | **2.0 mm** (floor: 2.0mm, roof: 2.2mm) | High impact resistance and torsional rigidity |
-| **Mating Joint** | **1.0 mm tongue-and-groove step** | Interlocking alignment with 0.25 mm clearance |
+| **Mating Joint** | **1.0 mm tongue-and-groove with 0.3 mm snap latch** | Interlocking alignment with 0.30 mm undercut snap-fit beads |
 | **Fasteners** | **4× M2 × 12mm socket screws** | Counterbored flush in lid into base bosses |
 | **Screen Bezel** | **23.5 × 12.5 mm aperture (r=1.2mm)** | Recessed 0.8 mm framing bezel for OLED |
-| **Tactile Buttons** | **3× captive plunger caps (Ø6.0mm)** | Dished thumb depressors with Ø8.4mm retaining brims |
+| **Tactile Buttons** | **3× captive plungers (0.25 mm travel)** | Dished thumb depressors with 0.25 mm FDM plunger tolerance |
 | **Acoustic Grille** | **7-vent resonant cluster (Ø2.2 + 6× Ø1.5mm)** | +12 dB SPL gain at 4 kHz resonant frequency |
 | **Power Switch** | **9.5 × 4.2 mm split parting notch** | PCB drops in without threading slide knob |
-| **USB-C Port** | **10.2 × 4.6 mm rounded cutout (r=1.5mm)** | Universal clearance for USB-C cable overmolds |
+| **USB-C Port** | **10.2 × 4.6 mm with 45° strain relief** | Flared 1.2 mm conical entry for cable strain relief |
 
 ---
 

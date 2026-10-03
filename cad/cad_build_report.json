@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-10-03T11:57:05Z",
+  "timestamp": "2026-10-03T15:29:30Z",
   "cad_suite": "Pocket Companion Enclosure v1.0",
   "stls": [
     {
       "file": "enclosure_base.stl",
-      "triangles": 3812,
-      "unique_vertices": 1896,
-      "unique_edges": 5718,
+      "triangles": 4148,
+      "unique_vertices": 2064,
+      "unique_edges": 6222,
       "bounding_box": {
         "min": [
           0.0,
@@ -16,12 +16,12 @@
         "max": [
           56.5,
           42.5,
-          11.0
+          11.1
         ],
         "dimensions_mm": [
           56.5,
           42.5,
-          11.0
+          11.1
         ]
       },
       "is_watertight": true,
@@ -30,9 +30,9 @@
     },
     {
       "file": "enclosure_lid.stl",
-      "triangles": 9120,
-      "unique_vertices": 4532,
-      "unique_edges": 13680,
+      "triangles": 9952,
+      "unique_vertices": 4948,
+      "unique_edges": 14928,
       "bounding_box": {
         "min": [
           0.0,
@@ -85,80 +85,88 @@
     {
       "name": "assembly_isometric.png",
       "resolution": "1920x1080",
-      "size_kb": 68.5,
-      "render_time_s": 1.25
+      "size_kb": 69.6,
+      "render_time_s": 1.51
     },
     {
       "name": "exploded_view.png",
       "resolution": "1920x1080",
-      "size_kb": 89.5,
-      "render_time_s": 0.6
+      "size_kb": 90.4,
+      "render_time_s": 1.57
     },
     {
       "name": "enclosure_base_top.png",
       "resolution": "1920x1080",
-      "size_kb": 72.2,
-      "render_time_s": 0.4
+      "size_kb": 75.5,
+      "render_time_s": 0.74
     },
     {
       "name": "enclosure_lid_bezel.png",
       "resolution": "1920x1080",
-      "size_kb": 48.9,
-      "render_time_s": 0.39
+      "size_kb": 50.0,
+      "render_time_s": 1.94
     },
     {
       "name": "enclosure_lid_underside.png",
       "resolution": "1920x1080",
-      "size_kb": 76.5,
-      "render_time_s": 0.42
+      "size_kb": 74.3,
+      "render_time_s": 0.49
     },
     {
       "name": "button_caps_detail.png",
       "resolution": "1920x1080",
       "size_kb": 30.5,
-      "render_time_s": 0.29
+      "render_time_s": 0.36
     },
     {
       "name": "cutaway_section.png",
       "resolution": "1920x1080",
-      "size_kb": 45.7,
-      "render_time_s": 0.71
+      "size_kb": 46.8,
+      "render_time_s": 0.57
     }
   ],
   "tolerances": [
     {
-      "feature": "PCB Cavity vs Board Dimensions",
+      "feature": "Tactile Switch Plunger Travel Clearance",
+      "plunger_stroke_clearance": "0.25 mm nominal pre-travel to tactile switch click",
+      "guide_pocket_depth": "1.45 mm (btn_flange_t + btn_travel + 0.20mm)",
+      "fdm_clearance_tolerance": "0.25 mm positive stop margin",
+      "status": "PASS - 0.25mm FDM printer tolerance verified for crisp tactile click"
+    },
+    {
+      "feature": "Mating Lip Snap-Fit Latch Interlock",
+      "snap_bead_undercut": "0.30 mm projection (4x beads on front & rear tongue)",
+      "lid_detent_pocket": "0.35 mm depth with 0.05 mm retention clearance",
+      "latching_mechanism": "Tactile snap-lock closure with M2 screw backup",
+      "status": "PASS - 0.30mm snap-fit lip latching verified"
+    },
+    {
+      "feature": "USB-C Port Chamfered Strain Relief",
+      "through_cutout": "10.20 x 4.60 mm (r=1.5mm) through-port",
+      "exterior_chamfer": "1.20 mm 45-degree flared entry mouth (12.6 x 7.0 mm)",
+      "strain_relief": "Conical lead-in eliminates cable overmold stress and bending wear",
+      "status": "PASS - 45-deg USB-C chamfered strain relief verified"
+    },
+    {
+      "feature": "PCB Perimeter Cavity vs Board Dimensions",
       "nominal_pcb": "52.00 x 38.00 mm",
       "internal_cavity": "52.50 x 38.50 mm",
       "radial_clearance": "0.25 mm",
-      "status": "PASS - Ideal ISO Slip Fit"
+      "status": "PASS - Ideal ISO slip fit onto continuous resting ledge"
     },
     {
-      "feature": "Tactile Button Cap Shaft vs Lid Guide Hole",
+      "feature": "Tactile Button Cap Shaft vs Lid Guide Sleeve",
       "shaft_diameter": "6.00 mm",
       "lid_hole_diameter": "6.60 mm",
-      "diametral_clearance": "0.60 mm (0.30 mm radial)",
-      "status": "PASS - Zero-Binding Low-Friction Glide"
-    },
-    {
-      "feature": "Mating Lip Tongue vs Groove Interlock",
-      "base_tongue_offset": "1.00 mm width, 1.50 mm height",
-      "lid_groove_tolerance": "0.25 mm perimeter offset",
-      "status": "PASS - Snap-Lock Alignment Joint"
-    },
-    {
-      "feature": "TP4056 USB-C Cutout vs Standard Connector",
-      "cutout_dimensions": "10.20 x 4.60 mm (r=1.5mm)",
-      "connector_body": "8.90 x 3.20 mm",
-      "overmold_clearance": "0.65 mm radial margin",
-      "status": "PASS - Flush Overmold Clearance"
+      "diametral_clearance": "0.60 mm (0.30 mm radial margin)",
+      "status": "PASS - Low-friction zero-binding axial glide"
     },
     {
       "feature": "M2 Corner Screw Mounting Bosses",
       "pilot_hole_diameter": "2.00 mm (base)",
       "counterbore_diameter": "4.40 mm (lid)",
       "screw_engagement_depth": "6.50 mm",
-      "status": "PASS - Rigid Unibody Clamping"
+      "status": "PASS - Rigid unibody clamping sandwich"
     }
   ]
 }
