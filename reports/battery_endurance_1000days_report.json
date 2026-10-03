@@ -2,7 +2,7 @@
   "status": "PASSED",
   "simulated_days": 1000,
   "simulated_total_hours": 24000.0,
-  "wallclock_seconds": 1.734,
+  "wallclock_seconds": 6.448,
   "total_active_hours": 2250.0,
   "expected_active_hours": 2250.0,
   "active_hours_error_pct": 0.0,
@@ -20,8 +20,8 @@
   "final_usable_capacity_mah": 383.27,
   "crashes": 0,
   "baseline_heap_kb": 0.0,
-  "peak_heap_kb": 19.3,
-  "final_delta_kb": 13.08,
+  "peak_heap_kb": 22.36,
+  "final_delta_kb": 15.47,
   "zero_memory_leak": true,
   "checkpoints": [
     {
@@ -31,9 +31,9 @@
       "charge_cycles": 20.4,
       "battery_health_pct": 99.59,
       "voltage": 4.148,
-      "heap_kb": 13.87,
-      "peak_kb": 14.22,
-      "delta_kb": 13.87
+      "heap_kb": 16.26,
+      "peak_kb": 17.78,
+      "delta_kb": 16.26
     },
     {
       "day": 200,
@@ -42,9 +42,9 @@
       "charge_cycles": 40.8,
       "battery_health_pct": 99.18,
       "voltage": 4.148,
-      "heap_kb": 14.48,
-      "peak_kb": 14.83,
-      "delta_kb": 14.48
+      "heap_kb": 16.87,
+      "peak_kb": 18.39,
+      "delta_kb": 16.87
     },
     {
       "day": 300,
@@ -53,9 +53,9 @@
       "charge_cycles": 61.3,
       "battery_health_pct": 98.77,
       "voltage": 4.148,
-      "heap_kb": 14.97,
-      "peak_kb": 15.32,
-      "delta_kb": 14.97
+      "heap_kb": 17.35,
+      "peak_kb": 18.87,
+      "delta_kb": 17.35
     },
     {
       "day": 400,
@@ -64,9 +64,9 @@
       "charge_cycles": 81.7,
       "battery_health_pct": 98.37,
       "voltage": 3.953,
-      "heap_kb": 15.52,
-      "peak_kb": 15.8,
-      "delta_kb": 15.52
+      "heap_kb": 17.91,
+      "peak_kb": 19.36,
+      "delta_kb": 17.91
     },
     {
       "day": 500,
@@ -75,9 +75,9 @@
       "charge_cycles": 102.6,
       "battery_health_pct": 97.95,
       "voltage": 3.698,
-      "heap_kb": 16.01,
-      "peak_kb": 16.29,
-      "delta_kb": 16.01
+      "heap_kb": 18.4,
+      "peak_kb": 19.84,
+      "delta_kb": 18.4
     },
     {
       "day": 600,
@@ -86,9 +86,9 @@
       "charge_cycles": 124.0,
       "battery_health_pct": 97.52,
       "voltage": 4.029,
-      "heap_kb": 16.52,
-      "peak_kb": 16.8,
-      "delta_kb": 16.52
+      "heap_kb": 18.91,
+      "peak_kb": 20.36,
+      "delta_kb": 18.91
     },
     {
       "day": 700,
@@ -97,9 +97,9 @@
       "charge_cycles": 145.1,
       "battery_health_pct": 97.1,
       "voltage": 3.773,
-      "heap_kb": 17.01,
-      "peak_kb": 17.29,
-      "delta_kb": 17.01
+      "heap_kb": 19.4,
+      "peak_kb": 20.84,
+      "delta_kb": 19.4
     },
     {
       "day": 800,
@@ -108,9 +108,9 @@
       "charge_cycles": 166.6,
       "battery_health_pct": 96.67,
       "voltage": 4.146,
-      "heap_kb": 17.42,
-      "peak_kb": 17.77,
-      "delta_kb": 17.42
+      "heap_kb": 19.81,
+      "peak_kb": 21.33,
+      "delta_kb": 19.81
     },
     {
       "day": 900,
@@ -119,9 +119,9 @@
       "charge_cycles": 187.8,
       "battery_health_pct": 96.24,
       "voltage": 3.869,
-      "heap_kb": 17.98,
-      "peak_kb": 18.25,
-      "delta_kb": 17.98
+      "heap_kb": 20.36,
+      "peak_kb": 21.81,
+      "delta_kb": 20.36
     },
     {
       "day": 1000,
@@ -130,9 +130,9 @@
       "charge_cycles": 209.1,
       "battery_health_pct": 95.82,
       "voltage": 3.418,
-      "heap_kb": 18.52,
-      "peak_kb": 18.8,
-      "delta_kb": 18.52
+      "heap_kb": 20.91,
+      "peak_kb": 22.36,
+      "delta_kb": 20.91
     }
   ]
 }
