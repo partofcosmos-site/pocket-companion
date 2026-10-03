@@ -1,8 +1,8 @@
 {
   "status": "PASSED",
   "total_cycles": 100000,
-  "wallclock_seconds": 13.259,
-  "overall_fps": 7542.1,
+  "wallclock_seconds": 20.636,
+  "overall_fps": 4845.8,
   "crashes": 0,
   "chords_mashed": 8333,
   "cutoff_events": 20,
@@ -29,7 +29,7 @@
       "cur_heap_kb": 8.28,
       "peak_heap_kb": 9.18,
       "delta_kb": 8.28,
-      "fps": 7778.0,
+      "fps": 4651.0,
       "vbat": 4.2,
       "pwm_freq": 8271
     },
@@ -38,7 +38,7 @@
       "cur_heap_kb": 9.19,
       "peak_heap_kb": 9.77,
       "delta_kb": 9.19,
-      "fps": 7708.1,
+      "fps": 4577.4,
       "vbat": 4.2,
       "pwm_freq": 1407
     },
@@ -47,7 +47,7 @@
       "cur_heap_kb": 9.59,
       "peak_heap_kb": 10.22,
       "delta_kb": 9.59,
-      "fps": 7750.8,
+      "fps": 4649.7,
       "vbat": 4.2,
       "pwm_freq": 440
     },
@@ -56,7 +56,7 @@
       "cur_heap_kb": 9.91,
       "peak_heap_kb": 10.66,
       "delta_kb": 9.91,
-      "fps": 7731.9,
+      "fps": 4689.5,
       "vbat": 4.2,
       "pwm_freq": 4860
     },
@@ -65,7 +65,7 @@
       "cur_heap_kb": 10.24,
       "peak_heap_kb": 11.11,
       "delta_kb": 10.24,
-      "fps": 7727.9,
+      "fps": 4798.6,
       "vbat": 4.2,
       "pwm_freq": 4066
     },
@@ -74,7 +74,7 @@
       "cur_heap_kb": 11.0,
       "peak_heap_kb": 11.49,
       "delta_kb": 11.0,
-      "fps": 7683.5,
+      "fps": 4810.0,
       "vbat": 4.2,
       "pwm_freq": 964
     },
@@ -83,7 +83,7 @@
       "cur_heap_kb": 11.25,
       "peak_heap_kb": 11.94,
       "delta_kb": 11.25,
-      "fps": 7553.5,
+      "fps": 4851.8,
       "vbat": 4.2,
       "pwm_freq": 281
     },
@@ -92,7 +92,7 @@
       "cur_heap_kb": 11.64,
       "peak_heap_kb": 12.38,
       "delta_kb": 11.64,
-      "fps": 7570.5,
+      "fps": 4875.4,
       "vbat": 4.2,
       "pwm_freq": 6415
     },
@@ -101,7 +101,7 @@
       "cur_heap_kb": 12.09,
       "peak_heap_kb": 12.83,
       "delta_kb": 12.09,
-      "fps": 7545.3,
+      "fps": 4871.9,
       "vbat": 4.2,
       "pwm_freq": 5409
     },
@@ -110,7 +110,7 @@
       "cur_heap_kb": 12.77,
       "peak_heap_kb": 13.34,
       "delta_kb": 12.77,
-      "fps": 7548.9,
+      "fps": 4852.0,
       "vbat": 4.2,
       "pwm_freq": 6537
     }

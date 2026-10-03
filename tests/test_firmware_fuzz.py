@@ -650,3 +650,25 @@ def test_fuzz_multimodal_100k_fuzz_soak():
     assert summary["final_delta_kb"] < 35.0
     assert len(summary["modes_explored"]) == 4
 
+
+def test_fuzz_battery_endurance_1000days():
+    """Verify 1,000-day battery endurance simulation across 400mAh discharge curves and low-power modes."""
+    from run_battery_endurance_1000days import run_battery_endurance_1000days
+    summary = run_battery_endurance_1000days()
+
+    assert summary["status"] == "PASSED"
+    assert summary["simulated_days"] == 1000
+    assert summary["simulated_total_hours"] == 24000.0
+    assert summary["crashes"] == 0
+    assert summary["total_active_hours"] == 2250.0
+    assert summary["active_hours_error_pct"] < 0.001
+    assert summary["total_sleep_hours"] == 21750.0
+    assert summary["deep_sleep_transitions"] == 4000
+    assert summary["wake_transitions"] == 3000
+    assert summary["cutoff_transitions"] > 150
+    assert summary["charge_cycles_count"] > 150
+    assert summary["final_battery_health_pct"] > 90.0
+    assert summary["zero_memory_leak"] is True
+    assert summary["final_delta_kb"] < 35.0
+
+
