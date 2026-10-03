@@ -15,7 +15,7 @@
 ## Contents
 
 1. [2026-10-03 — ![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/71f1e30cb4aaa1d3645ea29fa7da0e0f4d5774497b45c4ee4927fcc0c868b5](#2026-10-03-01systemarchitectureblockdiagramhttpshalflifehack)
-2. [2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f78d60506d27933e9864e1f215d1e03127209aa5e71ed517c3eb85ade911bdc8.png)](#2026-10-03-05easyedaschematiccapturehttpshalflifehackclub-as)
+2. [2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)](#2026-10-03-05easyedaschematiccapturehttpshalflifehackclub-as)
 3. [2026-10-03 — ![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/31c80fc77adb978b6a8c0ec8ddcf674d65880f699093b55a0e8af75322cdd94c.png)](#2026-10-03-09jlcpcbdrcvalidationpasshttpshalflifehackclub-as)
 
 ## Design
@@ -61,17 +61,17 @@ h:** Mini SPDT slide switch interrupting battery positive before the RP2040 5V/V
 - `GP4`: Right tactile button (Internal Pull-Up, Active Low)
 - `GP5`: Passive Piezo Buzzer (PWM audio output)
 
-### 2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f78d60506d27933e9864e1f215d1e03127209aa5e71ed517c3eb85ade911bdc8.png)
+### 2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)
 
 **3.5h**
 
-![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f78d60506d27933e9864e1f215d1e03127209aa5e71ed517c3eb85ade911bdc8.png)
+![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)
 
-![06_easyeda_erc_report](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/ba6fe3d6690fe816b9eca61ae9f0bd63ca8150fb573620420c032d16a290e1aa.png)
+![06_easyeda_erc_report](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/d814b9455769c4e7c8d6c3503dc198a8bcbbfe616ed28c84804c287e9412863d.png)
 
-![07_easyeda_pcb_2d_layout](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/3e6c4617525785f79a0b228f47d3803dd1b2a14fab5f004433144faf3b7b4f9f.png)
+![07_easyeda_pcb_2d_layout](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/bc2db1c001d1d81bce4f2f16691ded51a47d57cbce4c1fcb1adfb49931ee5d99.png)
 
-![08_pcb_3d_render_isometric](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/937d1f2e8c59e44e02a3906b3025db44e3349c387948505b6b22435859063eed.png)
+![08_pcb_3d_render_isometric](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/cae16ce9705a4287b5d016bb042c39e04f065694f9e1196ce56d5cf533009ca5.png)
 
 # EasyEDA Schematic Capture & Peripheral Interfacing
 
