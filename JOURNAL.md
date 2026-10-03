@@ -15,7 +15,7 @@
 ## Contents
 
 1. [2026-10-03 — ![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/71f1e30cb4aaa1d3645ea29fa7da0e0f4d5774497b45c4ee4927fcc0c868b5](#2026-10-03-01systemarchitectureblockdiagramhttpshalflifehack)
-2. [2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)](#2026-10-03-05easyedaschematiccapturehttpshalflifehackclub-as)
+2. [2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)\](#2026-10-03-05easyedaschematiccapturehttpshalflifehackclub-as)
 3. [2026-10-03 — ![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f4fd3f28e1eb4d983b4e0c02e1d72f5e47a18cd43a5570abfe2c30a984876071.png)](#2026-10-03-09jlcpcbdrcvalidationpasshttpshalflifehackclub-as)
 
 ## Design
@@ -53,32 +53,29 @@ For the TP4056 charging module, the stock board comes with a 1.2k Rprog resistor
 - `GP4`: Right tactile button (wired straight to GND, internal pull-up)
 - `GP5`: Piezo buzzer (PWM audio chirps)
 
-### 2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)
+### 2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)\
 
 **3.5h**
 
-![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)
+![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)\n\n![06_easyeda_erc_report](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/d814b9455769c4e7c8d6c3503dc198a8bcbbfe616ed28c84804c287e9412863d.png)\n\n![07_easyeda_pcb_2d_layout](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/bc2db1c001d1d81bce4f2f16691ded51a47d57cbce4c1fcb1adfb49931ee5d99.png)\n\n![08_pcb_3d_render_isometric](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/cae16ce9705a4287b5d016bb042c39e04f065694f9e1196ce56d5cf533009ca5.png)\n\n# EasyEDA Schematic Capture, BOM Selection & Layout Planning
 
-![06_easyeda_erc_report](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/d814b9455769c4e7c8d6c3503dc198a8bcbbfe616ed28c84804c287e9412863d.png)
+Once the breadboard prototype proved the hardware concept worked, I jumped into EasyEDA to turn the rat's nest of jumper wires into a proper schematic and plan the physical PCB layout.
 
-![07_easyeda_pcb_2d_layout](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/bc2db1c001d1d81bce4f2f16691ded51a47d57cbce4c1fcb1adfb49931ee5d99.png)
+### Component Selection & LCSC Parts Hunting
+I wanted parts that are easy to hand-solder, durable, and readily available:
+- **MCU (U1):** Waveshare RP2040-Zero (`C2058836`). Using through-hole header pins or castellations to keep assembly straightforward.
+- **Display Header (J1):** 4-pin 2.54mm female header (`C22453`) for the SSD1306. Socketing the display means if the glass screen ever cracks in my backpack, I can easily pop it out and slide a replacement in without desoldering.
+- **Input Buttons (SW1, SW2, SW3):** 6x6mm through-hole tactile push buttons (`C318884`). I picked clicky switches with a snappy tactile bump so button presses feel crisp during reaction games. Because I enabled the RP2040 internal pull-ups in firmware, each button connects directly between its GPIO net and GND—eliminating 3 external 10k resistors and saving board space.
+- **Buzzer (BZ1):** 9mm passive piezo buzzer (`C96395`) tied to `GP5`. Driven via PWM so I can play retro 8-bit tunes and timer alerts.
+- **Power Switch & Battery Header:** Mini SPDT slide switch (`C432128`) and a 2-pin JST-PH 2.0mm connector (`C131337`) so the battery can be physically switched off or unplugged during storage.
 
-![08_pcb_3d_render_isometric](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/cae16ce9705a4287b5d016bb042c39e04f065694f9e1196ce56d5cf533009ca5.png)
+### Clean Schematics & ERC Validation
+I avoided drawing long crossing net lines across the sheet. Instead, I grouped functional blocks into clean modules—MCU core, display interface, button matrix, audio, and power regulation—and tied them together with explicit net labels (`OLED_SDA`, `OLED_SCL`, `BTN_LEFT`, `BTN_ACTION`, `BTN_RIGHT`, `BUZZER_PWM`, `VBAT`, `3V3`, `GND`).
 
-# EasyEDA Schematic Capture & Peripheral Interfacing
+Ran the EasyEDA Electrical Rule Check (ERC) and verified all nets. I caught a missing ground link on the buzzer pad early and resolved it. Every GPIO net operates strictly at 3.3V logic, fully protecting the RP2040 inputs.
 
-## 1. Schematic Design & Part Selection (LCSC Integration)
-In this design phase, I transferred the hardware architecture into EasyEDA Standard to create the formal schematic:
-- **RP2040-Zero (U1):** LCSC `C2058836` - Assigned net labels for `OLED_SDA` (GP0), `OLED_SCL` (GP1), `BTN_LEFT` (GP2), `BTN_ACTION` (GP3), `BTN_RIGHT` (GP4), and `BUZZER_PWM` (GP5).
-- **OLED Display Header (J1):** LCSC `C22453` (4-pin 2.54mm pitch female header). Pin 1 (GND), Pin 2 (+3.3V power rail), Pin 3 (SCL), Pin 4 (SDA).
-- **Input Tactile Buttons (SW1, SW2, SW3):** LCSC `C318884` (6x6mm through-hole tactile push buttons). Wired between signal nets and GND, taking advantage of the RP2040's internal programmable pull-up resistors to eliminate external resistors and BOM clutter.
-- **Audio Circuit (BZ1):** LCSC `C96395` (9mm passive piezo buzzer). Connected to GP5 with a high-speed PWM channel for tones and game melody generation.
-- **Power Subsystem (SW_PWR, BAT1):** LCSC `C432128` (SS-12D00G3 slide switch) and `C131337` (JST-PH 2.0mm connector) wired to route battery power cleanly through the switch to the 5V/VBUS input.
-
-## 2. Electrical Rules & Netlist Validation
-- Placed clean net labels across all blocks to avoid cross-canvas rat's nests.
-- Ran EasyEDA Electrical Rule Check (ERC) with zero dangling nets or unconnected floating pins.
-- Verified voltage compatibility: all peripherals run strictly on 3.3V logic matching the RP2040 GPIO tolerance.
+### Layout Ergonomics & 3D Render
+Before converting to PCB tracks, I visualized where fingers land when holding the device. The 3 tactile buttons sit horizontally along the lower third for easy thumb access, while the OLED display sits centered above them. In the EasyEDA 3D viewer, seeing the virtual board rendered with realistic heights and component clearances confirmed that everything fits comfortably in one hand!
 
 ### 2026-10-03 — ![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f4fd3f28e1eb4d983b4e0c02e1d72f5e47a18cd43a5570abfe2c30a984876071.png)
 
