@@ -765,10 +765,10 @@ def render_10_gerber_manufacturing_stackup_preview():
     draw.rectangle([(0, 1046), (w, 1080)], fill=(30, 41, 59))
     draw.line([(0, 1046), (w, 1046)], fill=(51, 65, 85), width=1)
 
-    draw.text((16, 1056), "Archive: Gerber_Pocket_Companion_v1.zip (7 Raw RS-274X Files)", font=get_font(11, mono=True), fill=(241, 245, 249))
+    draw.text((16, 1056), "Archive: Gerber_Pocket_Companion_v2.zip (8 Production RS-274X & DRL Files)", font=get_font(11, mono=True), fill=(241, 245, 249))
     draw.text((500, 1056), "CAM Engine: Gerbv / JLCPCB Verification Mode", font=get_font(11, mono=True), fill=(148, 163, 184))
-    draw.text((900, 1056), "Total Primitives: 146 Shapes", font=get_font(11, mono=True), fill=(245, 158, 11))
-    draw.text((1200, 1056), "Total Drills: 23 Plated PTH", font=get_font(11, mono=True), fill=(56, 189, 248))
+    draw.text((900, 1056), "Total Primitives: 219 Shapes", font=get_font(11, mono=True), fill=(245, 158, 11))
+    draw.text((1200, 1056), "Total Drills: 43 Plated PTH", font=get_font(11, mono=True), fill=(56, 189, 248))
     draw.text((w - 320, 1056), "STATUS: 100% PRODUCTION READY", font=get_font(11, bold=True, mono=True), fill=(52, 211, 153))
 
     out_path = os.path.join(OUTPUT_DIR, "10_gerber_manufacturing_stackup_preview.png")
