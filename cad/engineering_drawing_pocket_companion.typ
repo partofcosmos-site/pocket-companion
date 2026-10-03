@@ -13,7 +13,7 @@
       grid(
         columns: (1fr, auto),
         align(left)[#text(7.5pt, fill: rgb("#475569"), weight: "bold")[POCKET COMPANION ENCLOSURE — ENGINEERING SPECIFICATION & BLUEPRINT]],
-        align(right)[#text(7.5pt, fill: rgb("#64748b"))[DWG-PC-CAD-01 | REV 2.4]]
+        align(right)[#text(7.5pt, fill: rgb("#64748b"))[DWG-PC-CAD-01 | REV 2.5]]
       )
       v(-3pt)
       line(length: 100%, stroke: 0.5pt + rgb("#cbd5e1"))
