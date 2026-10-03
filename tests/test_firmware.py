@@ -1070,7 +1070,7 @@ def test_battery_monitoring_levels_and_header_rendering():
     # Cutoff guard in step()
     oled.fill(0)
     fw.last_frame_time = 0.0
-    fw.step(now=100.0, dt=0.0)
+    fw.step(now=100.0, dt=0.01)
     assert oled.has_text("POWER CUTOFF!")
 
     # Battery reading from mock AnalogIn
