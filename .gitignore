@@ -4,3 +4,7 @@ __pycache__/
 Thumbs.db
 upload_cdp.py
 upload_thumbnail.py
+upload_cart.py
+upload_video.py
+inspect_step3.py
+submit_warmup.py
