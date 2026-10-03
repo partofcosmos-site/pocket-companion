@@ -1,12 +1,12 @@
 {
   "status": "PASSED",
   "cycles": 50000,
-  "elapsed_seconds": 1.101,
-  "fps": 45411.3,
+  "elapsed_seconds": 3.997,
+  "fps": 12510.2,
   "crashes": 0,
-  "bounces_injected": 500,
-  "bounces_filtered": 500,
-  "chords_evaluated": 1500,
+  "bounces_injected": 400,
+  "bounces_filtered": 400,
+  "chords_evaluated": 2000,
   "modes_explored": [
     0,
     1,

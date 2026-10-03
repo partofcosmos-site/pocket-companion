@@ -440,3 +440,53 @@ def test_fuzz_100k_cycles_soak_continuous_memory_tracking():
     for mode_idx in (0, 1, 2, 3):
         assert result["mode_distribution"][mode_idx] > 10000
 
+
+def test_edge_case_debounce_switch_chatter_rejection():
+    """Verify high-frequency contact bounce and boundary sub-200ms pulses are rejected."""
+    fw, oled, buzzer, btn_l, btn_act, btn_r, _ = create_fuzz_firmware()
+    sim_time = 1000.0
+
+    # Initial valid press to establish last_button_time
+    btn_r.press()
+    fw.handle_buttons(sim_time)
+    btn_r.release()
+    initial_mode = fw.mode
+    last_t = fw.last_button_time
+
+    # 1. Sub-threshold pulses: 1ms, 10ms, 50ms, 100ms, 199ms
+    sub_threshold_offsets = [0.001, 0.010, 0.050, 0.100, 0.150, 0.199, 0.1999]
+    for dt in sub_threshold_offsets:
+        bounce_t = last_t + dt
+        btn_r.press()
+        fw.handle_buttons(bounce_t)
+        btn_r.release()
+        assert fw.mode == initial_mode, f"Debounce failed for pulse at {dt*1000:.1f}ms offset"
+
+    # 2. Simulated 10 kHz contact chatter burst (100 toggles within 10ms)
+    for step in range(100):
+        chatter_t = last_t + 0.050 + (step * 0.0001)
+        btn_r.value = (step % 2 == 0)
+        fw.handle_buttons(chatter_t)
+    btn_r.release()
+    assert fw.mode == initial_mode, "10 kHz contact chatter corrupted firmware state"
+
+    # 3. Supra-threshold valid press: 200.1ms offset must trigger cleanly
+    valid_t = last_t + 0.201
+    btn_r.press()
+    fw.handle_buttons(valid_t)
+    btn_r.release()
+    assert fw.mode == (initial_mode + 1) % len(fw.modes), "Valid press at 200.1ms failed to trigger"
+
+
+def test_fuzz_50k_cycles_chording_and_debounce_stress():
+    """Execute 50,000 cycles with pseudo-random chording and contact bounce."""
+    from run_debounce_chording_stress import run_debounce_stress
+    summary = run_debounce_stress(cycles=50000)
+
+    assert summary["status"] == "PASSED"
+    assert summary["cycles"] == 50000
+    assert summary["crashes"] == 0
+    assert summary["bounces_filtered"] == summary["bounces_injected"]
+    assert len(summary["modes_explored"]) == 4
+
+

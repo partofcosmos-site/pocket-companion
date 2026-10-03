@@ -70,27 +70,14 @@ def run_debounce_stress(cycles: int = 50000) -> Dict[str, Any]:
     for i in range(1, cycles + 1):
         sim_time += 0.01  # 10ms frame progression
 
-        # 1. Edge-Case Contact Bounce Simulation (every 100 cycles)
-        if i % 100 == 0:
-            bounces_injected += 1
-            # Rapid chatter: toggle button 5 times within 15ms
-            for bounce_step in range(5):
-                micro_t = sim_time + (bounce_step * 0.003)
-                btn_act.value = (bounce_step % 2 == 0)
-                # Should be filtered if within 200ms of last valid press
-                fw.handle_buttons(micro_t)
-            btn_act.release()
-            bounces_filtered += 1
-
-        # 2. Debounce Boundary Threshold Check (every 500 cycles)
-        elif i % 500 == 0:
+        # 1. Debounce Boundary Threshold Check (every 250 cycles)
+        if i % 250 == 0:
             # Trigger pulse at t = last_button_time + 0.190s (sub-threshold, must ignore)
             sub_t = fw.last_button_time + 0.190
             btn_l.press()
             mode_before = fw.mode
             fw.handle_buttons(sub_t)
             btn_l.release()
-            # Verify no phantom mode change
             assert fw.mode == mode_before, f"Debounce failed to filter sub-threshold pulse at step {i}"
 
             # Trigger pulse at t = last_button_time + 0.205s (supra-threshold, must register)
@@ -100,8 +87,19 @@ def run_debounce_stress(cycles: int = 50000) -> Dict[str, Any]:
             btn_r.release()
             valid_presses_registered += 1
 
-        # 3. Pseudo-Random Button Chording (every 25 cycles)
-        elif i % 25 == 0:
+        # 2. Edge-Case Contact Bounce Simulation (every 100 cycles at offset 50)
+        elif i % 100 == 50:
+            bounces_injected += 1
+            # Rapid chatter: toggle button 5 times within 15ms
+            for bounce_step in range(5):
+                micro_t = sim_time + (bounce_step * 0.003)
+                btn_act.value = (bounce_step % 2 == 0)
+                fw.handle_buttons(micro_t)
+            btn_act.release()
+            bounces_filtered += 1
+
+        # 3. Pseudo-Random Button Chording (every 25 cycles at offset 10)
+        elif i % 25 == 10:
             chords_evaluated += 1
             sim_time += 0.21  # Advance past debounce window
             # Pick chord: 8 possible states
