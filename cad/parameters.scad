@@ -51,9 +51,12 @@ base_total_h = floor_t + base_inner_d; // 9.5 mm
 lid_total_h = roof_t + lid_inner_d;    // 10.2 mm
 total_enclosure_h = base_total_h + lid_total_h; // 19.7 mm
 
-// Mating Lip (Tongue & Groove alignment joint)
-lip_h = 1.5;              // Height of interlocking lip
+// Mating Lip (Tongue & Groove alignment joint with 0.3mm Snap-Fit Latch)
+lip_h = 1.6;              // Height of interlocking lip
 lip_w = wall_t / 2;       // 1.0 mm lip thickness
+snap_ridge_w = 0.30;      // 0.3mm snap-fit latching bead undercut
+snap_ridge_h = 0.80;      // Height of snap-fit latching ridge
+usbc_chamfer = 1.20;      // 45-degree chamfer for USB-C strain relief entry
 
 // -----------------------------------------------------------------------------
 // PCB Mounting Standoffs & Corner Bosses
@@ -106,7 +109,7 @@ btn_flange_t = 1.0;       // Retaining brim thickness
 btn_shaft_h = 6.8;        // Total shaft height
 btn_plunger_d = 3.0;      // Contact nipple diameter for tactile switch
 btn_plunger_h = 1.4;      // Contact nipple height
-btn_travel = 0.5;         // Tactile switch nominal actuation travel
+btn_travel = 0.25;        // 0.25mm FDM printer tolerance for tactile switch plunger travel
 
 // 3. Piezo Buzzer Sound Vents (BZ1 at x=44.0, y=14.0)
 buzzer_x = 44.0;

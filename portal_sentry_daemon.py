@@ -1,4 +1,5 @@
 import asyncio
+import base64
 import datetime
 import json
 import os
@@ -10,10 +11,11 @@ import websockets
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
-WS_URL = 'ws://127.0.0.1:9100/devtools/page/818AD5EC64F697348FA64075B99A1C19'
+CDP_JSON_URL = 'http://127.0.0.1:9100/json'
+PROJECT_ID = 'cmuqw217z02uz01rlatu9wyrg'
 HEARTBEAT_FILE = r'C:\Users\white\pocket-companion\sentry_heartbeat.json'
 LOG_FILE = r'C:\Users\white\pocket-companion\sentry_status.log'
-SCREENSHOT_FILE = r'C:\Users\white\pocket-companion\assets\submission_confirmed_live.png'
+SCREENSHOT_FILE = r'C:\Users\white\pocket-companion\assets\portal_live_state.png'
 
 CDN_IMAGE_URLS = [
     "https://halflife.hackclub-assets.com/hackclub-half-life/covers/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/5e449e176c85c1d4a4318d1d9541141d42ec89aa26c34e6a881e93d6927da231.png",
@@ -31,6 +33,17 @@ CDN_IMAGE_URLS = [
     "https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/663c98819a35280e7834c2e614e8f6ecaba066d9b0f043f7295a1e3015651059.png"
 ]
 
+def get_dynamic_ws_url():
+    try:
+        req = urllib.request.urlopen(CDP_JSON_URL, timeout=5)
+        tabs = json.loads(req.read().decode('utf-8'))
+        for t in tabs:
+            if PROJECT_ID in t.get('url', ''):
+                return t.get('webSocketDebuggerUrl'), t.get('url')
+    except Exception as e:
+        print(f"[WARN] Failed to query dynamic CDP tabs: {e}")
+    return None, None
+
 def verify_single_cdn_url(url, retries=2):
     for attempt in range(retries + 1):
         try:
@@ -38,11 +51,11 @@ def verify_single_cdn_url(url, retries=2):
             with urllib.request.urlopen(req, timeout=5) as r:
                 if r.status == 200:
                     return 200
-        except Exception as e:
+        except Exception:
             if attempt == retries:
-                return str(e)
-            time.sleep(0.5)
-    return "UNKNOWN"
+                return "FAIL"
+            time.sleep(0.3)
+    return "FAIL"
 
 def verify_cdn_images():
     results = {}
@@ -54,9 +67,10 @@ def verify_cdn_images():
             all_ok = False
     return all_ok, results
 
-async def inspect_portal_state():
+async def inspect_and_capture(ws_url):
     try:
-        async with websockets.connect(WS_URL, max_size=50*1024*1024, open_timeout=5) as ws:
+        async with websockets.connect(ws_url, max_size=50*1024*1024, open_timeout=5) as ws:
+            # 1. Evaluate DOM
             cmd = {
                 'id': 1,
                 'method': 'Runtime.evaluate',
@@ -119,9 +133,24 @@ async def inspect_portal_state():
             }
             await ws.send(json.dumps(cmd))
             res = json.loads(await ws.recv())
-            return res.get('result', {}).get('result', {}).get('value', {})
+            portal_val = res.get('result', {}).get('result', {}).get('value', {})
+            
+            # 2. Capture verification screenshot
+            shot_cmd = {
+                'id': 2,
+                'method': 'Page.captureScreenshot',
+                'params': {'format': 'png'}
+            }
+            await ws.send(json.dumps(shot_cmd))
+            shot_res = json.loads(await ws.recv())
+            img_b64 = shot_res.get('result', {}).get('data')
+            if img_b64:
+                with open(SCREENSHOT_FILE, 'wb') as f:
+                    f.write(base64.b64decode(img_b64))
+            
+            return portal_val, True
     except Exception as e:
-        return {'error': str(e)}
+        return {'error': str(e)}, False
 
 async def sentry_loop(interval_sec=60, max_iterations=None):
     iteration = 0
@@ -131,15 +160,24 @@ async def sentry_loop(interval_sec=60, max_iterations=None):
         iteration += 1
         now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         
-        # 1. Inspect portal state via CDP
-        portal_state = await inspect_portal_state()
+        # 1. Dynamically discover active tab ws_url
+        ws_url, page_url = get_dynamic_ws_url()
+        if not ws_url:
+            print(f"[{now_str}][Cycle #{iteration}] WARN: Could not locate tab for project {PROJECT_ID}. Retrying in {interval_sec}s...")
+            await asyncio.sleep(interval_sec)
+            continue
+            
+        # 2. Inspect portal state & capture screenshot
+        portal_state, shot_saved = await inspect_and_capture(ws_url)
         
-        # 2. Verify CDN images with robust retry
+        # 3. Verify CDN images with resilient retry
         cdn_ok, cdn_details = verify_cdn_images()
         
-        # 3. Check health metrics
+        # 4. Check health metrics
         is_approved = portal_state.get('isApproved', False)
-        is_in_review = portal_state.get('isInReview', False) or portal_state.get('hasSubmitted', False) or portal_state.get('hasUnsubmit', False)
+        is_submitted = portal_state.get('hasSubmitted', False)
+        has_unsubmit = portal_state.get('hasUnsubmit', False)
+        is_in_review = portal_state.get('isInReview', False) or is_submitted or has_unsubmit
         hours_ok = portal_state.get('hoursSyncedAboveThreshold', False)
         all_entries_ok = (portal_state.get('entries', {}).get('e1') and 
                           portal_state.get('entries', {}).get('e2') and 
@@ -158,10 +196,12 @@ async def sentry_loop(interval_sec=60, max_iterations=None):
             "timestamp": now_str,
             "iteration": iteration,
             "status": current_status,
+            "ws_url": ws_url,
             "portal": {
                 "is_approved": is_approved,
+                "is_submitted": is_submitted,
+                "has_unsubmit": has_unsubmit,
                 "in_review": is_in_review,
-                "has_unsubmit": portal_state.get('hasUnsubmit'),
                 "max_logged_hour": portal_state.get('maxLoggedHour'),
                 "hours_logged": portal_state.get('hoursLogged'),
                 "hours_synced_above_11_94h": hours_ok,
@@ -176,14 +216,16 @@ async def sentry_loop(interval_sec=60, max_iterations=None):
             "cdn_images": {
                 "verified_all_200": cdn_ok,
                 "total_verified": len(CDN_IMAGE_URLS)
-            }
+            },
+            "screenshot_saved": shot_saved,
+            "screenshot_path": SCREENSHOT_FILE
         }
         
         # Write heartbeat
         with open(HEARTBEAT_FILE, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2)
             
-        log_line = f"[{now_str}][Cycle #{iteration}] Status: {report['status']} | Review: {'APPROVED' if is_approved else 'IN REVIEW'} | Notes: {len(reviewer_notes)} | Hours: {portal_state.get('maxLoggedHour')}h (Synced >= 11.94h: {hours_ok}) | Entries (3/3): {all_entries_ok} | CDN (13/13): {cdn_ok}\n"
+        log_line = f"[{now_str}][Cycle #{iteration}] Status: {report['status']} | Review: {'APPROVED' if is_approved else 'IN REVIEW'} | Notes: {len(reviewer_notes)} | Hours: {portal_state.get('maxLoggedHour')}h (Synced >= 11.94h: {hours_ok}) | Entries (3/3): {all_entries_ok} | CDN (13/13): {cdn_ok} | Screenshot: {shot_saved}\n"
         with open(LOG_FILE, 'a', encoding='utf-8') as f:
             f.write(log_line)
             

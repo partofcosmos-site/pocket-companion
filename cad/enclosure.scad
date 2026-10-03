@@ -39,13 +39,31 @@ module enclosure_base() {
                     // Solid outer block
                     rounded_box(outer_w, outer_h, base_total_h, outer_corner_r);
                     
-                    // Stepped interlocking alignment tongue on top rim
-                    translate([wall_t - lip_w/2, wall_t - lip_w/2, base_total_h])
-                        difference() {
-                            rounded_box(cavity_w + lip_w, cavity_h + lip_w, lip_h, outer_corner_r - wall_t/2);
-                            translate([lip_w + tol, lip_w + tol, -0.1])
-                                rounded_box(cavity_w - lip_w - 2*tol, cavity_h - lip_w - 2*tol, lip_h + 0.2, pcb_corner_r);
-                        }
+            // Stepped interlocking alignment tongue on top rim with 0.3mm Snap-Fit Latch Beads
+            translate([wall_t - lip_w/2, wall_t - lip_w/2, base_total_h])
+                difference() {
+                    rounded_box(cavity_w + lip_w, cavity_h + lip_w, lip_h, outer_corner_r - wall_t/2);
+                    translate([lip_w + tol, lip_w + tol, -0.1])
+                        rounded_box(cavity_w - lip_w - 2*tol, cavity_h - lip_w - 2*tol, lip_h + 0.2, pcb_corner_r);
+                }
+            
+            // 0.3mm Snap-Fit Latch Beads on front and rear tongue walls
+            for (bx = [18.0, 38.0]) {
+                // Front wall snap bead
+                translate([bx - 5.0, wall_t - lip_w/2 - snap_ridge_w, base_total_h + 0.3])
+                    hull() {
+                        cube([10.0, snap_ridge_w, snap_ridge_h * 0.6]);
+                        translate([0, snap_ridge_w, snap_ridge_h])
+                            cube([10.0, 0.01, 0.01]);
+                    }
+                // Rear wall snap bead
+                translate([bx - 5.0, outer_h - wall_t + lip_w/2, base_total_h + 0.3])
+                    hull() {
+                        cube([10.0, snap_ridge_w, snap_ridge_h * 0.6]);
+                        translate([0, 0, snap_ridge_h])
+                            cube([10.0, 0.01, 0.01]);
+                    }
+            }
                 }
                 
                 // Interior hollow cavity
@@ -95,17 +113,28 @@ module enclosure_base() {
                 cylinder(d = screw_hole_d, h = 8.0);
         }
         
-        // 2. TP4056 USB-C cutout on bottom wall (Y = 0)
+        // 2. TP4056 USB-C cutout on bottom wall (Y = 0) with 45-deg Chamfered Strain Relief
+        // Through-port opening
         translate([wall_t + tol + usbc_center_x - usbc_w/2, -1.0, usbc_z])
             hull() {
-                translate([usbc_r, 0, usbc_r])
-                    rotate([-90, 0, 0]) cylinder(r = usbc_r, h = wall_t + 2.0);
-                translate([usbc_w - usbc_r, 0, usbc_r])
-                    rotate([-90, 0, 0]) cylinder(r = usbc_r, h = wall_t + 2.0);
-                translate([usbc_r, 0, usbc_h - usbc_r])
-                    rotate([-90, 0, 0]) cylinder(r = usbc_r, h = wall_t + 2.0);
-                translate([usbc_w - usbc_r, 0, usbc_h - usbc_r])
-                    rotate([-90, 0, 0]) cylinder(r = usbc_r, h = wall_t + 2.0);
+                translate([usbc_r, 0, usbc_r]) rotate([-90, 0, 0]) cylinder(r = usbc_r, h = wall_t + 2.0);
+                translate([usbc_w - usbc_r, 0, usbc_r]) rotate([-90, 0, 0]) cylinder(r = usbc_r, h = wall_t + 2.0);
+                translate([usbc_r, 0, usbc_h - usbc_r]) rotate([-90, 0, 0]) cylinder(r = usbc_r, h = wall_t + 2.0);
+                translate([usbc_w - usbc_r, 0, usbc_h - usbc_r]) rotate([-90, 0, 0]) cylinder(r = usbc_r, h = wall_t + 2.0);
+            }
+        
+        // Conical 45-degree chamfered entry funnel for strain relief and thick cable clearance
+        translate([wall_t + tol + usbc_center_x, 0, usbc_z + usbc_h/2])
+            rotate([-90, 0, 0])
+            hull() {
+                // Outer flared mouth at exterior wall (Y = -1.0)
+                translate([-(usbc_w + 2*usbc_chamfer)/2, -(usbc_h + 2*usbc_chamfer)/2, -1.0])
+                    linear_extrude(height = 0.01)
+                    rounded_rect_2d(usbc_w + 2*usbc_chamfer, usbc_h + 2*usbc_chamfer, usbc_r + usbc_chamfer);
+                // Inner port at Y = usbc_chamfer (1.2mm deep into wall)
+                translate([-usbc_w/2, -usbc_h/2, usbc_chamfer])
+                    linear_extrude(height = 0.01)
+                    rounded_rect_2d(usbc_w, usbc_h, usbc_r);
             }
         
         // 3. Power Slide Switch Notch on left wall (X = 0) at parting line
@@ -144,12 +173,22 @@ module enclosure_lid() {
                         translate([lip_w - tol, lip_w - tol, -0.2])
                             rounded_box(cavity_w - lip_w + 2*tol, cavity_h - lip_w + 2*tol, lip_h + 0.6, pcb_corner_r);
                     }
+                
+                // 0.3mm Snap-Fit Detent Recesses in groove walls
+                for (bx = [18.0, 38.0]) {
+                    // Front wall detent pocket
+                    translate([bx - 5.5, wall_t - lip_w/2 - snap_ridge_w - tol, 0.2])
+                        cube([11.0, snap_ridge_w + tol + 0.1, snap_ridge_h + 0.2]);
+                    // Rear wall detent pocket
+                    translate([bx - 5.5, outer_h - wall_t + lip_w/2 - 0.1, 0.2])
+                        cube([11.0, snap_ridge_w + tol + 0.1, snap_ridge_h + 0.2]);
+                }
             }
             
             // 2. Three Cylindrical Button Guide Shaft Sleeves on lid underside
             for (bpos = btn_positions) {
-                translate([wall_t + tol + bpos[0], wall_t + tol + bpos[1], 0])
-                    cylinder(d = btn_flange_d + 1.8, h = lid_inner_d);
+                translate([wall_t + tol + bpos[0], wall_t + tol + bpos[1], lid_inner_d - 3.4])
+                    cylinder(d = btn_flange_d + 1.8, h = 3.4);
             }
             
             // 3. Underside OLED Display Locator Frame
@@ -192,8 +231,9 @@ module enclosure_lid() {
                 cylinder(d = btn_hole_d, h = lid_total_h + 0.4);
             
             // Captive retaining flange counterbore pocket inside sleeve
-            translate([wall_t + tol + bpos[0], wall_t + tol + bpos[1], -0.1])
-                cylinder(d = btn_flange_d + 2*tol, h = btn_flange_t + 1.2);
+            // Calibrated for btn_flange_t + btn_travel (0.25mm FDM printer tolerance for plunger travel)
+            translate([wall_t + tol + bpos[0], wall_t + tol + bpos[1], lid_inner_d - (btn_flange_t + btn_travel + 0.15)])
+                cylinder(d = btn_flange_d + 2*tol, h = btn_flange_t + btn_travel + 0.3);
         }
         
         // 3. Piezo Buzzer Acoustic Resonance Grille

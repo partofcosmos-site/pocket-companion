@@ -1039,9 +1039,88 @@ def test_hardware_init_function(monkeypatch):
     code.init_hardware()
 
 
+def test_battery_monitoring_levels_and_header_rendering():
+    """Verify battery voltage sensing, low-battery alert, cutoff protection, and error recovery."""
+    fw, oled, _, _, _, _, _ = create_mock_firmware()
+
+    # Healthy battery (4.2V)
+    fw.update_battery(voltage=4.20)
+    assert fw.battery_voltage == 4.20
+    assert fw.low_battery is False
+    assert fw.power_cutoff is False
+    fw.draw_header()
+    assert oled.has_text("< L  R >")
+
+    # Low battery warning (3.35V <= 3.4V)
+    oled.fill(0)
+    fw.update_battery(voltage=3.35)
+    assert fw.low_battery is True
+    assert fw.power_cutoff is False
+    fw.draw_header()
+    assert oled.has_text("!BAT!")
+
+    # Power cutoff protection (3.15V <= 3.2V)
+    oled.fill(0)
+    fw.update_battery(voltage=3.15)
+    assert fw.power_cutoff is True
+    assert fw.low_battery is True
+    fw.draw_header()
+    assert oled.has_text("!CUTOFF!")
+
+    # Cutoff guard in step()
+    oled.fill(0)
+    fw.last_frame_time = 0.0
+    fw.step(now=100.0, dt=0.0)
+    assert oled.has_text("POWER CUTOFF!")
+
+    # Battery reading from mock AnalogIn
+    from tests.mock_hardware import MockAnalogIn, MockPin
+    adc = MockAnalogIn(MockPin("GP26"))
+    adc.set_voltage(3.80)
+    fw.vbat_pin = adc
+    fw.update_battery()
+    assert 3.75 <= fw.battery_voltage <= 3.85
+
+    # Failing ADC read
+    class BrokenADC:
+        @property
+        def value(self):
+            raise OSError("ADC read failed")
+    fw.vbat_pin = BrokenADC()
+    fw.update_battery()
 
 
+def test_init_hardware_battery_pin_exception(monkeypatch):
+    """Verify init_hardware handles failing analogio gracefully."""
+    import code
 
+    class BrokenAnalogio:
+        class AnalogIn:
+            def __init__(self, *args, **kwargs):
+                raise RuntimeError("ADC init failed")
+
+    monkeypatch.setattr(code, "analogio", BrokenAnalogio())
+    code.init_hardware()
+
+
+def test_benchmark_all_modes_execution_speed():
+    """Benchmark sustained frame rate across all 4 operational modes."""
+    fw, oled, _, _, _, _, _ = create_mock_firmware()
+    modes = ["Virtual Pet", "Reflex Tester", "Pomodoro Timer", "Simon Memory"]
+    iterations = 500
+
+    for mode_idx, mode_name in enumerate(modes):
+        fw.mode = mode_idx
+        start = time.perf_counter()
+        t = 1000.0
+        for _ in range(iterations):
+            t += 0.06
+            fw.step(now=t, dt=0.0)
+        elapsed = time.perf_counter() - start
+        fps = iterations / elapsed
+        latency_ms = (elapsed / iterations) * 1000.0
+        print(f"\n[BENCHMARK] Mode {mode_idx} ({mode_name}): {fps:.1f} FPS | {latency_ms:.4f} ms/frame")
+        assert fps > 100.0
 # =========================================================================
 # 10. Frame Execution Speed Benchmark
 # =========================================================================

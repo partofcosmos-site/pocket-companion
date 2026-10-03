@@ -151,6 +151,8 @@ class MockPWMOut:
         self._duty_cycle = int(val)
         if self._duty_cycle > 0 and self._frequency > 0:
             self.tone_log.append((self._frequency, self._duty_cycle))
+            if len(self.tone_log) > 100:
+                self.tone_log.pop(0)
 
     @property
     def frequency(self) -> int:
@@ -185,45 +187,52 @@ class MockSSD1306_I2C:
         self.draw_commands: List[Tuple[Any, ...]] = []
         self.frames: List[List[Dict[str, Any]]] = []
 
+    def _record_cmd(self, cmd: Tuple[Any, ...]):
+        self.draw_commands.append(cmd)
+        if len(self.draw_commands) > 30:
+            self.draw_commands.pop(0)
+
     def fill(self, color: int):
         """Fill entire display with 0 (black) or 1 (white)."""
         color = 1 if color else 0
-        self.draw_commands.append(("fill", color))
+        self._record_cmd(("fill", color))
         self.drawn_texts.clear()
         for y in range(self.height):
-            self.display_buffer[y] = [color] * self.width
+            row = self.display_buffer[y]
+            for x in range(self.width):
+                row[x] = color
 
     def pixel(self, x: int, y: int, color: int = 1):
         if 0 <= x < self.width and 0 <= y < self.height:
             self.display_buffer[y][x] = 1 if color else 0
-            self.draw_commands.append(("pixel", x, y, color))
+            self._record_cmd(("pixel", x, y, color))
 
     def hline(self, x: int, y: int, w: int, color: int = 1):
-        self.draw_commands.append(("hline", x, y, w, color))
+        self._record_cmd(("hline", x, y, w, color))
         c = 1 if color else 0
         if 0 <= y < self.height:
             for px in range(max(0, x), min(self.width, x + w)):
                 self.display_buffer[y][px] = c
 
     def vline(self, x: int, y: int, h: int, color: int = 1):
-        self.draw_commands.append(("vline", x, y, h, color))
+        self._record_cmd(("vline", x, y, h, color))
         c = 1 if color else 0
         if 0 <= x < self.width:
             for py in range(max(0, y), min(self.height, y + h)):
                 self.display_buffer[py][x] = c
 
     def line(self, x0: int, y0: int, x1: int, y1: int, color: int = 1):
-        self.draw_commands.append(("line", x0, y0, x1, y1, color))
+        self._record_cmd(("line", x0, y0, x1, y1, color))
 
     def rect(self, x: int, y: int, w: int, h: int, color: int = 1):
-        self.draw_commands.append(("rect", x, y, w, h, color))
+        self._record_cmd(("rect", x, y, w, h, color))
         self.hline(x, y, w, color)
         self.hline(x, y + h - 1, w, color)
         self.vline(x, y, h, color)
         self.vline(x + w - 1, y, h, color)
 
     def fill_rect(self, x: int, y: int, w: int, h: int, color: int = 1):
-        self.draw_commands.append(("fill_rect", x, y, w, h, color))
+        self._record_cmd(("fill_rect", x, y, w, h, color))
         c = 1 if color else 0
         for py in range(max(0, y), min(self.height, y + h)):
             for px in range(max(0, x), min(self.width, x + w)):
@@ -232,12 +241,14 @@ class MockSSD1306_I2C:
     def text(self, string: str, x: int, y: int, color: int = 1):
         entry = {"text": str(string), "x": x, "y": y, "color": color}
         self.drawn_texts.append(entry)
-        self.draw_commands.append(("text", str(string), x, y, color))
+        self._record_cmd(("text", str(string), x, y, color))
 
     def show(self):
         """Commit framebuffer to display frame history."""
         self.frames.append(list(self.drawn_texts))
-        self.draw_commands.append(("show",))
+        if len(self.frames) > 5:
+            self.frames.pop(0)
+        self._record_cmd(("show",))
 
     def has_text(self, substring: str) -> bool:
         """Check if substring was rendered in the active frame."""

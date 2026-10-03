@@ -1,11 +1,13 @@
 {
-  "timestamp": "2026-10-03 17:36:19",
-  "iteration": 11,
+  "timestamp": "2026-10-03 20:57:46",
+  "iteration": 3,
   "status": "HEALTHY_SUBMITTED_IN_REVIEW",
+  "ws_url": "ws://127.0.0.1:9100/devtools/page/410F2851C37846425A1CB7DC27F0C978",
   "portal": {
     "is_approved": false,
-    "in_review": true,
+    "is_submitted": true,
     "has_unsubmit": true,
+    "in_review": true,
     "max_logged_hour": 11.94,
     "hours_logged": [
       "10.5h logged",
@@ -26,5 +28,7 @@
   "cdn_images": {
     "verified_all_200": true,
     "total_verified": 13
-  }
+  },
+  "screenshot_saved": true,
+  "screenshot_path": "C:\\Users\\white\\pocket-companion\\assets\\portal_live_state.png"
 }

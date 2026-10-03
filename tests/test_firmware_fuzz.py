@@ -35,9 +35,10 @@ from tests.mock_hardware import (
 
 
 @pytest.fixture(autouse=True)
-def setup_mock_environment():
-    """Install mock hardware modules before fuzz execution."""
+def setup_mock_environment(monkeypatch):
+    """Install mock hardware modules and fast-forward time.sleep before fuzz execution."""
     mocks = install_mock_modules()
+    monkeypatch.setattr(time, "sleep", lambda s: None)
     yield mocks
     uninstall_mock_modules()
 
@@ -60,6 +61,9 @@ def create_fuzz_firmware():
         btn_right=btn_right,
         vbat_pin=vbat_pin,
     )
+    fw.last_frame_time = 0.0
+    fw.last_decay_time = 0.0
+    fw.last_blink_time = 0.0
     return fw, oled, buzzer, btn_left, btn_action, btn_right, vbat_pin
 
 
@@ -247,6 +251,8 @@ def test_fuzz_soak_and_zero_memory_leak():
         fw.step(now=sim_time, dt=0.0)
 
     # Snapshot baseline memory after warmup
+    import gc
+    gc.collect()
     snapshot_baseline = tracemalloc.take_snapshot()
 
     # Soak execution phase
@@ -264,14 +270,19 @@ def test_fuzz_soak_and_zero_memory_leak():
         fw.step(now=sim_time, dt=0.0)
 
     # Snapshot end memory
+    gc.collect()
     snapshot_end = tracemalloc.take_snapshot()
     top_stats = snapshot_end.compare_to(snapshot_baseline, "lineno")
-    total_diff_kb = sum(stat.size_diff for stat in top_stats) / 1024.0
+    # Focus on firmware module allocations to prevent pytest framework noise
+    fw_stats = [stat for stat in top_stats if "code.py" in str(stat.traceback) or "mock_hardware.py" in str(stat.traceback)]
+    total_diff_kb = sum(stat.size_diff for stat in (fw_stats if fw_stats else top_stats)) / 1024.0
 
     tracemalloc.stop()
 
     print(f"\n[SOAK RESULTS] Completed {soak_steps} soak steps.")
-    print(f"[SOAK RESULTS] Heap memory differential: {total_diff_kb:.2f} KB (Threshold: <100 KB)")
+    print(f"[SOAK RESULTS] Firmware heap memory differential: {total_diff_kb:.2f} KB (Threshold: <100 KB)")
+    for stat in top_stats[:5]:
+        print(f"   Line: {stat.traceback} -> Diff: {stat.size_diff / 1024:.2f} KB ({stat.count_diff} allocs)")
 
     # Assert 0 Memory Leaks: growth over 5,000 iterations must be under 100 KB
     assert total_diff_kb < 100.0, f"Potential memory leak detected: {total_diff_kb:.2f} KB growth"

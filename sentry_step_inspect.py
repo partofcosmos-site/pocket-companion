@@ -1,9 +1,29 @@
 import asyncio
 import json
+import urllib.request
 import websockets
 
+def get_live_ws_url():
+    try:
+        with urllib.request.urlopen("http://127.0.0.1:9100/json/list", timeout=3) as resp:
+            targets = json.loads(resp.read().decode("utf-8"))
+            for t in targets:
+                url = t.get("url", "").lower()
+                if "halflife" in url or "cmuqw217z02uz01rlatu9wyrg" in url:
+                    ws = t.get("webSocketDebuggerUrl")
+                    if ws:
+                        return ws
+            # Fallback to first page
+            for t in targets:
+                if t.get("type") == "page" and t.get("webSocketDebuggerUrl"):
+                    return t.get("webSocketDebuggerUrl")
+    except Exception as e:
+        print(f"[ERROR] Could not query CDP json/list: {e}")
+    return 'ws://127.0.0.1:9100/devtools/page/93FA310AC7FB1470DF24F339DB313D66'
+
 async def inspect():
-    ws_url = 'ws://127.0.0.1:9100/devtools/page/818AD5EC64F697348FA64075B99A1C19'
+    ws_url = get_live_ws_url()
+    print(f"[CDP] Connecting to: {ws_url}")
     async with websockets.connect(ws_url) as ws:
         cmd = {
             'id': 1,

@@ -83,6 +83,26 @@ def create_breadboard_diagram(output_path):
     col_x_start = bb_x + 8
     col_pitch = (bb_w - 16) / (ncols - 1)
 
+    # Component dimensions & coordinates for layout and hole masking
+    rp_x = col_x_start + 3 * col_pitch - 1.5
+    rp_y = bb_y + bb_h/2 - 13.5
+    rp_w = 7 * col_pitch + 3.0
+    rp_h = 27.0
+
+    oled_x = col_x_start + 14 * col_pitch
+    oled_y = bb_y + bb_h/2 + 2.5
+    oled_w = 20.0
+    oled_h = 22.0
+
+    buttons = [
+        ("LEFT (GP2)", col_x_start + 14 * col_pitch, '#10B981', '#059669', "SW1"),
+        ("ACTION (GP3)", col_x_start + 19 * col_pitch, '#0284C7', '#0369A1', "SW2"),
+        ("RIGHT (GP4)", col_x_start + 24 * col_pitch, '#EF4444', '#DC2626', "SW3"),
+    ]
+
+    bz_x = col_x_start + 26 * col_pitch + 2.0
+    bz_y = bb_y + bb_h - 18.0
+
     for c in range(ncols):
         cx = col_x_start + c * col_pitch
         if (c + 1) % 5 == 0 or c == 0:
