@@ -96,18 +96,16 @@ class PocketCompanion:
     @staticmethod
     def _safe_val(val, min_val, max_val):
         """Safely parse integer within bounds, strictly rejecting NaN, Inf, and non-numerics."""
-        try:
-            if isinstance(val, int) and not isinstance(val, bool):
-                if min_val <= val <= max_val:
-                    return val
-            elif isinstance(val, float):
-                if val == val and abs(val) != float("inf"):
-                    iv = int(val)
-                    if min_val <= iv <= max_val:
-                        return iv
-            return None
-        except Exception:
-            return None
+        if isinstance(val, int) and not isinstance(val, bool):
+            if min_val <= val <= max_val:
+                return val
+        elif isinstance(val, float):
+            if val == val and abs(val) != float("inf"):
+                iv = int(val)
+                if min_val <= iv <= max_val:
+                    return iv
+        return None
+
 
     def reset_defaults(self):
         """Restore all state machine variables to known valid factory defaults."""
