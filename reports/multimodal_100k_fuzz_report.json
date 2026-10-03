@@ -1,17 +1,17 @@
 {
   "status": "PASSED",
   "total_cycles": 100000,
-  "wallclock_seconds": 20.411,
-  "overall_fps": 4899.4,
+  "wallclock_seconds": 21.353,
+  "overall_fps": 4683.1,
   "crashes": 0,
   "chords_mashed": 8333,
   "cutoff_events": 20,
   "recharge_events": 10,
   "pwm_metrics": {
-    "frequency_changes": 9482,
-    "duty_toggles": 18964,
-    "min_freq_hz": 51,
-    "max_freq_hz": 9996
+    "frequency_changes": 9994,
+    "duty_toggles": 19988,
+    "min_freq_hz": 50,
+    "max_freq_hz": 9998
   },
   "modes_explored": [
     0,
@@ -20,99 +20,99 @@
     3
   ],
   "baseline_heap_kb": 0.0,
-  "peak_heap_kb": 13.39,
-  "final_delta_kb": 7.39,
+  "peak_heap_kb": 13.59,
+  "final_delta_kb": 8.01,
   "zero_memory_leak": true,
   "checkpoints": [
     {
       "cycle": 10000,
-      "cur_heap_kb": 8.64,
-      "peak_heap_kb": 9.09,
-      "delta_kb": 8.64,
-      "fps": 4923.5,
+      "cur_heap_kb": 8.36,
+      "peak_heap_kb": 9.21,
+      "delta_kb": 8.36,
+      "fps": 4757.9,
       "vbat": 4.2,
-      "pwm_freq": 5136
+      "pwm_freq": 8271
     },
     {
       "cycle": 20000,
-      "cur_heap_kb": 8.92,
-      "peak_heap_kb": 9.74,
-      "delta_kb": 8.92,
-      "fps": 4450.3,
+      "cur_heap_kb": 9.29,
+      "peak_heap_kb": 9.79,
+      "delta_kb": 9.29,
+      "fps": 4209.8,
       "vbat": 4.2,
-      "pwm_freq": 2702
+      "pwm_freq": 1407
     },
     {
       "cycle": 30000,
-      "cur_heap_kb": 9.26,
-      "peak_heap_kb": 10.16,
-      "delta_kb": 9.26,
-      "fps": 4165.0,
+      "cur_heap_kb": 9.62,
+      "peak_heap_kb": 10.25,
+      "delta_kb": 9.62,
+      "fps": 4487.8,
       "vbat": 4.2,
-      "pwm_freq": 9834
+      "pwm_freq": 440
     },
     {
       "cycle": 40000,
-      "cur_heap_kb": 9.97,
-      "peak_heap_kb": 10.64,
-      "delta_kb": 9.97,
-      "fps": 4489.8,
+      "cur_heap_kb": 10.03,
+      "peak_heap_kb": 10.69,
+      "delta_kb": 10.03,
+      "fps": 4629.7,
       "vbat": 4.2,
-      "pwm_freq": 995
+      "pwm_freq": 4860
     },
     {
       "cycle": 50000,
-      "cur_heap_kb": 10.51,
-      "peak_heap_kb": 11.17,
-      "delta_kb": 10.51,
-      "fps": 4582.0,
+      "cur_heap_kb": 10.19,
+      "peak_heap_kb": 11.14,
+      "delta_kb": 10.19,
+      "fps": 4671.2,
       "vbat": 4.2,
-      "pwm_freq": 3839
+      "pwm_freq": 4066
     },
     {
       "cycle": 60000,
-      "cur_heap_kb": 10.89,
-      "peak_heap_kb": 11.55,
-      "delta_kb": 10.89,
-      "fps": 4699.0,
+      "cur_heap_kb": 11.03,
+      "peak_heap_kb": 11.52,
+      "delta_kb": 11.03,
+      "fps": 4636.8,
       "vbat": 4.2,
-      "pwm_freq": 5609
+      "pwm_freq": 964
     },
     {
       "cycle": 70000,
-      "cur_heap_kb": 11.34,
-      "peak_heap_kb": 12.02,
-      "delta_kb": 11.34,
-      "fps": 4773.8,
+      "cur_heap_kb": 11.05,
+      "peak_heap_kb": 11.96,
+      "delta_kb": 11.05,
+      "fps": 4655.2,
       "vbat": 4.2,
-      "pwm_freq": 4805
+      "pwm_freq": 281
     },
     {
       "cycle": 80000,
-      "cur_heap_kb": 11.77,
-      "peak_heap_kb": 12.44,
-      "delta_kb": 11.77,
-      "fps": 4839.8,
+      "cur_heap_kb": 11.75,
+      "peak_heap_kb": 12.41,
+      "delta_kb": 11.75,
+      "fps": 4751.8,
       "vbat": 4.2,
-      "pwm_freq": 3012
+      "pwm_freq": 6415
     },
     {
       "cycle": 90000,
-      "cur_heap_kb": 12.32,
-      "peak_heap_kb": 12.94,
-      "delta_kb": 12.32,
-      "fps": 4868.1,
+      "cur_heap_kb": 12.2,
+      "peak_heap_kb": 12.85,
+      "delta_kb": 12.2,
+      "fps": 4676.5,
       "vbat": 4.2,
-      "pwm_freq": 2776
+      "pwm_freq": 5409
     },
     {
       "cycle": 100000,
-      "cur_heap_kb": 12.48,
-      "peak_heap_kb": 13.39,
-      "delta_kb": 12.48,
-      "fps": 4911.1,
+      "cur_heap_kb": 12.79,
+      "peak_heap_kb": 13.36,
+      "delta_kb": 12.79,
+      "fps": 4691.8,
       "vbat": 4.2,
-      "pwm_freq": 8879
+      "pwm_freq": 6537
     }
   ]
 }

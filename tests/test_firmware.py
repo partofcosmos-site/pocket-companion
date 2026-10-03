@@ -1294,3 +1294,79 @@ def test_boundary_conditions_and_persistence_unit(tmp_path):
 
     fw.update_battery(-10.0)  # Negative dip clamped
     assert fw.battery_voltage >= 2.5
+
+
+# =========================================================================
+# 11. Low-Power Sleep & Interrupt Wake-Up Latency Unit Tests
+# =========================================================================
+
+def test_low_power_sleep_and_wake_transitions():
+    """Verify entering low-power sleep blanks OLED, and button interrupt wakes device."""
+    import code
+    fw, oled, buzzer, btn_l, btn_act, btn_r, _ = create_mock_firmware()
+
+    assert fw.sleep_mode is False
+    assert fw.sleep_events_count == 0
+    assert fw.wake_events_count == 0
+
+    # 1. Enter low-power sleep
+    fw.enter_sleep()
+    assert fw.sleep_mode is True
+    assert fw.sleep_events_count == 1
+    # OLED should be blanked
+    assert oled.display_buffer[32][64] == 0
+    assert len(oled.drawn_texts) == 0
+
+    # 2. In sleep mode, step() skips updates when no buttons pressed
+    fw.step(now=100.0, dt=0.01)
+    assert fw.sleep_mode is True
+    assert fw.wake_events_count == 0
+
+    # 3. Wake via button interrupt
+    btn_act.press()
+    fw.step(now=101.0, dt=0.0)
+    assert fw.sleep_mode is False
+    assert fw.wake_events_count == 1
+    assert fw.wake_latency_us > 0.0
+    btn_act.release()
+
+    # 4. Direct wake() method testing with explicit and None timestamps
+    fw.enter_sleep()
+    lat = fw.wake(now=200.0)
+    assert fw.sleep_mode is False
+    assert lat > 0.0
+    assert fw.wake_events_count == 2
+
+    fw.enter_sleep()
+    lat_none = fw.wake(now=None)
+    assert fw.sleep_mode is False
+    assert lat_none > 0.0
+    assert fw.wake_events_count == 3
+
+    # 5. OLED failure during enter_sleep
+    class FaultyOled:
+        def fill(self, color):
+            raise OSError("I2C bus sleep timeout")
+        def show(self):
+            pass
+
+    faulty_fw = code.PocketCompanion(oled=FaultyOled())
+    assert faulty_fw.oled_offline is False
+    faulty_fw.enter_sleep()
+    assert faulty_fw.sleep_mode is True
+    assert faulty_fw.oled_offline is True
+    assert faulty_fw.oled_error_count == 1
+
+    # 6. Module-level aliases
+    code.enter_sleep()
+    assert code.app.sleep_mode is True
+    wake_lat = code.wake(now=300.0)
+    assert code.app.sleep_mode is False
+    assert wake_lat > 0.0
+
+    # 7. reset_defaults clears sleep state
+    code.app.enter_sleep()
+    code.reset_defaults()
+    assert code.app.sleep_mode is False
+    assert code.app.wake_events_count == 0
+

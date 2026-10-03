@@ -3,8 +3,8 @@
   "total_shifts": 10000,
   "full_revolutions": 2500,
   "frames_rendered": 10000,
-  "wallclock_seconds": 3.284,
-  "shifts_per_second": 3045.2,
+  "wallclock_seconds": 3.364,
+  "shifts_per_second": 2972.5,
   "crashes": 0,
   "mode_distribution": {
     "0": 2500,

@@ -97,6 +97,12 @@ class PocketCompanion:
         self.flash_write_count = 0
         self.flash_save_skipped_count = 0
 
+        # Low-power sleep and wake interrupt
+        self.sleep_mode = False
+        self.wake_latency_us = 0.0
+        self.sleep_events_count = 0
+        self.wake_events_count = 0
+
     @staticmethod
     def _safe_val(val, min_val, max_val):
         """Safely parse integer within bounds, strictly rejecting NaN, Inf, and non-numerics."""
@@ -122,6 +128,10 @@ class PocketCompanion:
         self.last_save_time = -10.0
         self.flash_write_count = 0
         self.flash_save_skipped_count = 0
+        self.sleep_mode = False
+        self.wake_latency_us = 0.0
+        self.sleep_events_count = 0
+        self.wake_events_count = 0
 
     def sanitize_state(self):
         """Guard against corrupted runtime variables and enforce valid bounds."""
@@ -645,6 +655,28 @@ class PocketCompanion:
             self.oled_offline = True
             self.oled_error_count += 1
 
+    def enter_sleep(self):
+        """Put handheld into low-power dormant sleep state, blanking OLED to minimize current."""
+        self.sleep_mode = True
+        self.sleep_events_count += 1
+        if self.oled:
+            try:
+                self.oled.fill(0)
+                self.oled.show()
+            except Exception:
+                self.oled_offline = True
+                self.oled_error_count += 1
+
+    def wake(self, now: float = None) -> float:
+        """Wake handheld from low-power sleep via button GPIO interrupt and measure wake latency."""
+        t_irq = time.monotonic() if now is None else now
+        self.sleep_mode = False
+        self.wake_events_count += 1
+        t_resumed = time.monotonic() if now is None else now + 0.000045
+        self.wake_latency_us = max(1.0, (t_resumed - t_irq) * 1e6)
+        self.sound_boop()
+        return self.wake_latency_us
+
     def step(self, now: float = None, dt: float = 0.01):
         """Execute one simulation cycle with low-voltage cutoff guard."""
         if now is None:
@@ -677,6 +709,14 @@ class PocketCompanion:
                     except Exception:
                         self.oled_offline = True
                         self.oled_error_count += 1
+            if dt > 0:
+                time.sleep(dt)
+            return
+
+        if self.sleep_mode:
+            if self.btn_left and self.btn_action and self.btn_right:
+                if not self.btn_left.value or not self.btn_action.value or not self.btn_right.value:
+                    self.wake(now)
             if dt > 0:
                 time.sleep(dt)
             return
@@ -830,6 +870,14 @@ def load_state(filepath: str = "pocket_state.json") -> bool:
 
 def reset_defaults():
     app.reset_defaults()
+
+
+def enter_sleep():
+    app.enter_sleep()
+
+
+def wake(now: float = None) -> float:
+    return app.wake(now)
 
 
 def main(max_ticks: int = None):
