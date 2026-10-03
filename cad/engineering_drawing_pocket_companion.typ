@@ -293,15 +293,15 @@
 #text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[9. IEC 60529 IP54 Dust & Splash Ingress Protection Sealing Audit]
 
 #table(
-  columns: (1.6fr, 1.1fr, 2.3fr, 1.2fr),
-  inset: 3.5pt,
+  columns: (1.5fr, 1.2fr, 2.2fr, 1.1fr),
+  inset: 2.5pt,
   stroke: 0.5pt + rgb("#cbd5e1"),
   fill: (col, row) => if row == 0 { rgb("#f1f5f9") } else { none },
   align: (left, center, left, center),
-  [#text(7.5pt, weight: "bold")[Sealing Subsystem]],
-  [#text(7.5pt, weight: "bold")[Nominal Geometry]],
-  [#text(7.5pt, weight: "bold")[Hydrodynamic / Particulate Barrier Physics]],
-  [#text(7.5pt, weight: "bold")[Ingress Status]],
+  [#text(7pt, weight: "bold")[Sealing Subsystem]],
+  [#text(7pt, weight: "bold")[Nominal Geometry]],
+  [#text(7pt, weight: "bold")[Hydrodynamic / Particulate Barrier Physics]],
+  [#text(7pt, weight: "bold")[Ingress Status]],
   [Tongue-in-Groove Labyrinth], [Tongue $0.80$ mm, Groove $1.10$ mm], [Triple $90^degree$ bends ($K = 5.1$); dynamic pressure drop $>99.2\%$], [PASS (IPX4 Splash)],
   [Labyrinth Air Gap Clearance], [$0.15$ mm per side], [Talcum dust tortuous path; rejects Dia $1.0$ mm wire probe (IEC)], [PASS (IP5X Dust)],
   [Tongue Vertical Height], [$1.60$ mm tongue, $1.85$ mm groove], [Vertical labyrinth step prevents direct line-of-sight fluid entry], [PASS (Zero Seep)],
@@ -313,49 +313,13 @@
   [Capillary Air Gap Margin], [$0.40$ mm minimum], [Washburn capillary pressure break prevents meniscus wick], [PASS (Anti-Wicking)]
 )
 
-#v(2pt)
+#v(1pt)
 
 // --- Section 10: IP54 Cross-Sectional Ingress Protection Baffle Diagram ---
-#text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[10. IP54 Ingress Protection Cross-Sectional Baffle Engineering Proof]
+#text(9pt, weight: "bold", fill: rgb("#0369a1"))[10. IP54 Ingress Protection Cross-Sectional Baffle Engineering Proof]
 
 #align(center)[
-  #image("renders/ip54_ingress_protection_analysis.png", width: 94%) \
-  #text(7pt, weight: "bold")[Figure 6: High-Resolution IP54 Cross-Sectional Labyrinth Baffle, Umbrella Skirt & Hydro-Acoustic Mesh Diagram ($1920 times 1080$)] \
-  #text(6.5pt, fill: rgb("#64748b"))[Panel 1: 0.8mm Tongue Labyrinth • Panel 2: Hydrodynamic Loss • Panel 3: Button Umbrella Skirt • Panel 4: Chevron Baffle • Panel 5: ePTFE WEP • Panel 6: Audit Matrix]
-]
-
-#pagebreak()
-
-// --- Page 5: Thermal Expansion & Shrinkage Tolerance Stack-Up ---
-#text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[11. ISO 286 / IEC 60068-2-14 Thermal Expansion & Joint Tolerance Stack-Up Audit]
-
-#table(
-  columns: (1.6fr, 1.1fr, 2.3fr, 1.2fr),
-  inset: 3.5pt,
-  stroke: 0.5pt + rgb("#cbd5e1"),
-  fill: (col, row) => if row == 0 { rgb("#f1f5f9") } else { none },
-  align: (left, center, left, center),
-  [#text(7.5pt, weight: "bold")[Mating Joint / Interface]],
-  [#text(7.5pt, weight: "bold")[Nominal Gap]],
-  [#text(7.5pt, weight: "bold")[Differential CTE Mechanics ($Delta T = 80"K", -20^degree"C" "to" +60^degree"C"$)]],
-  [#text(7.5pt, weight: "bold")[Clearance Status]],
-  [PCB Mount Diagonal Span], [$200.0$ $mu$m radial], [$Delta alpha = 46$ ppm/K ($53.25$ mm diag); max shift $plus.minus 98.0$ $mu$m], [PASS ($102.0$ $mu$m gap)],
-  [PCB Mount X-Axis Span], [$200.0$ $mu$m radial], [$Delta alpha = 46$ ppm/K ($44.00$ mm span); max shift $plus.minus 81.0$ $mu$m], [PASS ($119.0$ $mu$m gap)],
-  [Button Guide Radial Bore], [$250.0$ $mu$m radial], [Matched PETG $alpha = 60$ ppm/K; differential drift $<0.6$ $mu$m], [PASS ($249.4$ $mu$m gap)],
-  [Button Plunger Pre-Travel], [$250.0$ $mu$m stroke], [Differential height expansion ($10.2$ mm vs $7.5$ mm); shift $plus.minus 6.5$ $mu$m], [PASS ($243.5$ $mu$m stroke)],
-  [Snap-Fit Latch Undercut], [$300.0$ $mu$m bead], [Modulus scaling: $E(-20)=2550$ MPa, $E(+60)=1650$ MPa; $"FoS" >= 2.86$], [PASS (Zero Fracture)],
-  [Labyrinth Seal Air Gap], [$150.0$ $mu$m per side], [Symmetric perimeter breathing; gap contraction $<3.6$ $mu$m], [PASS ($146.4$ $mu$m gap)],
-  [LiPo Battery Cavity Length], [$1500.0$ $mu$m float], [Pouch volumetric thermal swelling jacket; margin $>1.4$ mm], [PASS (Zero Pinch)],
-  [USB-C Receptacle Port], [$800.0$ $mu$m chamfer], [Metal plug vs chassis thermal expansion; clearance $>785.0$ $mu$m], [PASS (Deep Seating)]
-)
-
-#v(2pt)
-
-// --- Section 12: Thermal Tolerance Stack-Up Diagram Proof ---
-#text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[12. Thermal Expansion & Shrinkage Stack-Up Engineering Proof]
-
-#align(center)[
-  #image("renders/thermal_tolerance_stackup.png", width: 94%) \
-  #text(7pt, weight: "bold")[Figure 7: High-Resolution Thermal Expansion Kinematics, Screw Alignment & Clearance Stack-Up Map ($1920 times 1080$)] \
-  #text(6.5pt, fill: rgb("#64748b"))[Panel 1: Differential CTE • Panel 2: Screw Alignment Stack-Up • Panel 3: Button Guide Invariance • Panel 4: Snap-Fit Yield Margin • Panel 5: Pre-Travel • Panel 6: Audit Matrix]
+  #image("renders/ip54_ingress_protection_analysis.png", width: 72%) \
+  #text(6.5pt, weight: "bold")[Figure 6: High-Resolution IP54 Cross-Sectional Labyrinth Baffle, Umbrella Skirt & Hydro-Acoustic Mesh Diagram ($1920 times 1080$)] \
+  #text(6pt, fill: rgb("#64748b"))[Panel 1: 0.8mm Tongue Labyrinth • Panel 2: Hydrodynamic Loss • Panel 3: Button Umbrella Skirt • Panel 4: Chevron Baffle • Panel 5: ePTFE WEP • Panel 6: Audit Matrix]
 ]
