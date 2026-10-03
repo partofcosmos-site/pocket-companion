@@ -1,8 +1,8 @@
 {
   "status": "PASSED",
   "total_cycles": 25000,
-  "wallclock_seconds": 2.025,
-  "fps": 12347.9,
+  "wallclock_seconds": 4.934,
+  "fps": 5066.8,
   "crashes": 0,
   "battery_drops_injected": 13,
   "i2c_nacks_injected": 13,
