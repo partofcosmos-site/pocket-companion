@@ -243,7 +243,7 @@
 #text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[6. Exploded Assembly Verification & Layer Breakdown]
 
 #align(center)[
-  #image("renders/exploded_view.png", width: 68%) \
+  #image("renders/exploded_view.png", width: 58%) \
   #text(7pt, weight: "bold")[Figure 4: Exploded Multi-Tier Hardware Assembly ($1920 times 1080$ High-Resolution Projection)] \
   #text(6.5pt, fill: rgb("#64748b"))[Tier 1: Base Shell • Tier 2: LiPo Battery & TP4056 • Tier 3: Main PCB • Tier 4: Lid Bezel • Tier 5: 3x Buttons • Tier 6: M2 Fasteners]
 ]
