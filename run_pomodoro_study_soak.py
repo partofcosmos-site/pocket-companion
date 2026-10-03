@@ -239,7 +239,7 @@ def run_pomodoro_study_soak(total_study_intervals: int = 50) -> Dict[str, Any]:
         "baseline_heap_kb": round(baseline_mem / 1024.0, 2),
         "peak_heap_kb": round(peak_mem / 1024.0, 2),
         "final_delta_kb": round(delta_mem_kb, 2),
-        "zero_memory_leak": delta_mem_kb < 600.0,
+        "zero_memory_leak": delta_mem_kb < 50.0,
     }
 
     os.makedirs("reports", exist_ok=True)
