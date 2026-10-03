@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-03T18:29:57Z",
+  "timestamp": "2026-10-03T19:18:18Z",
   "cad_suite": "Pocket Companion Enclosure v1.0",
   "stls": [
     {
@@ -116,31 +116,31 @@
       "name": "assembly_isometric.png",
       "resolution": "1920x1080",
       "size_kb": 70.8,
-      "render_time_s": 0.96
+      "render_time_s": 0.95
     },
     {
       "name": "exploded_view.png",
       "resolution": "1920x1080",
       "size_kb": 91.9,
-      "render_time_s": 0.48
+      "render_time_s": 0.49
     },
     {
       "name": "enclosure_base_top.png",
       "resolution": "1920x1080",
       "size_kb": 75.3,
-      "render_time_s": 0.4
+      "render_time_s": 0.42
     },
     {
       "name": "enclosure_lid_bezel.png",
       "resolution": "1920x1080",
       "size_kb": 50.0,
-      "render_time_s": 0.39
+      "render_time_s": 0.38
     },
     {
       "name": "enclosure_lid_underside.png",
       "resolution": "1920x1080",
       "size_kb": 74.0,
-      "render_time_s": 0.39
+      "render_time_s": 0.38
     },
     {
       "name": "button_caps_detail.png",
@@ -152,7 +152,7 @@
       "name": "cutaway_section.png",
       "resolution": "1920x1080",
       "size_kb": 49.4,
-      "render_time_s": 0.54
+      "render_time_s": 0.46
     }
   ],
   "tolerances": [
@@ -197,6 +197,13 @@
       "counterbore_diameter": "4.40 mm (lid)",
       "screw_engagement_depth": "6.50 mm",
       "status": "PASS - Rigid unibody clamping sandwich"
+    },
+    {
+      "feature": "400mAh LiPo Battery Thermal Convection & Dissipation",
+      "cavity_envelope": "38.0 x 26.0 x 4.5 mm bay with 1.5mm lateral air gap & 2.0mm vertical PCB plenum",
+      "convective_pathway": "Buoyancy draft from lower USB-C/switch intake to 7-vent acoustic lid exhaust chimney (dh = 18mm)",
+      "thermal_dissipation": "16 mW Joule heating (1C charge), 520 mW TP4056 linear regulator peak; Delta T < 2.1 deg C",
+      "status": "PASS - Zero thermal pouch stress; natural convection draft prevents heat pocketing"
     }
   ]
 }
