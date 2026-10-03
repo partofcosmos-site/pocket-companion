@@ -13,10 +13,10 @@
     "zero_jitter_verified": true
   },
   "total_sim_seconds": 79200.0,
-  "wallclock_seconds": 5.487,
-  "speedup_factor": 14435.4,
+  "wallclock_seconds": 10.465,
+  "speedup_factor": 7568.4,
   "baseline_heap_kb": 0.0,
-  "peak_heap_kb": 20.34,
-  "final_delta_kb": 14.47,
+  "peak_heap_kb": 21.22,
+  "final_delta_kb": 14.61,
   "zero_memory_leak": true
 }
