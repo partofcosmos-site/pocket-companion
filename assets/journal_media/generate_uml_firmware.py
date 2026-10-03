@@ -7,7 +7,7 @@ Target: 1920x1080 publication-grade system architecture & UML 2.5 state machine 
 import os
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from matplotlib.patches import FancyBboxPatch, Rectangle, Circle, Polygon
+from matplotlib.patches import FancyBboxPatch, Rectangle, Circle
 
 def generate_state_machine_diagram(output_path):
     width_px, height_px = 1920, 1080
@@ -69,47 +69,47 @@ def generate_state_machine_diagram(output_path):
         rect_divider = Rectangle((x, y + h - head_h), w, 4, facecolor=color_theme['header'], edgecolor='none')
         ax.add_patch(rect_divider)
         
-        badge_w = 38
+        badge_w = 36
         sbadge = FancyBboxPatch((x + 8, y + h - head_h + 6), badge_w, 20, boxstyle="round,pad=0,rounding_size=3",
                                 facecolor='#000000', edgecolor=color_theme['border'], linewidth=0.8, alpha=0.6)
         ax.add_patch(sbadge)
-        ax.text(x + 27, y + h - head_h + 16, f"S{state_num}", color=color_theme['text_acc'],
+        ax.text(x + 26, y + h - head_h + 16, f"S{state_num}", color=color_theme['text_acc'],
                 fontsize=8, fontweight='black', fontfamily='monospace', ha='center', va='center')
 
         ax.text(x + badge_w + 16, y + h - head_h + 16, name, color='#FFFFFF',
-                fontsize=10.5, fontweight='bold', fontfamily='DejaVu Sans', va='center')
+                fontsize=10.2, fontweight='bold', fontfamily='DejaVu Sans', va='center')
 
         ax.plot([x, x + w], [y + h - head_h, y + h - head_h], color=color_theme['border'], linewidth=1.2)
 
         cur_y = y + h - head_h - 15
-        line_spacing = 16
+        line_spacing = 16.5
 
         for entry in entries:
-            ax.text(x + 10, cur_y, "entry /", color='#38BDF8', fontsize=8, fontweight='bold', fontfamily='monospace')
-            ax.text(x + 65, cur_y, entry, color='#E2E8F0', fontsize=8, fontfamily='monospace')
+            ax.text(x + 10, cur_y, "entry /", color='#38BDF8', fontsize=7.8, fontweight='bold', fontfamily='monospace')
+            ax.text(x + 65, cur_y, entry, color='#E2E8F0', fontsize=7.8, fontfamily='monospace')
             cur_y -= line_spacing
 
         for do_item in does:
-            ax.text(x + 10, cur_y, "do /", color='#34D399', fontsize=8, fontweight='bold', fontfamily='monospace')
-            ax.text(x + 65, cur_y, do_item, color='#CBD5E1', fontsize=8, fontfamily='monospace')
+            ax.text(x + 10, cur_y, "do /", color='#34D399', fontsize=7.8, fontweight='bold', fontfamily='monospace')
+            ax.text(x + 65, cur_y, do_item, color='#CBD5E1', fontsize=7.8, fontfamily='monospace')
             cur_y -= line_spacing
 
         if on_events:
             for on_lbl, on_act in on_events:
-                ax.text(x + 10, cur_y, on_lbl, color='#F59E0B', fontsize=8, fontweight='bold', fontfamily='monospace')
-                ax.text(x + 65, cur_y, on_act, color='#E2E8F0', fontsize=8, fontfamily='monospace')
+                ax.text(x + 10, cur_y, on_lbl, color='#F59E0B', fontsize=7.8, fontweight='bold', fontfamily='monospace')
+                ax.text(x + 68, cur_y, on_act, color='#E2E8F0', fontsize=7.8, fontfamily='monospace')
                 cur_y -= line_spacing
 
         for exit_item in exits:
-            ax.text(x + 10, cur_y, "exit /", color='#F87171', fontsize=8, fontweight='bold', fontfamily='monospace')
-            ax.text(x + 65, cur_y, exit_item, color='#94A3B8', fontsize=8, fontfamily='monospace')
+            ax.text(x + 10, cur_y, "exit /", color='#F87171', fontsize=7.8, fontweight='bold', fontfamily='monospace')
+            ax.text(x + 65, cur_y, exit_item, color='#94A3B8', fontsize=7.8, fontfamily='monospace')
             cur_y -= line_spacing
 
     # -------------------------------------------------------------
     # 3. TRANSITION ARROW HELPER
     # -------------------------------------------------------------
-    def draw_transition(p_start, p_end, label, sublabel=None, rad=0.0, col='#F59E0B', lw=1.8,
-                        label_pos=(0, 0)):
+    def draw_transition(p_start, p_end, lines, rad=0.0, col='#F59E0B', lw=1.8,
+                        label_pos=(0, 0), font_size=7.6):
         conn = f"arc3,rad={rad}" if rad != 0.0 else "arc3,rad=0.0"
         arrow = patches.FancyArrowPatch(p_start, p_end,
                                         connectionstyle=conn,
@@ -120,14 +120,11 @@ def generate_state_machine_diagram(output_path):
         ax.add_patch(arrow)
 
         lx, ly = label_pos
-        ax.text(lx, ly, label, color='#F8FAFC', fontsize=8.0, fontweight='bold',
+        full_text = "\n".join(lines)
+        ax.text(lx, ly, full_text, color='#F8FAFC', fontsize=font_size, fontweight='bold',
                 fontfamily='monospace', ha='center', va='center',
-                bbox=dict(boxstyle="round,pad=0.25,rounding_size=3",
-                          facecolor='#0B0F19', edgecolor=col, linewidth=1.0, alpha=0.95))
-        
-        if sublabel:
-            ax.text(lx, ly - 12, sublabel, color='#94A3B8', fontsize=7.2,
-                    fontfamily='monospace', ha='center', va='center')
+                bbox=dict(boxstyle="round,pad=0.22,rounding_size=3",
+                          facecolor='#080C14', edgecolor=col, linewidth=1.0, alpha=0.96))
 
     THEMES = {
         'purple': {'header': '#4C1D95', 'border': '#8B5CF6', 'text_acc': '#C4B5FD'},
@@ -141,38 +138,38 @@ def generate_state_machine_diagram(output_path):
     }
 
     # -------------------------------------------------------------
-    # 4. STATE LAYOUT
+    # 4. STATE LAYOUT & SPACING
     # -------------------------------------------------------------
-    # TOP ROW: BOOT PIPELINE (Y = 825)
-    # Initial pseudostate
-    init_x, init_y = 55, 885
-    init_circle = Circle((init_x, init_y), 12, facecolor='#38BDF8', edgecolor='#0284C7', linewidth=2)
+    # TOP ROW: BOOT PIPELINE (Y = 800)
+    init_x, init_y = 35, 870
+    init_circle = Circle((init_x, init_y), 11, facecolor='#38BDF8', edgecolor='#0284C7', linewidth=2)
     ax.add_patch(init_circle)
-    ax.text(init_x, init_y - 22, "Power On", color='#38BDF8', fontsize=8, fontweight='bold', ha='center', va='top')
+    ax.text(init_x, init_y - 20, "Power On", color='#38BDF8', fontsize=7.8, fontweight='bold', ha='center', va='top')
 
-    # S0: BOOT
-    s0_x, s0_y, s0_w, s0_h = 135, 820, 245, 128
+    # S0: BOOT (X: 85 .. 300, W: 215)
+    s0_x, s0_y, s0_w, s0_h = 85, 800, 215, 140
     draw_uml_state(s0_x, s0_y, s0_w, s0_h, "BOOT", 0, THEMES['purple'],
                    entries=["xosc_init_133mhz()", "check_vsys_rails()"],
                    does=["load_timer_ticks_us()", "verify_nvm_partition()"],
                    exits=["release_gpio_isolation()"])
 
-    # S1: INIT_HARDWARE
-    s1_x, s1_y, s1_w, s1_h = 475, 820, 275, 128
+    # S1: INIT_HARDWARE (X: 430 .. 680, W: 250) - Gap S0..S1 = 130px
+    s1_x, s1_y, s1_w, s1_h = 430, 800, 250, 140
     draw_uml_state(s1_x, s1_y, s1_w, s1_h, "INIT_HARDWARE", 1, THEMES['blue'],
                    entries=["gpio_pullups_init(GP2,3,4)", "i2c_bus_init(400kHz)"],
                    does=["ssd1306_reset_sequence()", "buzzer_pwm_init(GP5)"],
                    exits=["adc_read_battery_vbat()"])
 
-    # S2: SPLASH_ANIMATION
-    s2_x, s2_y, s2_w, s2_h = 845, 820, 275, 128
+    # S2: SPLASH_ANIMATION (X: 805 .. 1055, W: 250) - Gap S1..S2 = 125px
+    s2_x, s2_y, s2_w, s2_h = 805, 800, 250, 140
     draw_uml_state(s2_x, s2_y, s2_w, s2_h, "SPLASH_ANIMATION", 2, THEMES['cyan'],
                    entries=["oled_show_logo(HACK_CLUB)", "buzzer_chime(1046Hz, 80ms)"],
                    does=["fade_in_framebuffer()", "seed_prng_with_adc()"],
                    exits=["clear_oled_framebuffer()"])
 
-    # MIDDLE ROW (LEFT): S3 IDLE_PET_LOOP (Central Hub)
-    s3_x, s3_y, s3_w, s3_h = 85, 415, 395, 275
+    # COLUMN 1 (LEFT): S3 IDLE_PET_LOOP & S7 SLEEP_TIMEOUT
+    # S3: IDLE_PET_LOOP (X: 65 .. 455, W: 390, Y: 435 .. 700, H: 265)
+    s3_x, s3_y, s3_w, s3_h = 65, 435, 390, 265
     draw_uml_state(s3_x, s3_y, s3_w, s3_h, "IDLE_PET_LOOP", 3, THEMES['emerald'],
                    entries=["init_pet_stats(hunger, happy)", "reset_inactivity_timer()"],
                    does=["draw_pixel_face()", "render_status_bars()", "run_3s_eye_blink()", "decay_pet_stats(0.05/s)"],
@@ -182,101 +179,101 @@ def generate_state_machine_diagram(output_path):
                        ("on BTN_R /", "play_pet() [happy += 10]")
                    ])
 
-    # BOTTOM ROW (LEFT): S7 SLEEP_TIMEOUT
-    s7_x, s7_y, s7_w, s7_h = 85, 155, 395, 160
+    # S7: SLEEP_TIMEOUT (X: 65 .. 455, W: 390, Y: 135 .. 305, H: 170)
+    s7_x, s7_y, s7_w, s7_h = 65, 135, 390, 170
     draw_uml_state(s7_x, s7_y, s7_w, s7_h, "SLEEP_TIMEOUT", 7, THEMES['slate'],
                    entries=["ssd1306_sleep_cmd(0xAE)", "disable_pwm_channels()"],
                    does=["rp2040_light_sleep()", "enable_gpio_irq_wake()"],
                    exits=["ssd1306_wake_cmd(0xAF)", "restore_clock_pll()"])
 
-    # MIDDLE ROW (CENTER-RIGHT): S4, S5, S6 REACTION GAME LOOP
-    # S4: REACTION_GAME_COUNTDOWN
-    s4_x, s4_y, s4_w, s4_h = 585, 560, 360, 155
+    # COLUMN 2 (CENTER): REACTION GAME LOOP S4, S5, S6 (X: 580 .. 940, W: 360)
+    # S4: REACTION_GAME_COUNTDOWN (Y: 575 .. 735, H: 160)
+    s4_x, s4_y, s4_w, s4_h = 580, 575, 360, 160
     draw_uml_state(s4_x, s4_y, s4_w, s4_h, "REACTION_GAME_COUNTDOWN", 4, THEMES['amber'],
                    entries=["oled_print('READY...')", "delay = random(1.5, 3.5s)"],
                    does=["start_jitter_countdown()", "poll_early_inputs()"],
                    exits=["set_stimulus_timestamp_t0()"],
                    on_events=[
-                       ("on BTN_ACTION /", "flag_false_start_penalty()")
+                       ("on BTN /", "flag_false_start_penalty()")
                    ])
 
-    # S5: REACTION_WAIT_INPUT
-    s5_x, s5_y, s5_w, s5_h = 585, 345, 360, 165
+    # S5: REACTION_WAIT_INPUT (Y: 345 .. 520, H: 175)
+    s5_x, s5_y, s5_w, s5_h = 580, 345, 360, 175
     draw_uml_state(s5_x, s5_y, s5_w, s5_h, "REACTION_WAIT_INPUT", 5, THEMES['rose'],
                    entries=["buzzer_pwm(2.4kHz, 80ms)", "oled_invert_display()", "t_stimulus = monotonic_ns()"],
                    does=["fast_poll_gpio3_falling()", "track_reaction_timeout(2.0s)"],
                    exits=["t_reaction = monotonic_ns()", "restore_oled_normal()"])
 
-    # S6: RESULT_DISPLAY
-    s6_x, s6_y, s6_w, s6_h = 585, 145, 360, 155
+    # S6: RESULT_DISPLAY (Y: 130 .. 290, H: 160)
+    s6_x, s6_y, s6_w, s6_h = 580, 130, 360, 160
     draw_uml_state(s6_x, s6_y, s6_w, s6_h, "RESULT_DISPLAY", 6, THEMES['indigo'],
                    entries=["dt = (t_react - t_stim)/1e6", "grade = evaluate_reflex(dt)"],
                    does=["oled_show_score(dt, grade)", "buzzer_fanfare(grade)"],
                    exits=["update_leaderboard(dt)", "save_highscore_nvm()"])
 
     # -------------------------------------------------------------
-    # 5. TRANSITIONS (Zero Overlaps, Clean Positioning)
+    # 5. TRANSITION ROUTING & COMPACT LABELS
     # -------------------------------------------------------------
     # Initial -> BOOT
-    draw_transition((init_x + 12, init_y), (s0_x, init_y),
-                    "[VBUS_OK || VBAT > 3.4V]", col='#38BDF8',
-                    label_pos=((init_x + 12 + s0_x)/2, init_y + 16))
+    draw_transition((init_x + 11, init_y), (s0_x, init_y),
+                    ["[Power Applied]"], col='#38BDF8',
+                    label_pos=((init_x + 11 + s0_x)/2, init_y + 18), font_size=7.2)
 
-    # BOOT -> INIT_HARDWARE
-    draw_transition((s0_x + s0_w, s0_y + 64), (s1_x, s1_y + 64),
-                    "[clocks_locked] / init_buses()", col='#8B5CF6',
-                    label_pos=((s0_x + s0_w + s1_x)/2, s0_y + 80))
+    # BOOT -> INIT_HARDWARE (in the 130px gap)
+    draw_transition((s0_x + s0_w, s0_y + 70), (s1_x, s1_y + 70),
+                    ["[clocks_locked]", "/ init_buses()"], col='#8B5CF6',
+                    label_pos=((s0_x + s0_w + s1_x)/2, s0_y + 70))
 
-    # INIT_HARDWARE -> SPLASH_ANIMATION
-    draw_transition((s1_x + s1_w, s1_y + 64), (s2_x, s2_y + 64),
-                    "[I2C_ACK(0x3C)] / start_timer()", col='#3B82F6',
-                    label_pos=((s1_x + s1_w + s2_x)/2, s1_y + 80))
+    # INIT_HARDWARE -> SPLASH_ANIMATION (in the 125px gap)
+    draw_transition((s1_x + s1_w, s1_y + 70), (s2_x, s2_y + 70),
+                    ["[I2C_ACK(0x3C)]", "/ start_timer()"], col='#3B82F6',
+                    label_pos=((s1_x + s1_w + s2_x)/2, s1_y + 70))
 
     # SPLASH_ANIMATION -> IDLE_PET_LOOP (Down and left curve into S3 top)
-    draw_transition((s2_x + 40, s2_y), (s3_x + s3_w - 60, s3_y + s3_h),
-                    "AFTER(2000 ms) / init_virtual_pet()", rad=-0.18, col='#06B6D4',
-                    label_pos=(s3_x + s3_w - 20, s3_y + s3_h + 40))
+    draw_transition((s2_x + 30, s2_y), (s3_x + s3_w - 70, s3_y + s3_h),
+                    ["AFTER(2000 ms)", "/ init_virtual_pet()"], rad=-0.20, col='#06B6D4',
+                    label_pos=(s3_x + s3_w + 25, s3_y + s3_h + 35))
 
-    # S3 -> S4: BTN_ACTION Hold
-    draw_transition((s3_x + s3_w, s3_y + 180), (s4_x, s4_y + 70),
-                    "BTN_ACTION_HOLD(1.5s) / seed_reflex_game()", col='#10B981',
-                    label_pos=((s3_x + s3_w + s4_x)/2, s3_y + 195))
+    # S3 -> S4: BTN_ACTION Hold (Horizontal in 125px gap)
+    draw_transition((s3_x + s3_w, s3_y + 185), (s4_x, s4_y + 45),
+                    ["BTN_ACTION_HOLD", "/ seed_game()"], col='#10B981',
+                    label_pos=((s3_x + s3_w + s4_x)/2, s3_y + 185))
 
-    # S4 -> S5: Countdown expires
+    # S4 -> S5: Countdown expires (Straight down in gap)
     draw_transition((s4_x + s4_w/2, s4_y), (s5_x + s5_w/2, s5_y + s5_h),
-                    "TIMEOUT(jitter) / buzzer_burst_2.4khz()", col='#F59E0B',
+                    ["TIMEOUT(jitter_delay)", "/ buzzer_burst_2.4khz()"], col='#F59E0B',
                     label_pos=(s4_x + s4_w/2, (s4_y + s5_y + s5_h)/2))
 
-    # S5 -> S6: User button press reaction (Center downward arrow)
-    draw_transition((s5_x + 120, s5_y), (s6_x + 120, s6_y + s6_h),
-                    "BTN_ACTION_FALLING / calc_reaction_dt()", col='#F43F5E',
-                    label_pos=(s5_x + 120, (s5_y + s6_y + s6_h)/2))
+    # S5 -> S6: User reaction falling edge (Straight down in gap)
+    draw_transition((s5_x + 110, s5_y), (s6_x + 110, s6_y + s6_h),
+                    ["BTN_ACTION_FALLING", "/ calc_reaction_dt()"], col='#F43F5E',
+                    label_pos=(s5_x + 110, (s5_y + s6_y + s6_h)/2))
 
-    # S5 -> S6: Timeout branch (Curved arrow on right)
-    draw_transition((s5_x + s5_w, s5_y + 50), (s6_x + s6_w, s6_y + 50),
-                    "TIMEOUT(2.0s) / flag_missed()", rad=0.35, col='#EF4444',
-                    label_pos=(s5_x + s5_w + 120, (s5_y + s6_y)/2 + 50))
+    # S5 -> S6: Timeout branch (Curved arch on right)
+    draw_transition((s5_x + s5_w, s5_y + 45), (s6_x + s6_w, s6_y + 45),
+                    ["TIMEOUT(2.0s)", "/ flag_missed()"], rad=0.28, col='#EF4444',
+                    label_pos=(s5_x + s5_w + 58, (s5_y + s6_y)/2 + 45))
 
-    # S6 -> S3: Return to pet mode (Leftward arrow)
-    draw_transition((s6_x, s6_y + 70), (s3_x + s3_w, s3_y + 50),
-                    "AFTER(4000 ms) || BTN_L / return_to_pet()", rad=0.08, col='#6366F1',
-                    label_pos=((s6_x + s3_x + s3_w)/2, s6_y + 90))
+    # S6 -> S3: Return to pet mode (Up and left into S3 bottom-right)
+    draw_transition((s6_x, s6_y + 100), (s3_x + s3_w, s3_y + 35),
+                    ["AFTER(4000 ms) || BTN_L", "/ return_to_pet()"], rad=-0.12, col='#6366F1',
+                    label_pos=((s6_x + s3_x + s3_w)/2, s6_y + 125))
 
-    # S3 -> S7: Inactivity Timeout (Downward arrow)
-    draw_transition((s3_x + 120, s3_y), (s7_x + 120, s7_y + s7_h),
-                    "INACTIVITY(60.0s) / enter_light_sleep()", col='#94A3B8',
-                    label_pos=(s3_x + 120, (s3_y + s7_y + s7_h)/2 + 12))
+    # S3 -> S7: Inactivity Timeout (Straight down)
+    draw_transition((s3_x + 110, s3_y), (s7_x + 110, s7_y + s7_h),
+                    ["INACTIVITY(60.0s)", "/ enter_light_sleep()"], col='#94A3B8',
+                    label_pos=(s3_x + 110, (s3_y + s7_y + s7_h)/2))
 
-    # S7 -> S3: Wake Interrupt (Upward arrow)
+    # S7 -> S3: Wake Interrupt (Straight up)
     draw_transition((s7_x + 280, s7_y + s7_h), (s3_x + 280, s3_y),
-                    "EDGE(BTN_ANY) / wake_irq(), restore_display()", col='#38BDF8',
-                    label_pos=(s7_x + 280, (s3_y + s7_y + s7_h)/2 - 12))
+                    ["EDGE(BTN_ANY)", "/ wake_irq(), restore_oled()"], col='#38BDF8',
+                    label_pos=(s7_x + 280, (s3_y + s7_y + s7_h)/2))
 
     # -------------------------------------------------------------
-    # 6. RIGHT SPECIFICATION PANELS (Width 740 px)
+    # 6. RIGHT SPECIFICATION PANELS (Width 785 px, X: 1090 .. 1875)
     # -------------------------------------------------------------
     # Panel 1: Hardware GPIO Matrix & Peripheral Assignment (Top Right)
-    p1_x, p1_y, p1_w, p1_h = 1145, 530, 745, 418
+    p1_x, p1_y, p1_w, p1_h = 1090, 520, 785, 420
     p1_card = FancyBboxPatch((p1_x, p1_y), p1_w, p1_h, boxstyle="round,pad=0,rounding_size=6",
                              facecolor='#111827', edgecolor='#1F2937', linewidth=1.5)
     ax.add_patch(p1_card)
@@ -313,22 +310,22 @@ def generate_state_machine_diagram(output_path):
         f_weight = 'bold' if is_head else 'normal'
         ax.text(p1_x + 20, t_y - 1, row[0], color=c0_col, fontsize=8.2, fontweight='bold', fontfamily='monospace')
         ax.text(p1_x + 130, t_y - 1, row[1], color=c1_col, fontsize=8.2, fontweight=f_weight, fontfamily='monospace')
-        ax.text(p1_x + 365, t_y - 1, row[2], color=c2_col, fontsize=8.0, fontfamily='monospace')
+        ax.text(p1_x + 380, t_y - 1, row[2], color=c2_col, fontsize=8.0, fontfamily='monospace')
         ax.text(p1_x + p1_w - 25, t_y - 1, row[3], color=c3_col, fontsize=8.0, fontweight='bold',
                 fontfamily='monospace', ha='right')
         t_y -= 38
 
-    # Performance & Timing benchmarks inside Panel 1 lower half
+    # Power Profile line inside Panel 1
     ax.plot([p1_x + 12, p1_x + p1_w - 12], [p1_y + 70, p1_y + 70], color='#1E293B', lw=1)
     ax.text(p1_x + 20, p1_y + 50, "POWER PROFILE:", color='#94A3B8', fontsize=8, fontweight='bold', fontfamily='DejaVu Sans')
-    ax.text(p1_x + 130, p1_y + 50, "Run: 28.4 mA  |  Light Sleep: 1.82 mA  |  Deep Standby: 0.28 mA",
+    ax.text(p1_x + 135, p1_y + 50, "Run: 28.4 mA  |  Light Sleep: 1.82 mA  |  Deep Standby: 0.28 mA",
             color='#34D399', fontsize=8, fontweight='bold', fontfamily='monospace')
     ax.text(p1_x + 20, p1_y + 25, "LIPO RUNTIME:", color='#94A3B8', fontsize=8, fontweight='bold', fontfamily='DejaVu Sans')
-    ax.text(p1_x + 130, p1_y + 25, "300 mAh Cell = 10.5 hrs continuous gameplay / 164 hrs sleep",
+    ax.text(p1_x + 135, p1_y + 25, "300 mAh Cell = 10.5 hrs continuous gameplay / 164 hrs sleep",
             color='#F8FAFC', fontsize=8, fontfamily='monospace')
 
     # Panel 2: Firmware Scheduling & Performance Architecture (Bottom Right)
-    p2_x, p2_y, p2_w, p2_h = 1145, 145, 745, 365
+    p2_x, p2_y, p2_w, p2_h = 1090, 130, 785, 370
     p2_card = FancyBboxPatch((p2_x, p2_y), p2_w, p2_h, boxstyle="round,pad=0,rounding_size=6",
                              facecolor='#111827', edgecolor='#1F2937', linewidth=1.5)
     ax.add_patch(p2_card)

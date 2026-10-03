@@ -215,39 +215,38 @@ def create_authentic_schematic(output_path):
 
     buttons_data = [
         ("SW2", "BTN_L", "Left", 14),
-        ("SW3", "BTN_M", "Action", 24),
-        ("SW4", "BTN_R", "Right", 34),
+        ("SW3", "BTN_M", "Action", 25),
+        ("SW4", "BTN_R", "Right", 36),
     ]
 
     for sw_ref, net, name, bx in buttons_data:
-        # Compact, authentic IEEE tactile pushbutton symbol
-        y_mid = 30
-        y_top = y_mid + 2.0   # 32.0
-        y_bot = y_mid - 2.0   # 28.0
+        # Compact, authentic switch symbol
+        top_y = 31
+        bot_y = 25
         
-        # Upper lead wire up to net flag
-        ax.plot([bx, bx], [y_top, y_top + 3.5], color=WIRE_COLOR, lw=1.5, zorder=4)
-        draw_net_flag(bx, y_top + 3.5, net, direction='right', color='#16A34A')
+        # Upper wire with net flag pointing UP/RIGHT
+        ax.plot([bx, bx], [top_y + 4.0, top_y], color=WIRE_COLOR, lw=1.5, zorder=4)
+        draw_net_flag(bx, top_y + 4.0, net, direction='right', color='#16A34A')
         
-        # Lower lead wire down to GND
-        ax.plot([bx, bx], [y_bot, y_bot - 3.0], color=WIRE_COLOR, lw=1.5, zorder=4)
-        draw_gnd(bx, y_bot - 3.0)
+        # Lower wire with GND
+        ax.plot([bx, bx], [bot_y, bot_y - 2.5], color=WIRE_COLOR, lw=1.5, zorder=4)
+        draw_gnd(bx, bot_y - 2.5)
 
         # Switch Contact Terminals (Circles)
-        ax.add_patch(Circle((bx, y_top), 0.45, facecolor=BODY_FILL, edgecolor=BODY_BORDER, lw=1.3, zorder=5))
-        ax.add_patch(Circle((bx, y_bot), 0.45, facecolor=BODY_FILL, edgecolor=BODY_BORDER, lw=1.3, zorder=5))
+        ax.add_patch(Circle((bx, top_y), 0.45, facecolor=BODY_FILL, edgecolor=BODY_BORDER, lw=1.3, zorder=5))
+        ax.add_patch(Circle((bx, bot_y), 0.45, facecolor=BODY_FILL, edgecolor=BODY_BORDER, lw=1.3, zorder=5))
         
         # Angled Contact Arm (Normally Open)
-        ax.plot([bx, bx + 1.8], [y_top - 0.3, y_mid - 0.5], color=BODY_BORDER, lw=1.6, zorder=5)
+        ax.plot([bx - 0.4, bx + 1.8], [top_y - 0.2, bot_y + 2.0], color=BODY_BORDER, lw=1.6, zorder=5)
         
-        # Pushbutton Plunger / T-Hat
-        ax.plot([bx + 1.0, bx + 2.4], [y_mid + 0.8, y_mid + 0.8], color=BODY_BORDER, lw=1.1, zorder=5)
-        ax.plot([bx + 2.4, bx + 2.4], [y_mid - 0.2, y_mid + 1.8], color=BODY_BORDER, lw=1.5, zorder=5)
+        # Pushbutton Plunger / Button Hat
+        ax.plot([bx + 0.8, bx + 2.5], [bot_y + 3.8, bot_y + 3.8], color=BODY_BORDER, lw=1.1, zorder=5)
+        ax.plot([bx + 2.5, bx + 2.5], [bot_y + 2.6, bot_y + 5.0], color=BODY_BORDER, lw=1.5, zorder=5)
 
-        # Reference designator to the left of the switch
-        ax.text(bx - 2.0, y_mid, sw_ref, color=REF_COLOR, fontsize=7.2, fontweight='bold', fontfamily='Consolas', ha='right', va='center', zorder=10)
+        # Reference designator to the left
+        ax.text(bx - 2.0, (top_y + bot_y)/2, sw_ref, color=REF_COLOR, fontsize=7.2, fontweight='bold', fontfamily='Consolas', ha='right', va='center', zorder=10)
         # Part info below GND
-        ax.text(bx, y_bot - 6.5, f"SW-TH_4P\n{name}", color='#475569', fontsize=5.2, fontfamily='Consolas', ha='center', zorder=10)
+        ax.text(bx, bot_y - 5.5, f"SW-TH_4P\n{name}", color='#475569', fontsize=5.2, fontfamily='Consolas', ha='center', zorder=10)
 
     ax.text(28, 11.5, "Internal RP2040 Pull-ups (~50kΩ) enabled | LCSC: C318884",
             color='#64748B', fontsize=5.5, fontfamily='Segoe UI', ha='center', zorder=10)

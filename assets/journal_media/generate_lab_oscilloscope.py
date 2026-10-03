@@ -57,48 +57,46 @@ def generate_oscilloscope_screen(output_path):
     header_y = screen_y + screen_h + 10
     
     # Brand and Model banner
-    ax.text(screen_x + 10, header_y + 28, "SIGLENT", color='#FFFFFF',
+    ax.text(screen_x + 12, header_y + 28, "SIGLENT", color='#FFFFFF',
             fontsize=15, fontweight='black', fontfamily='DejaVu Sans', va='center')
-    ax.text(screen_x + 100, header_y + 28, "SDS1104X-E", color='#38BDF8',
+    ax.text(screen_x + 98, header_y + 28, "SDS1104X-E", color='#38BDF8',
             fontsize=13, fontweight='bold', fontfamily='DejaVu Sans', va='center')
     ax.text(screen_x + 225, header_y + 28, "Super Phosphor Oscilloscope  100MHz  1GSa/s",
             color='#64748B', fontsize=9.5, fontfamily='DejaVu Sans', va='center')
 
     # Run / Stop Indicator Badge (Bright Red for STOPPED)
-    stop_badge = FancyBboxPatch((screen_x + 575, header_y + 14), 100, 26,
+    stop_badge = FancyBboxPatch((screen_x + 550, header_y + 14), 95, 26,
                                 boxstyle="round,pad=0,rounding_size=4",
                                 facecolor='#DC2626', edgecolor='#EF4444', linewidth=1.5)
     ax.add_patch(stop_badge)
-    ax.text(screen_x + 625, header_y + 27, "STOPPED", color='#FFFFFF',
-            fontsize=11, fontweight='black', fontfamily='DejaVu Sans', ha='center', va='center')
+    ax.text(screen_x + 597, header_y + 27, "STOPPED", color='#FFFFFF',
+            fontsize=10.5, fontweight='black', fontfamily='DejaVu Sans', ha='center', va='center')
 
     # Trigger Acquisition Mode (Trig'd in Neon Green)
-    trig_badge = FancyBboxPatch((screen_x + 685, header_y + 14), 70, 26,
+    trig_badge = FancyBboxPatch((screen_x + 655, header_y + 14), 70, 26,
                                 boxstyle="round,pad=0,rounding_size=4",
                                 facecolor='#064E3B', edgecolor='#059669', linewidth=1.2)
     ax.add_patch(trig_badge)
-    ax.text(screen_x + 720, header_y + 27, "Trig'd", color='#34D399',
-            fontsize=10.5, fontweight='bold', fontfamily='DejaVu Sans', ha='center', va='center')
+    ax.text(screen_x + 690, header_y + 27, "Trig'd", color='#34D399',
+            fontsize=10, fontweight='bold', fontfamily='DejaVu Sans', ha='center', va='center')
 
     # Sample Rate & Memory Depth
-    ax.text(screen_x + 775, header_y + 27, "1.00 MSa/s", color='#F1F5F9',
+    ax.text(screen_x + 745, header_y + 27, "1.00 MSa/s", color='#F1F5F9',
+            fontsize=10, fontweight='bold', fontfamily='monospace', va='center')
+    ax.text(screen_x + 835, header_y + 27, "14.0 Mpts", color='#94A3B8',
+            fontsize=9.2, fontfamily='monospace', va='center')
+
+    # Timebase readout & Delay
+    ax.text(screen_x + 920, header_y + 27, "H: 50.0ms/div", color='#F8FAFC',
             fontsize=10.5, fontweight='bold', fontfamily='monospace', va='center')
-    ax.text(screen_x + 865, header_y + 27, "14.0 Mpts", color='#94A3B8',
-            fontsize=9.5, fontfamily='monospace', va='center')
-    ax.text(screen_x + 945, header_y + 27, "Sin(x)/x", color='#64748B',
-            fontsize=9, fontfamily='monospace', va='center')
+    ax.text(screen_x + 1045, header_y + 27, "Delay: 0.000s", color='#94A3B8',
+            fontsize=9.2, fontfamily='monospace', va='center')
 
-    # Timebase readout
-    ax.text(screen_x + 1025, header_y + 27, "H: 50.0ms/div", color='#F8FAFC',
-            fontsize=11, fontweight='bold', fontfamily='monospace', va='center')
-    ax.text(screen_x + 1145, header_y + 27, "Delay: 0.000s", color='#94A3B8',
-            fontsize=9.5, fontfamily='monospace', va='center')
-
-    # System Timestamp & Host Status
+    # Connectivity & System Timestamp
+    ax.text(screen_x + 1165, header_y + 27, "LAN: 192.168.1.104",
+            color='#38BDF8', fontsize=8.8, fontfamily='monospace', va='center')
     ax.text(screen_x + screen_w - 12, header_y + 28, "2026-10-03  14:22:18",
-            color='#94A3B8', fontsize=9.5, fontfamily='monospace', ha='right', va='center')
-    ax.text(screen_x + screen_w - 170, header_y + 28, "USB  LAN [192.168.1.104]",
-            color='#38BDF8', fontsize=8.5, fontfamily='monospace', ha='right', va='center')
+            color='#94A3B8', fontsize=9.2, fontfamily='monospace', ha='right', va='center')
 
     # -------------------------------------------------------------
     # 3. OSCILLOSCOPE GRATICULE (14 Horizontal x 8 Vertical Divs)
@@ -106,7 +104,6 @@ def generate_oscilloscope_screen(output_path):
     grat_x, grat_y = screen_x + 36, screen_y + 68
     grat_w, grat_h = screen_w - 68, screen_h - 110
 
-    # Draw graticule outer border
     grat_border = Rectangle((grat_x, grat_y), grat_w, grat_h,
                             facecolor='none', edgecolor='#334155', linewidth=1.5)
     ax.add_patch(grat_border)
@@ -126,16 +123,15 @@ def generate_oscilloscope_screen(output_path):
         ax.plot([grat_x, grat_x + grat_w], [gy, gy], color=GRID_COLOR,
                 linestyle=':', linewidth=1.0, alpha=0.85)
 
-    # Center axes with tick marks (5 subdivisions per division = 0.2 div)
+    # Center axes with tick marks
     mid_x = grat_x + 7 * dx
     mid_y = grat_y + 4 * dy
     ax.plot([mid_x, mid_x], [grat_y, grat_y + grat_h], color=GRID_CENTER, linewidth=1.2)
     ax.plot([grat_x, grat_x + grat_w], [mid_y, mid_y], color=GRID_CENTER, linewidth=1.2)
 
-    # Subticks along center horizontal line
+    # Subticks along center axes
     for sub in np.linspace(grat_x, grat_x + grat_w, n_hdivs * 5 + 1):
         ax.plot([sub, sub], [mid_y - 3, mid_y + 3], color=GRID_TICKS, linewidth=0.8)
-    # Subticks along center vertical line
     for sub in np.linspace(grat_y, grat_y + grat_h, n_vdivs * 5 + 1):
         ax.plot([mid_x - 3, mid_x + 3], [sub, sub], color=GRID_TICKS, linewidth=0.8)
 
@@ -151,7 +147,6 @@ def generate_oscilloscope_screen(output_path):
     # -------------------------------------------------------------
     # 4. WAVEFORM CHANNELS & PHYSICS
     # -------------------------------------------------------------
-    # 14 divisions * 50 ms/div = 700 ms total displayed window
     time_pts = 14000
     t_ms = np.linspace(-350.0, 350.0, time_pts)
     x_coords = grat_x + ((t_ms - (-350.0)) / 700.0) * grat_w
@@ -164,19 +159,16 @@ def generate_oscilloscope_screen(output_path):
     np.random.seed(42)
 
     # --- CHANNEL 1: BTN_ACTION (GP3 Active-Low Input) ---
-    # Baseline ground level (0V): div 1.0 (grat_y + 1.0 * dy)
-    # 3.3V logic high: div 2.4 (grat_y + 2.4 * dy)
     ch1_gnd = grat_y + 0.8 * dy
-    ch1_vscale = dy * 0.44  # 3.3V = 1.45 dy
-    
+    ch1_vscale = dy * 0.44
     ch1_v = np.ones_like(t_ms) * 3.32
     for i, t in enumerate(t_ms):
         if t < t_x2:
             ch1_v[i] = 3.32 + np.random.normal(0, 0.012)
-        elif t < t_x2 + 0.25:  # fast falling edge slope (~250 µs)
+        elif t < t_x2 + 0.25:
             alpha = (t - t_x2) / 0.25
             ch1_v[i] = 3.32 * (1.0 - alpha) + np.random.normal(0, 0.02)
-        elif t < t_x2 + 1.2:  # contact debounce settle damped by RC
+        elif t < t_x2 + 1.2:
             t_ring = (t - (t_x2 + 0.25))
             bounce = 0.32 * np.exp(-t_ring / 0.35) * np.sin(2 * np.pi * 3.5 * t_ring)
             ch1_v[i] = max(0.01, bounce + np.random.normal(0, 0.015))
@@ -185,7 +177,6 @@ def generate_oscilloscope_screen(output_path):
     ch1_y = ch1_gnd + ch1_v * ch1_vscale
 
     # --- CHANNEL 2: BUZZER_PWM (GP5 2.4kHz Audio Tone Stimulus) ---
-    # Baseline ground level: div 2.7 (grat_y + 2.7 * dy)
     ch2_gnd = grat_y + 2.7 * dy
     ch2_vscale = dy * 0.42
     ch2_v = np.zeros_like(t_ms)
@@ -204,8 +195,6 @@ def generate_oscilloscope_screen(output_path):
     ch2_y = ch2_gnd + ch2_v * ch2_vscale
 
     # --- CHANNEL 3: I2C_SCL (GP1 400kHz OLED Clock) ---
-    # Baseline ground level: div 4.5 (grat_y + 4.5 * dy)
-    # Idle HIGH at 3.3V, pulls LOW during transactions
     ch3_gnd = grat_y + 4.5 * dy
     ch3_vscale = dy * 0.35
     ch3_v = np.ones_like(t_ms) * 3.30
@@ -225,8 +214,6 @@ def generate_oscilloscope_screen(output_path):
     ch3_y = ch3_gnd + ch3_v * ch3_vscale
 
     # --- CHANNEL 4: I2C_SDA (GP0 OLED Framebuffer Data) ---
-    # Baseline ground level: div 6.0 (grat_y + 6.0 * dy)
-    # Idle HIGH at 3.3V, data bits during frame buffer transfer
     ch4_gnd = grat_y + 6.0 * dy
     ch4_vscale = dy * 0.35
     ch4_v = np.ones_like(t_ms) * 3.30
@@ -253,14 +240,11 @@ def generate_oscilloscope_screen(output_path):
         (x_coords, ch4_y, CH4_COLOR),
     ]
     for xs, ys, col in traces:
-        # Broad bloom halo
         ax.plot(xs, ys, color=col, linewidth=4.5, alpha=0.18, solid_capstyle='round')
-        # Medium halo
         ax.plot(xs, ys, color=col, linewidth=2.4, alpha=0.48, solid_capstyle='round')
-        # Core sharp trace
         ax.plot(xs, ys, color=col, linewidth=1.1, alpha=0.98, solid_capstyle='round')
 
-    # Ground Reference Arrow Markers on left graticule edge
+    # Ground Reference Arrow Markers on left edge
     gnd_markers = [
         (ch1_gnd, CH1_COLOR, "1"),
         (ch2_gnd, CH2_COLOR, "2"),
@@ -276,7 +260,7 @@ def generate_oscilloscope_screen(output_path):
         ax.text(grat_x - 16, gy, num, color='#000000', fontsize=8, fontweight='black',
                 ha='center', va='center')
 
-    # Trigger level marker on right graticule edge (Triggering on CH2 at 1.65V)
+    # Trigger level marker on right edge
     trig_y_px = ch2_gnd + 1.65 * ch2_vscale
     trig_tag = Polygon([[grat_x + grat_w + 22, trig_y_px + 8],
                         [grat_x + grat_w + 6, trig_y_px],
@@ -305,7 +289,7 @@ def generate_oscilloscope_screen(output_path):
     ax.text(grat_x + 12, dec_y + 14, "DEC 1: I2C  [ SCL: CH3 · SDA: CH4 · 400 kbps · Address 7-bit · Hex ]",
             color=DEC_COLOR, fontsize=8.5, fontweight='bold', fontfamily='monospace')
 
-    # Clear, wide decode packets around the stimulus frame packet (-160 ms to -100 ms)
+    # Decode packets around stimulus frame (-160 ms to -100 ms)
     dec_start_x = grat_x + ((-165.0 - (-350.0)) / 700.0) * grat_w
     dec_end_x = grat_x + ((-95.0 - (-350.0)) / 700.0) * grat_w
     dec_w_total = dec_end_x - dec_start_x
@@ -363,7 +347,6 @@ def generate_oscilloscope_screen(output_path):
     ax.plot([px_x2, px_x2], [grat_y, grat_y + grat_h], color='#F59E0B',
             linestyle='--', linewidth=1.5, alpha=0.95)
 
-    # Cursor flags at top of graticule
     flag1 = FancyBboxPatch((px_x1 - 18, grat_y + grat_h - 2), 36, 18,
                            boxstyle="round,pad=0,rounding_size=3",
                            facecolor='#B45309', edgecolor='#F59E0B', linewidth=1.2)
@@ -378,7 +361,6 @@ def generate_oscilloscope_screen(output_path):
     ax.text(px_x2, grat_y + grat_h + 7, "BX", color='#FFFFFF',
             fontsize=8.5, fontweight='bold', ha='center', va='center')
 
-    # Delta T Measurement Banner / Caliper Bracket between X1 and X2
     bracket_y = grat_y + grat_h - 38
     ax.annotate("", xy=(px_x1, bracket_y), xytext=(px_x2, bracket_y),
                 arrowprops=dict(arrowstyle="<->", color="#F59E0B", lw=2.0))
@@ -391,7 +373,7 @@ def generate_oscilloscope_screen(output_path):
             color='#FDE047', fontsize=10, fontweight='black', fontfamily='monospace',
             ha='center', va='center')
 
-    # Annotation callouts for events
+    # Event callout pills
     callout1 = FancyBboxPatch((px_x1 - 195, ch2_gnd + 1.8 * ch2_vscale), 185, 34,
                               boxstyle="round,pad=0,rounding_size=4",
                               facecolor='#06202A', edgecolor=CH2_COLOR, linewidth=1)
@@ -415,14 +397,14 @@ def generate_oscilloscope_screen(output_path):
     # -------------------------------------------------------------
     # 8. PICTURE-IN-PICTURE HIGH-SPEED ZOOM INSET (Z1: 20 µs/div)
     # -------------------------------------------------------------
-    # Placed in the top right quadrant of the graticule (clean empty space)
-    zoom_w, zoom_h = 390, 160
-    zoom_x = grat_x + grat_w - zoom_w - 15
-    zoom_y = grat_y + grat_h - zoom_h - 55
+    # Positioned cleanly in the lower-right quadrant of the graticule
+    zoom_w, zoom_h = 390, 175
+    zoom_x = grat_x + grat_w - zoom_w - 20
+    zoom_y = grat_y + 18
     
     zoom_box = FancyBboxPatch((zoom_x, zoom_y), zoom_w, zoom_h,
                               boxstyle="round,pad=0,rounding_size=6",
-                              facecolor='#020617', edgecolor='#38BDF8', linewidth=1.6, alpha=0.95)
+                              facecolor='#020617', edgecolor='#38BDF8', linewidth=1.6, alpha=0.98)
     ax.add_patch(zoom_box)
     
     # Zoom header
@@ -433,8 +415,8 @@ def generate_oscilloscope_screen(output_path):
 
     # Zoom internal graticule
     for izx in np.linspace(zoom_x + 15, zoom_x + zoom_w - 15, 8):
-        ax.plot([izx, izx], [zoom_y + 12, zoom_y + zoom_h - 28], color='#1E293B', linestyle=':', lw=0.6)
-    for izy in np.linspace(zoom_y + 12, zoom_y + zoom_h - 28, 5):
+        ax.plot([izx, izx], [zoom_y + 12, zoom_y + zoom_h - 26], color='#1E293B', linestyle=':', lw=0.6)
+    for izy in np.linspace(zoom_y + 12, zoom_y + zoom_h - 26, 5):
         ax.plot([zoom_x + 15, zoom_x + zoom_w - 15], [izy, izy], color='#1E293B', linestyle=':', lw=0.6)
 
     # Inset waveforms
@@ -452,9 +434,9 @@ def generate_oscilloscope_screen(output_path):
             val = 3.3 * (1.0 - np.exp(-tr / 0.28))
         z_scl.append(val)
     z_scl = np.array(z_scl)
-    z_scl_py = zoom_y + 88 + z_scl * 11
+    z_scl_py = zoom_y + 88 + z_scl * 10
     ax.plot(z_px, z_scl_py, color=CH3_COLOR, lw=1.3)
-    ax.text(zoom_x + 16, zoom_y + 126, "CH3: SCL 400kHz (Tr=182ns)", color=CH3_COLOR, fontsize=7.5, fontfamily='monospace', fontweight='bold')
+    ax.text(zoom_x + 16, zoom_y + 132, "CH3: SCL 400kHz (Tr=182ns)", color=CH3_COLOR, fontsize=7.5, fontfamily='monospace', fontweight='bold')
 
     # Buzzer PWM wave in zoom (period = 416.5 µs)
     z_pwm = []
@@ -462,9 +444,9 @@ def generate_oscilloscope_screen(output_path):
         val = 3.28 if (t_us % 416.5) < 208.25 else 0.03
         z_pwm.append(val)
     z_pwm = np.array(z_pwm)
-    z_pwm_py = zoom_y + 28 + z_pwm * 9
+    z_pwm_py = zoom_y + 24 + z_pwm * 9
     ax.plot(z_px, z_pwm_py, color=CH2_COLOR, lw=1.3)
-    ax.text(zoom_x + 16, zoom_y + 60, "CH2: PWM 2.4kHz (Duty 50.1%)", color=CH2_COLOR, fontsize=7.5, fontfamily='monospace', fontweight='bold')
+    ax.text(zoom_x + 16, zoom_y + 64, "CH2: PWM 2.4kHz (Duty 50.1%)", color=CH2_COLOR, fontsize=7.5, fontfamily='monospace', fontweight='bold')
 
     # -------------------------------------------------------------
     # 9. RIGHT SIDEBAR DOCK (Rigol/Siglent Cursors & Measurements)

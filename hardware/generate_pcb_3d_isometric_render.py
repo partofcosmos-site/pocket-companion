@@ -115,7 +115,6 @@ def create_top_texture():
         draw.line(pts, fill=trace_hi, width=w + 6)
         draw.line(pts, fill=trace_col, width=w)
 
-    # Trace routing
     trace([(-8.0, 4.0), (-3.0, 4.0), (2.0, 9.0), (7.0, 9.0)], w=14)   # SDA to OLED
     trace([(-8.0, 2.0), (-2.0, 2.0), (3.0, 7.0), (9.0, 7.0)], w=14)   # SCL to OLED
     trace([(-8.0, -2.0), (-8.0, -8.0), (-13.0, -8.0), (-13.0, -11.0)], w=14) # GP2 to Left Button
@@ -138,17 +137,11 @@ def create_top_texture():
         draw.rounded_rectangle([(px0, py0), (px1, py1)], radius=r, fill=gold_fill, outline=gold_edge, width=2)
         draw.line([(px0 + 4, py0 + 3), (px1 - 4, py0 + 3)], fill=gold_hi, width=2)
 
-    # RP2040-Zero Solder Pads on Main Board:
-    # Module is from X = -17 to +1, Y = -5.75 to +17.75
-    # Left edge pads (X = -17.5 to -16.5)
+    # RP2040-Zero Solder Pads
     for i in range(9):
         py = -4.0 + i * 2.3
         pad_mm(-17.8, py - 0.4, -16.2, py + 0.4, r=4)
-    # Right edge pads (X = 0.5 to 1.8)
-    for i in range(9):
-        py = -4.0 + i * 2.3
         pad_mm(0.2, py - 0.4, 1.8, py + 0.4, r=4)
-    # Bottom edge pads (Y = -6.5 to -5.0)
     for i in range(5):
         px = -14.0 + i * 3.0
         pad_mm(px - 0.4, -6.5, px + 0.4, -5.0, r=4)
@@ -166,7 +159,7 @@ def create_top_texture():
         pad_mm(bx - 3.8, -11.5, bx - 2.6, -10.5, r=4)
         pad_mm(bx + 2.6, -11.5, bx + 3.8, -10.5, r=4)
 
-    # Slide Switch Footprint (Left edge: X = -23.5, Y = -4.0)
+    # Slide Switch Footprint
     for sy in [-5.5, -4.0, -2.5]:
         pad_mm(-24.5, sy - 0.4, -22.5, sy + 0.4, r=4)
     pad_mm(-24.2, -6.8, -22.8, -6.0, r=4)
@@ -186,22 +179,19 @@ def create_top_texture():
         cx, cy = mm2px(px, 12.0)
         draw.ellipse([(cx - 12, cy - 12), (cx + 12, cy + 12)], fill=(8, 8, 10, 255))
 
-    # ------------------ CRISP WHITE SILKSCREEN ------------------
+    # Crisp White Silkscreen
     silk = (250, 250, 255, 255)
     silk_dim = (180, 185, 200, 255)
 
-    # 1. Prominent Branding Silkscreen on Front Edge (Y in [-15, -18.5])
-    # Perfectly placed between buttons and edge where it's 100% visible!
+    # Prominent Branding on Front Edge (Y in [-15, -18.5])
     px_b, py_b = mm2px(-18.0, -16.8)
     draw.text((px_b, py_b), "POCKET COMPANION v1.0", font=get_font(42, bold=True), fill=silk)
     draw.text((px_b + 550, py_b + 5), "· HACK CLUB HALF-LIFE", font=get_font(32, bold=True), fill=(245, 158, 11, 255))
     draw.text((px_b + 980, py_b + 10), "· OPEN HARDWARE RP2040", font=get_font(26, mono=True), fill=silk_dim)
 
-    # 2. Hack Club Half-Life Emblem (Placed prominently in clear view at X=14 to 22, Y=5 to 14)
-    # Between OLED and right mounting hole!
+    # Hack Club Half-Life Emblem (Shield + Lambda)
     hx, hy = mm2px(16.5, 9.5)
     draw.rounded_rectangle([(hx - 60, hy - 60), (hx + 60, hy + 60)], radius=24, outline=silk, width=5)
-    # Lambda symbol
     draw.line([(hx - 22, hy - 32), (hx + 18, hy + 32)], fill=silk, width=8)
     draw.line([(hx + 18, hy - 32), (hx - 2, hy + 2)], fill=silk, width=8)
     draw.line([(hx - 32, hy + 32), (hx - 12, hy + 32)], fill=silk, width=6)
@@ -209,29 +199,25 @@ def create_top_texture():
     draw.text((hx - 48, hy + 75), "HALF-LIFE", font=get_font(18, bold=True, mono=True), fill=(245, 158, 11, 255))
     draw.text((hx - 40, hy + 98), "YSWS 2026", font=get_font(14, mono=True), fill=silk_dim)
 
-    # 3. Component Outlines & Reference Designators
-    # U1 (RP2040-Zero)
+    # Component Outlines & Reference Designators
     ux0, uy0 = mm2px(-17.0, 17.5)
     ux1, uy1 = mm2px(1.0, -5.75)
     draw.rectangle([(ux0, uy0), (ux1, uy1)], outline=silk_dim, width=2)
     draw.text((ux0 + 20, uy0 + 15), "U1 · RP2040-ZERO", font=get_font(22, bold=True, mono=True), fill=silk)
 
-    # 3x Buttons Labels (SW1, SW2, SW3)
-    btns = [(-13.0, "SW1", "◄ LEFT", "GP2"), (0.0, "SW2", "● ACTION", "GP3"), (13.0, "SW3", "RIGHT ►", "GP4")]
+    btns = [(-13.0, "SW1", "LEFT", "GP2"), (0.0, "SW2", "ACTION", "GP3"), (13.0, "SW3", "RIGHT", "GP4")]
     for bx_mm, ref, fnc, pin in btns:
         bx, by = mm2px(bx_mm, -12.0)
         draw.rounded_rectangle([(bx - 100, by - 100), (bx + 100, by + 100)], radius=16, outline=silk_dim, width=2)
         draw.text((bx - 35, by - 95), ref, font=get_font(20, bold=True, mono=True), fill=silk)
-        draw.text((bx - 50, by + 105), fnc, font=get_font(22, bold=True), fill=silk)
+        draw.text((bx - 45, by + 105), fnc, font=get_font(22, bold=True), fill=silk)
         draw.text((bx - 28, by + 135), pin, font=get_font(16, mono=True), fill=silk_dim)
 
-    # SW_PWR (Slide Switch)
     sx, sy = mm2px(-23.5, -4.0)
     draw.text((sx - 35, sy - 85), "SW_PWR", font=get_font(18, bold=True, mono=True), fill=silk)
     draw.text((sx - 35, sy - 50), "OFF", font=get_font(16, mono=True), fill=silk_dim)
     draw.text((sx - 35, sy + 40), "ON", font=get_font(16, bold=True, mono=True), fill=(52, 211, 153, 255))
 
-    # BZ1 (Buzzer)
     bx, by = mm2px(19.0, -3.0)
     draw.ellipse([(bx - 120, by - 120), (bx + 120, by + 120)], outline=silk_dim, width=2)
     draw.text((bx - 55, by - 145), "BZ1 · BUZZER", font=get_font(18, bold=True, mono=True), fill=silk)
@@ -239,14 +225,12 @@ def create_top_texture():
     draw.text((bx + 35, by - 40), "-", font=get_font(24, bold=True), fill=silk_dim)
     draw.text((bx - 40, by + 128), "GP5 PWM", font=get_font(16, mono=True), fill=silk_dim)
 
-    # J1 (Battery Connector)
     jx, jy = mm2px(-21.0, 12.0)
     draw.rectangle([(jx - 80, jy - 80), (jx + 80, jy + 80)], outline=silk_dim, width=2)
     draw.text((jx - 70, jy - 110), "J1 · BATT 3.7V", font=get_font(18, bold=True, mono=True), fill=silk)
     draw.text((jx - 65, jy + 88), "+ RED", font=get_font(16, bold=True, mono=True), fill=(239, 68, 68, 255))
     draw.text((jx + 15, jy + 88), "- BLK", font=get_font(16, bold=True, mono=True), fill=silk_dim)
 
-    # Altoids Tin Border Guide
     draw.rounded_rectangle([(60, 60), (tw - 61, th - 61)], radius=cr - 40, outline=(90, 95, 110, 140), width=2)
 
     return tex
@@ -265,7 +249,6 @@ def render_3d_box(img_draw, x0, y0, z0, x1, y1, z1, col_top, col_front, col_left
     p111 = proj((x1, y1, z1))
     p011 = proj((x0, y1, z1))
 
-    # Visible faces: Left (X=x0), Front (Y=y0), Top (Z=z1)
     img_draw.polygon([p010, p000, p001, p011], fill=col_left, outline=col_border)
     img_draw.polygon([p000, p100, p101, p001], fill=col_front, outline=col_border)
     img_draw.polygon([p001, p101, p111, p011], fill=col_top, outline=col_border)
@@ -275,7 +258,6 @@ def render_3d_cylinder(img_draw, cx, cy, z0, z1, radius, col_top, col_side_dark,
     pts_bot = [proj((cx + radius * np.cos(a), cy + radius * np.sin(a), z0)) for a in angles]
     pts_top = [proj((cx + radius * np.cos(a), cy + radius * np.sin(a), z1)) for a in angles]
 
-    # Calculate camera distance to sort quads back-to-front
     quad_info = []
     for i in range(segments):
         i_next = (i + 1) % segments
@@ -287,7 +269,6 @@ def render_3d_cylinder(img_draw, cx, cy, z0, z1, radius, col_top, col_side_dark,
         dist = np.dot(pc, f)
         quad_info.append((dist, i, i_next, mid_angle))
 
-    # Sort furthest to closest
     quad_info.sort(key=lambda x: x[0], reverse=True)
 
     light_dir = np.array([-0.707, -0.707, 0.0])
@@ -312,20 +293,17 @@ def generate_isometric_render():
     base = Image.new("RGBA", (w, h), (11, 15, 25, 255))
     draw_base = ImageDraw.Draw(base)
 
-    # Radial studio lighting
     cx_s, cy_s = w // 2, h // 2 + 30
     for rad in range(700, 0, -25):
         alpha = int((1.0 - rad / 700.0) * 22)
         draw_base.ellipse([(cx_s - rad * 1.5, cy_s - rad), (cx_s + rad * 1.5, cy_s + rad)], fill=(18 + alpha, 24 + alpha, 40 + alpha, 255))
 
-    # Floor grid at Z = -4.0mm
     grid_col = (20, 28, 44, 255)
     for gx in range(-50, 51, 10):
         draw_base.line([proj((gx, -45, -4.0)), proj((gx, 45, -4.0))], fill=grid_col, width=1)
     for gy in range(-40, 41, 10):
         draw_base.line([proj((-55, gy, -4.0)), proj((55, gy, -4.0))], fill=grid_col, width=1)
 
-    # Floor drop shadow
     print("[2/5] Rendering ambient occlusion & floor shadow...")
     shadow_layer = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     draw_sh = ImageDraw.Draw(shadow_layer)
@@ -334,7 +312,6 @@ def generate_isometric_render():
     shadow_layer = shadow_layer.filter(ImageFilter.GaussianBlur(26))
     base.alpha_composite(shadow_layer)
 
-    # 3D PCB Substrate (1.6mm thickness: Z = -0.8 to +0.8 mm)
     print("[3/5] Rendering 3D PCB FR4 edges & substrate...")
     pcb_draw = ImageDraw.Draw(base)
 
@@ -350,7 +327,6 @@ def generate_isometric_render():
     pcb_draw.polygon([p_bl_bot, p_tl_bot, p_tl_top, p_bl_top], fill=(16, 22, 20, 255), outline=(28, 38, 32, 255))
     pcb_draw.line([proj((-26, -19, 0.0)), proj((-26, 19, 0.0))], fill=(160, 95, 20, 255), width=2)
 
-    # Warp 2D High-Resolution Top Texture onto 3D Top Plane (Z = +0.8 mm)
     print("[4/5] Perspective warping high-res PCB texture...")
     top_tex = create_top_texture()
     src_pts = [(0, 0), (2600, 0), (2600, 1900), (0, 1900)]
@@ -361,12 +337,10 @@ def generate_isometric_render():
     warped_top = top_tex.transform((w, h), Image.PERSPECTIVE, coeffs, Image.BICUBIC)
     base.alpha_composite(warped_top)
 
-    # 3D Components
     print("[5/5] Modeling & rendering 3D components...")
     comp_draw = ImageDraw.Draw(base)
 
     # 1. WAVESHARE RP2040-ZERO MODULE
-    # Position: X in [-17, 1], Y in [-5.75, 17.75], Z in [0.8, 2.0]
     render_3d_box(comp_draw, -17.0, -5.75, 0.8, 1.0, 17.75, 2.0,
                   col_top=(24, 30, 68, 255), col_front=(16, 20, 48, 255), col_left=(12, 15, 38, 255),
                   col_border=(45, 55, 110, 255))
@@ -374,10 +348,8 @@ def generate_isometric_render():
     # Castellated Pads & Solder Fillets
     for i in range(9):
         py = -4.0 + i * 2.3
-        # Left edge
         render_3d_box(comp_draw, -17.6, py - 0.4, 0.8, -16.8, py + 0.4, 1.6,
                       col_top=(215, 220, 235, 255), col_front=(160, 170, 185, 255), col_left=(130, 140, 155, 255))
-        # Right edge
         render_3d_box(comp_draw, 0.8, py - 0.4, 0.8, 1.6, py + 0.4, 1.6,
                       col_top=(215, 220, 235, 255), col_front=(160, 170, 185, 255), col_left=(130, 140, 155, 255))
     for i in range(5):
@@ -385,7 +357,7 @@ def generate_isometric_render():
         render_3d_box(comp_draw, px - 0.4, -6.4, 0.8, px + 0.4, -5.6, 1.6,
                       col_top=(215, 220, 235, 255), col_front=(160, 170, 185, 255), col_left=(130, 140, 155, 255))
 
-    # RP2040 QFN-56 Chip (7x7mm, Z = 2.0 to 3.0mm)
+    # RP2040 QFN-56 Chip
     render_3d_box(comp_draw, -11.5, 2.0, 2.0, -4.5, 9.0, 2.95,
                   col_top=(26, 28, 32, 255), col_front=(16, 18, 20, 255), col_left=(12, 14, 16, 255),
                   col_border=(45, 48, 55, 255))
@@ -398,7 +370,7 @@ def generate_isometric_render():
                   col_top=(215, 220, 230, 255), col_front=(165, 170, 180, 255), col_left=(130, 135, 145, 255),
                   col_border=(235, 240, 250, 255))
 
-    # USB-C Connector (Stainless Steel shell: X in [-12.5, -3.5], Y in [13.0, 20.2], Z in [2.0, 5.2])
+    # USB-C Connector (Stainless Steel)
     render_3d_box(comp_draw, -12.5, 13.0, 2.0, -3.5, 20.0, 5.0,
                   col_top=(200, 205, 215, 255), col_front=(150, 155, 165, 255), col_left=(120, 125, 135, 255),
                   col_border=(230, 235, 245, 255))
@@ -406,26 +378,25 @@ def generate_isometric_render():
     comp_draw.ellipse([(p_u_mouth[0] - 16, p_u_mouth[1] - 5), (p_u_mouth[0] + 16, p_u_mouth[1] + 5)], fill=(12, 14, 18, 255))
 
     # 2. 0.96" OLED DISPLAY (Mounted on Female Header)
-    # 4-Pin Female Header Socket on Main PCB (X = 4.0 to 16.0, Y = 11.0 to 13.0, Z = 0.8 to 4.5mm)
     render_3d_box(comp_draw, 4.0, 11.0, 0.8, 16.0, 13.0, 4.5,
                   col_top=(28, 30, 36, 255), col_front=(18, 20, 24, 255), col_left=(12, 14, 16, 255),
                   col_border=(50, 54, 64, 255))
     for px in [5.5, 8.5, 11.5, 14.5]:
         comp_draw.line([proj((px, 12.0, 4.5)), proj((px, 12.0, 5.5))], fill=(234, 179, 8, 255), width=3)
 
-    # OLED Carrier PCB (Elevated at Z = 4.8 to 5.8mm, X in [0.0, 20.0], Y in [-1.5, 14.5])
+    # OLED Carrier PCB
     render_3d_box(comp_draw, 0.0, -1.5, 4.8, 20.0, 14.5, 5.8,
                   col_top=(15, 23, 42, 255), col_front=(10, 15, 28, 255), col_left=(8, 12, 22, 255),
                   col_border=(30, 41, 59, 255))
 
-    # OLED Glass Panel (X in [1.5, 18.5], Y in [-0.5, 13.0], Z in [5.8 to 6.8mm])
+    # OLED Glass Panel
     gx0, gx1 = 1.5, 18.5
     gy0, gy1 = -0.5, 13.0
     render_3d_box(comp_draw, gx0, gy0, 5.8, gx1, gy1, 6.8,
                   col_top=(8, 12, 20, 255), col_front=(5, 8, 14, 255), col_left=(3, 5, 10, 255),
                   col_border=(56, 189, 248, 255))
 
-    # Glowing Cyan Screen Graphics on Active Area (Z = 6.85mm)
+    # Glowing Cyan Screen Graphics on Active Area
     p_sc_tl = proj((gx0 + 1.2, gy1 - 1.2, 6.85))
     p_sc_tr = proj((gx1 - 1.2, gy1 - 1.2, 6.85))
     p_sc_br = proj((gx1 - 1.2, gy0 + 1.2, 6.85))
@@ -434,13 +405,14 @@ def generate_isometric_render():
     disp_w, disp_h = 512, 256
     disp_img = Image.new("RGBA", (disp_w, disp_h), (2, 6, 15, 255))
     draw_disp = ImageDraw.Draw(disp_img)
-    draw_disp.text((20, 15), "[♥ ♥ ♥]  BAT: 96%  3.7V", font=get_font(22, bold=True, mono=True), fill=(56, 189, 248, 255))
+    draw_disp.text((20, 15), "BAT: 96%  3.7V", font=get_font(22, bold=True, mono=True), fill=(56, 189, 248, 255))
     draw_disp.text((360, 15), "LVL 04", font=get_font(22, bold=True, mono=True), fill=(52, 211, 153, 255))
     draw_disp.line([(15, 48), (disp_w - 15, 48)], fill=(56, 189, 248, 255), width=2)
+    # Virtual Pet Graphic
     draw_disp.text((120, 85), "(  *  ^  *  )", font=get_font(46, bold=True, mono=True), fill=(186, 230, 253, 255))
     draw_disp.text((150, 160), "HAPPY  ·  EXP +25", font=get_font(24, bold=True, mono=True), fill=(52, 211, 153, 255))
     draw_disp.line([(15, 205), (disp_w - 15, 205)], fill=(30, 58, 95, 255), width=2)
-    draw_disp.text((20, 218), "POCKET COMPANION · RP2040", font=get_font(20, mono=True), fill=(125, 211, 252, 255))
+    draw_disp.text((20, 218), "CIRCUITPYTHON 9.2 · RP2040", font=get_font(20, mono=True), fill=(125, 211, 252, 255))
 
     disp_coeffs = find_coeffs([p_sc_tl, p_sc_tr, p_sc_br, p_sc_bl], [(0, 0), (disp_w, 0), (disp_w, disp_h), (0, disp_h)])
     warped_disp = disp_img.transform((w, h), Image.PERSPECTIVE, disp_coeffs, Image.BICUBIC)
@@ -554,26 +526,40 @@ def generate_isometric_render():
     hud_draw.line([p_thick_mid, p_thick_txt], fill=(245, 158, 11, 200), width=1)
     hud_draw.text(p_thick_txt, "t = 1.60 mm", font=get_font(12, bold=True, mono=True), fill=(245, 158, 11), anchor="rm")
 
-    # Callouts
-    def draw_callout(target_3d, label_title, label_sub, text_pos, anchor="lm"):
+    # Clean Orthogonal CAD Callouts
+    def draw_callout_left(target_3d, title, sub, card_pos):
+        cx, cy = card_pos
+        cw, ch = 250, 44
         pt_scr = proj(target_3d)
         hud_draw.ellipse([(pt_scr[0] - 4, pt_scr[1] - 4), (pt_scr[0] + 4, pt_scr[1] + 4)], fill=(56, 189, 248, 255), outline=(255, 255, 255), width=1)
-        elbow = (text_pos[0] - 15 if anchor=="lm" else text_pos[0] + 15, pt_scr[1])
-        hud_draw.line([pt_scr, elbow, (text_pos[0], text_pos[1])], fill=(56, 189, 248, 180), width=1)
+        card_mid = (cx + cw, cy + ch / 2)
+        mid_x = (pt_scr[0] + card_mid[0]) / 2.0
+        hud_draw.line([pt_scr, (mid_x, pt_scr[1]), (mid_x, card_mid[1]), card_mid], fill=(56, 189, 248, 190), width=1)
+        hud_draw.rounded_rectangle([(cx, cy), (cx + cw, cy + ch)], radius=6, fill=(15, 23, 42, 230), outline=(51, 65, 85, 255), width=1)
+        hud_draw.text((cx + 10, cy + 6), title, font=get_font(12, bold=True), fill=(241, 245, 249))
+        hud_draw.text((cx + 10, cy + 24), sub, font=get_font(10, mono=True), fill=(56, 189, 248))
 
-        tw = 260
-        tx0 = text_pos[0] if anchor=="lm" else text_pos[0] - tw
-        hud_draw.rounded_rectangle([(tx0, text_pos[1] - 20), (tx0 + tw, text_pos[1] + 22)], radius=6, fill=(15, 23, 42, 220), outline=(51, 65, 85, 255), width=1)
-        hud_draw.text((tx0 + 10, text_pos[1] - 8), label_title, font=get_font(12, bold=True), fill=(241, 245, 249))
-        hud_draw.text((tx0 + 10, text_pos[1] + 8), label_sub, font=get_font(10, mono=True), fill=(56, 189, 248))
+    def draw_callout_right(target_3d, title, sub, card_pos):
+        cx, cy = card_pos
+        cw, ch = 250, 44
+        pt_scr = proj(target_3d)
+        hud_draw.ellipse([(pt_scr[0] - 4, pt_scr[1] - 4), (pt_scr[0] + 4, pt_scr[1] + 4)], fill=(56, 189, 248, 255), outline=(255, 255, 255), width=1)
+        card_mid = (cx, cy + ch / 2)
+        mid_x = (pt_scr[0] + card_mid[0]) / 2.0
+        hud_draw.line([pt_scr, (mid_x, pt_scr[1]), (mid_x, card_mid[1]), card_mid], fill=(56, 189, 248, 190), width=1)
+        hud_draw.rounded_rectangle([(cx, cy), (cx + cw, cy + ch)], radius=6, fill=(15, 23, 42, 230), outline=(51, 65, 85, 255), width=1)
+        hud_draw.text((cx + 10, cy + 6), title, font=get_font(12, bold=True), fill=(241, 245, 249))
+        hud_draw.text((cx + 10, cy + 24), sub, font=get_font(10, mono=True), fill=(56, 189, 248))
 
-    draw_callout((-8.0, 16.5, 4.0), "U1 · RP2040-Zero (USB-C)", "Waveshare Cortex-M0+ 133MHz", (80, 220), anchor="lm")
-    draw_callout((-20.0, 12.0, 5.0), "J1 · LiPo Battery Header", "JST-PH 2.0mm 3.7V Input", (80, 360), anchor="lm")
-    draw_callout((-23.5, -4.0, 3.5), "SW_PWR · Slide Switch", "SPDT Power Disconnect", (80, 500), anchor="lm")
+    # Left Callouts
+    draw_callout_left((-8.0, 19.5, 4.5), "U1 · RP2040-Zero (USB-C)", "Waveshare Cortex-M0+ 133MHz", (60, 220))
+    draw_callout_left((-20.0, 13.5, 6.0), "J1 · LiPo Battery Header", "JST-PH 2.0mm 3.7V Input", (60, 360))
+    draw_callout_left((-23.5, -4.0, 4.5), "SW_PWR · Slide Switch", "SPDT Power Disconnect", (60, 500))
 
-    draw_callout((10.0, 6.0, 7.0), "DISP1 · 0.96\" OLED", "SSD1306 128×64 Monochrome I2C", (1580, 240), anchor="rm")
-    draw_callout((19.0, -3.0, 4.0), "BZ1 · Piezo Transducer", "9mm Passive Buzzer (GP5 PWM)", (1580, 380), anchor="rm")
-    draw_callout((0.0, -12.0, 4.0), "SW1-SW3 · User Inputs", "3× 6×6mm Tactile Buttons", (1580, 520), anchor="rm")
+    # Right Callouts
+    draw_callout_right((18.5, 12.0, 6.8), "DISP1 · 0.96\" OLED", "SSD1306 128×64 Monochrome I2C", (1600, 240))
+    draw_callout_right((21.0, -1.0, 5.2), "BZ1 · Piezo Transducer", "9mm Passive Buzzer (GP5 PWM)", (1600, 380))
+    draw_callout_right((13.0, -12.0, 4.4), "SW1-SW3 · User Inputs", "3× 6×6mm Tactile Buttons", (1600, 520))
 
     # Bottom Right Specs Card
     card_w, card_h = 420, 140
@@ -596,7 +582,7 @@ def generate_isometric_render():
 
     base.convert("RGB").save(OUTPUT_PATH, "PNG", quality=95)
     file_size = os.path.getsize(OUTPUT_PATH)
-    print(f"[SUCCESS] Saved updated 3D render: {OUTPUT_PATH}")
+    print(f"[SUCCESS] Saved perfected 3D render: {OUTPUT_PATH}")
     print(f"Dimensions: {w}x{h}, File Size: {file_size:,} bytes")
 
 if __name__ == "__main__":
