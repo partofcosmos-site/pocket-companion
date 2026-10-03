@@ -15,13 +15,13 @@
   },
   "serialization_speed_metrics": {
     "samples": 1000,
-    "mean_latency_us": 853.83,
-    "median_latency_us": 759.2,
-    "p95_latency_us": 1231.8,
-    "p99_latency_us": 1494.5,
-    "min_latency_us": 613.1,
-    "max_latency_us": 3470.5,
-    "sub_millisecond_verified": false
+    "mean_latency_us": 456.07,
+    "median_latency_us": 421.6,
+    "p95_latency_us": 586.3,
+    "p99_latency_us": 740.2,
+    "min_latency_us": 377.1,
+    "max_latency_us": 9811.6,
+    "sub_millisecond_verified": true
   },
   "brownout_recovery_at_2v7": {
     "trials_injected": 500,
@@ -31,8 +31,8 @@
     "zero_corruption_verified": true
   },
   "memory_metrics": {
-    "peak_heap_kb": 135.62,
-    "final_delta_kb": 14.92,
+    "peak_heap_kb": 145.82,
+    "final_delta_kb": 20.43,
     "zero_memory_leak": true
   }
 }
