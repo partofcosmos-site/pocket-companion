@@ -490,3 +490,20 @@ def test_fuzz_50k_cycles_chording_and_debounce_stress():
     assert len(summary["modes_explored"]) == 4
 
 
+def test_fuzz_game_states_and_submillisecond_score_tracking():
+    """Verify Mode 1 Reflex & Mode 3 Simon under chaotic player input with sub-ms score tracking."""
+    from run_game_fuzz_runner import run_game_state_fuzzing
+    summary = run_game_state_fuzzing(total_game_cycles=25000)
+
+    assert summary["status"] == "PASSED"
+    assert summary["total_cycles"] == 25000
+    assert summary["crashes"] == 0
+    assert summary["reflex_metrics"]["total_rounds"] > 500
+    assert summary["simon_metrics"]["games_started"] > 100
+    assert summary["reflex_metrics"]["latency_stats"]["sub_millisecond"] is True
+    assert summary["simon_metrics"]["latency_stats"]["sub_millisecond"] is True
+    assert summary["reflex_metrics"]["latency_stats"]["max_ms"] < 1.0
+    assert summary["simon_metrics"]["latency_stats"]["max_ms"] < 1.0
+
+
+
