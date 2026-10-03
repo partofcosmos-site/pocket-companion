@@ -1,0 +1,118 @@
+{
+  "status": "PASSED",
+  "total_cycles": 100000,
+  "wallclock_seconds": 20.52,
+  "overall_fps": 4873.3,
+  "crashes": 0,
+  "chords_mashed": 8333,
+  "cutoff_events": 20,
+  "recharge_events": 10,
+  "pwm_metrics": {
+    "frequency_changes": 9994,
+    "duty_toggles": 19988,
+    "min_freq_hz": 50,
+    "max_freq_hz": 9998
+  },
+  "modes_explored": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "baseline_heap_kb": 0.0,
+  "peak_heap_kb": 13.57,
+  "final_delta_kb": 8.19,
+  "zero_memory_leak": true,
+  "checkpoints": [
+    {
+      "cycle": 10000,
+      "cur_heap_kb": 8.28,
+      "peak_heap_kb": 9.18,
+      "delta_kb": 8.28,
+      "fps": 5488.5,
+      "vbat": 4.2,
+      "pwm_freq": 8271
+    },
+    {
+      "cycle": 20000,
+      "cur_heap_kb": 9.19,
+      "peak_heap_kb": 9.77,
+      "delta_kb": 9.19,
+      "fps": 5096.7,
+      "vbat": 4.2,
+      "pwm_freq": 1407
+    },
+    {
+      "cycle": 30000,
+      "cur_heap_kb": 9.59,
+      "peak_heap_kb": 10.22,
+      "delta_kb": 9.59,
+      "fps": 5088.9,
+      "vbat": 4.2,
+      "pwm_freq": 440
+    },
+    {
+      "cycle": 40000,
+      "cur_heap_kb": 9.91,
+      "peak_heap_kb": 10.66,
+      "delta_kb": 9.91,
+      "fps": 5118.1,
+      "vbat": 4.2,
+      "pwm_freq": 4860
+    },
+    {
+      "cycle": 50000,
+      "cur_heap_kb": 10.24,
+      "peak_heap_kb": 11.11,
+      "delta_kb": 10.24,
+      "fps": 5108.7,
+      "vbat": 4.2,
+      "pwm_freq": 4066
+    },
+    {
+      "cycle": 60000,
+      "cur_heap_kb": 11.0,
+      "peak_heap_kb": 11.49,
+      "delta_kb": 11.0,
+      "fps": 5105.7,
+      "vbat": 4.2,
+      "pwm_freq": 964
+    },
+    {
+      "cycle": 70000,
+      "cur_heap_kb": 11.25,
+      "peak_heap_kb": 11.94,
+      "delta_kb": 11.25,
+      "fps": 5042.8,
+      "vbat": 4.2,
+      "pwm_freq": 281
+    },
+    {
+      "cycle": 80000,
+      "cur_heap_kb": 11.64,
+      "peak_heap_kb": 12.38,
+      "delta_kb": 11.64,
+      "fps": 4974.5,
+      "vbat": 4.2,
+      "pwm_freq": 6415
+    },
+    {
+      "cycle": 90000,
+      "cur_heap_kb": 12.09,
+      "peak_heap_kb": 12.83,
+      "delta_kb": 12.09,
+      "fps": 4916.6,
+      "vbat": 4.2,
+      "pwm_freq": 5409
+    },
+    {
+      "cycle": 100000,
+      "cur_heap_kb": 12.77,
+      "peak_heap_kb": 13.34,
+      "delta_kb": 12.77,
+      "fps": 4879.1,
+      "vbat": 4.2,
+      "pwm_freq": 6537
+    }
+  ]
+}

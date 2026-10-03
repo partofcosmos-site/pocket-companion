@@ -632,3 +632,21 @@ def test_fuzz_hardware_fault_injection_and_autonomous_recovery():
     assert summary["i2c_nacks_injected"] > 0
     assert summary["oled_reconnections"] > 0
     assert summary["switch_chatter_events"] > 0
+
+
+def test_fuzz_multimodal_100k_fuzz_soak():
+    """Verify 100k-cycle multi-modal physical stress with concurrent voltage noise, PWM sweeps, and button mashing."""
+    from run_multimodal_100k_fuzz import run_multimodal_100k_fuzz
+    summary = run_multimodal_100k_fuzz(total_cycles=100000)
+
+    assert summary["status"] == "PASSED"
+    assert summary["total_cycles"] == 100000
+    assert summary["crashes"] == 0
+    assert summary["chords_mashed"] > 5000
+    assert summary["cutoff_events"] > 0
+    assert summary["recharge_events"] > 0
+    assert summary["pwm_metrics"]["frequency_changes"] > 1000
+    assert summary["zero_memory_leak"] is True
+    assert summary["final_delta_kb"] < 35.0
+    assert len(summary["modes_explored"]) == 4
+
