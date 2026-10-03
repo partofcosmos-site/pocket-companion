@@ -327,30 +327,51 @@ module pcb_model() {
 // Assembly & Exploded Visualizer
 // -----------------------------------------------------------------------------
 module enclosure_assembly(lid_z_offset = 0, lid_alpha = 0.92) {
-    // Base Shell
+    // 1. Base Shell (LiPo cradle, TP4056 rails, switch notch, standoffs, snap beads)
     color([0.20, 0.22, 0.25]) // Sleek Matte Cyber Slate
         enclosure_base();
     
-    // 400mAh LiPo Battery Model in Base
+    // 2. 400mAh LiPo Battery Model in Base Tray
     color([0.75, 0.75, 0.78, 0.85])
     translate([wall_t + tol + lipo_center_x - 35.0/2, wall_t + tol + lipo_center_y - 25.0/2, floor_t + 0.4])
         cube([35.0, 25.0, 5.5]);
     
-    // Internal PCB Assembly
-    translate([wall_t + tol, wall_t + tol, floor_t + standoff_z + (lid_z_offset > 0 ? lid_z_offset * 0.35 : 0)])
+    // 3. TP4056 USB-C Charger Module in Base Tray
+    color([0.15, 0.30, 0.65])
+    translate([wall_t + tol + usbc_center_x - 17.0/2, wall_t + tol + 0.5, floor_t + 0.3]) {
+        cube([17.0, 22.0, 1.2]); // Charger PCB
+        // Type-C metal shield receptacle
+        color([0.78, 0.80, 0.82])
+        translate([17.0/2 - 8.9/2, -1.8, 1.2])
+            cube([8.9, 7.3, 3.2]);
+    }
+    
+    // 4. Internal PCB Assembly (RP2040 tray on underside, OLED bezel on top)
+    translate([wall_t + tol, wall_t + tol, floor_t + standoff_z + (lid_z_offset > 0 ? lid_z_offset * 0.45 : 0)])
         pcb_model();
     
-    // 3x Tactile Button Caps
+    // 5. 3x Tactile Button Caps
     for (bpos = btn_positions) {
         color([0.92, 0.30, 0.24]) // Racing Red tactile caps
-        translate([wall_t + tol + bpos[0], wall_t + tol + bpos[1], floor_t + standoff_z + pcb_t + 4.8 + (lid_z_offset > 0 ? lid_z_offset * 1.15 : 0)])
+        translate([wall_t + tol + bpos[0], wall_t + tol + bpos[1], floor_t + standoff_z + pcb_t + 4.8 + (lid_z_offset > 0 ? lid_z_offset * 1.25 : 0)])
             button_cap(orient = "assembly");
     }
     
-    // Top Lid
+    // 6. Top Lid with recessed OLED bezel & button guide sleeves
     color([0.30, 0.38, 0.48, lid_alpha]) // Clear smoked acrylic preview
     translate([0, 0, base_total_h + lid_z_offset])
         enclosure_lid();
+
+    // 7. 4x M2 Fastener Screws hovering in exploded view
+    if (lid_z_offset > 0) {
+        for (pos = standoff_pos) {
+            color([0.85, 0.88, 0.92]) // Polished stainless steel M2 screws
+            translate([wall_t + tol + pos[0], wall_t + tol + pos[1], base_total_h + lid_z_offset + lid_total_h + 12.0]) {
+                cylinder(d = screw_head_d, h = screw_head_depth); // Head
+                translate([0, 0, -8.0]) cylinder(d = screw_hole_d, h = 8.0); // M2 Shank
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -374,7 +395,7 @@ if (part == "base") {
     enclosure_assembly(lid_z_offset = 0, lid_alpha = 0.38);
 } else if (part == "exploded") {
     // Exploded presentation view showing all internal hardware layers
-    enclosure_assembly(lid_z_offset = 28.0);
+    enclosure_assembly(lid_z_offset = 36.0);
 } else if (part == "cutaway") {
     // Longitudinal cross-section view for internal fit verification
     difference() {
