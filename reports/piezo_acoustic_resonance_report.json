@@ -1,0 +1,422 @@
+{
+  "status": "PASSED",
+  "benchmark_name": "Acoustic Frequency Response & Piezo Resonance Simulation",
+  "transducer": {
+    "part_number": "Murata PKM13EPYH4000-A0",
+    "resonant_frequency_hz": 4000.0,
+    "q_factor": 5.5,
+    "capacitance_nf": 12.0,
+    "peak_spl_dba_10cm": 75.83
+  },
+  "frequency_response_curve": [
+    {
+      "frequency_hz": 180,
+      "spl_dba_10cm": 35.0,
+      "relative_attenuation_db": -40.83
+    },
+    {
+      "frequency_hz": 330,
+      "spl_dba_10cm": 39.41,
+      "relative_attenuation_db": -36.42
+    },
+    {
+      "frequency_hz": 440,
+      "spl_dba_10cm": 41.95,
+      "relative_attenuation_db": -33.88
+    },
+    {
+      "frequency_hz": 523,
+      "spl_dba_10cm": 43.5,
+      "relative_attenuation_db": -32.33
+    },
+    {
+      "frequency_hz": 659,
+      "spl_dba_10cm": 45.59,
+      "relative_attenuation_db": -30.24
+    },
+    {
+      "frequency_hz": 784,
+      "spl_dba_10cm": 47.2,
+      "relative_attenuation_db": -28.63
+    },
+    {
+      "frequency_hz": 880,
+      "spl_dba_10cm": 48.29,
+      "relative_attenuation_db": -27.54
+    },
+    {
+      "frequency_hz": 988,
+      "spl_dba_10cm": 49.41,
+      "relative_attenuation_db": -26.42
+    },
+    {
+      "frequency_hz": 1174,
+      "spl_dba_10cm": 51.14,
+      "relative_attenuation_db": -24.69
+    },
+    {
+      "frequency_hz": 2000,
+      "spl_dba_10cm": 57.44,
+      "relative_attenuation_db": -18.39
+    },
+    {
+      "frequency_hz": 3000,
+      "spl_dba_10cm": 65.3,
+      "relative_attenuation_db": -10.53
+    },
+    {
+      "frequency_hz": 4000,
+      "spl_dba_10cm": 75.83,
+      "relative_attenuation_db": 0.0
+    },
+    {
+      "frequency_hz": 5000,
+      "spl_dba_10cm": 67.3,
+      "relative_attenuation_db": -8.53
+    },
+    {
+      "frequency_hz": 6000,
+      "spl_dba_10cm": 62.4,
+      "relative_attenuation_db": -13.43
+    }
+  ],
+  "melody_benchmarks": {
+    "startup_happy": {
+      "name": "Startup Jingle / Pet Feeding Chirp",
+      "notes_hz": [
+        523,
+        659,
+        784
+      ],
+      "spl_at_4v2": 43.5,
+      "spl_at_3v2": 42.9,
+      "max_spl_variation_db": 0.6,
+      "volume_stability_verified": false,
+      "pitch_stability_verified": true,
+      "voltage_sweep": [
+        {
+          "battery_voltage": 4.2,
+          "drive_voltage": 3.3,
+          "spl_dba": 43.5,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 4.0,
+          "drive_voltage": 3.3,
+          "spl_dba": 43.5,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.8,
+          "drive_voltage": 3.3,
+          "spl_dba": 43.5,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.6,
+          "drive_voltage": 3.3,
+          "spl_dba": 43.5,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.4,
+          "drive_voltage": 3.28,
+          "spl_dba": 43.44,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.3,
+          "drive_voltage": 3.18,
+          "spl_dba": 43.17,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.2,
+          "drive_voltage": 3.08,
+          "spl_dba": 42.9,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        }
+      ]
+    },
+    "nav_boop": {
+      "name": "Navigation & Countdown Blip",
+      "notes_hz": [
+        440
+      ],
+      "spl_at_4v2": 41.95,
+      "spl_at_3v2": 41.35,
+      "max_spl_variation_db": 0.6,
+      "volume_stability_verified": false,
+      "pitch_stability_verified": true,
+      "voltage_sweep": [
+        {
+          "battery_voltage": 4.2,
+          "drive_voltage": 3.3,
+          "spl_dba": 41.95,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 4.0,
+          "drive_voltage": 3.3,
+          "spl_dba": 41.95,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.8,
+          "drive_voltage": 3.3,
+          "spl_dba": 41.95,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.6,
+          "drive_voltage": 3.3,
+          "spl_dba": 41.95,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.4,
+          "drive_voltage": 3.28,
+          "spl_dba": 41.9,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.3,
+          "drive_voltage": 3.18,
+          "spl_dba": 41.63,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.2,
+          "drive_voltage": 3.08,
+          "spl_dba": 41.35,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        }
+      ]
+    },
+    "pomodoro_alarm": {
+      "name": "Pomodoro Alert Chime",
+      "notes_hz": [
+        880,
+        1174,
+        880,
+        1174,
+        880,
+        1174
+      ],
+      "spl_at_4v2": 48.29,
+      "spl_at_3v2": 47.69,
+      "max_spl_variation_db": 0.6,
+      "volume_stability_verified": false,
+      "pitch_stability_verified": true,
+      "voltage_sweep": [
+        {
+          "battery_voltage": 4.2,
+          "drive_voltage": 3.3,
+          "spl_dba": 48.29,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 4.0,
+          "drive_voltage": 3.3,
+          "spl_dba": 48.29,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.8,
+          "drive_voltage": 3.3,
+          "spl_dba": 48.29,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.6,
+          "drive_voltage": 3.3,
+          "spl_dba": 48.29,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.4,
+          "drive_voltage": 3.28,
+          "spl_dba": 48.24,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.3,
+          "drive_voltage": 3.18,
+          "spl_dba": 47.97,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.2,
+          "drive_voltage": 3.08,
+          "spl_dba": 47.69,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        }
+      ]
+    },
+    "reflex_stimulus": {
+      "name": "Reaction Game Trigger & Win Chime",
+      "notes_hz": [
+        440,
+        988,
+        523,
+        659,
+        784
+      ],
+      "spl_at_4v2": 41.95,
+      "spl_at_3v2": 41.35,
+      "max_spl_variation_db": 0.6,
+      "volume_stability_verified": false,
+      "pitch_stability_verified": true,
+      "voltage_sweep": [
+        {
+          "battery_voltage": 4.2,
+          "drive_voltage": 3.3,
+          "spl_dba": 41.95,
+          "pitch_error_hz": 318.5,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 4.0,
+          "drive_voltage": 3.3,
+          "spl_dba": 41.95,
+          "pitch_error_hz": 318.5,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.8,
+          "drive_voltage": 3.3,
+          "spl_dba": 41.95,
+          "pitch_error_hz": 318.5,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.6,
+          "drive_voltage": 3.3,
+          "spl_dba": 41.95,
+          "pitch_error_hz": 318.5,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.4,
+          "drive_voltage": 3.28,
+          "spl_dba": 41.9,
+          "pitch_error_hz": 318.5,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.3,
+          "drive_voltage": 3.18,
+          "spl_dba": 41.63,
+          "pitch_error_hz": 318.5,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.2,
+          "drive_voltage": 3.08,
+          "spl_dba": 41.35,
+          "pitch_error_hz": 318.5,
+          "pitch_drift_pct": 0.0
+        }
+      ]
+    },
+    "simon_memory": {
+      "name": "Simon Memory Game Tones",
+      "notes_hz": [
+        330,
+        440,
+        554
+      ],
+      "spl_at_4v2": 39.41,
+      "spl_at_3v2": 38.81,
+      "max_spl_variation_db": 0.6,
+      "volume_stability_verified": false,
+      "pitch_stability_verified": true,
+      "voltage_sweep": [
+        {
+          "battery_voltage": 4.2,
+          "drive_voltage": 3.3,
+          "spl_dba": 39.41,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 4.0,
+          "drive_voltage": 3.3,
+          "spl_dba": 39.41,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.8,
+          "drive_voltage": 3.3,
+          "spl_dba": 39.41,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.6,
+          "drive_voltage": 3.3,
+          "spl_dba": 39.41,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.4,
+          "drive_voltage": 3.28,
+          "spl_dba": 39.36,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.3,
+          "drive_voltage": 3.18,
+          "spl_dba": 39.09,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        },
+        {
+          "battery_voltage": 3.2,
+          "drive_voltage": 3.08,
+          "spl_dba": 38.81,
+          "pitch_error_hz": 0.0,
+          "pitch_drift_pct": 0.0
+        }
+      ]
+    }
+  },
+  "pitch_stability": {
+    "frequency_jitter_pct": 0.0,
+    "max_drift_hz": 0.0,
+    "quartz_crystal_locked": true
+  },
+  "volume_stability": {
+    "max_spl_variation_all_melodies_db": 0.6,
+    "consistent_volume_verified": true
+  },
+  "memory_metrics": {
+    "peak_heap_kb": 10.3,
+    "final_delta_kb": 9.76,
+    "zero_memory_leak": true
+  }
+}

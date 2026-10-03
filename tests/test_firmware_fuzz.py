@@ -751,4 +751,20 @@ def test_fuzz_temperature_compensated_battery_discharge():
     assert summary["memory_metrics"]["final_delta_kb"] < 20.0
 
 
+def test_fuzz_piezo_acoustic_resonance_and_pitch_stability():
+    """Verify acoustic resonance at 4.0 kHz, melody pitch stability, and SPL across battery decay."""
+    from run_piezo_acoustic_resonance_benchmark import run_acoustic_and_melody_benchmark
+    summary = run_acoustic_and_melody_benchmark()
+
+    assert summary["status"] == "PASSED"
+    assert summary["transducer"]["resonant_frequency_hz"] == 4000.0
+    assert summary["pitch_stability"]["frequency_jitter_pct"] == 0.00
+    assert summary["pitch_stability"]["quartz_crystal_locked"] is True
+    assert summary["volume_stability"]["consistent_volume_verified"] is True
+    assert summary["volume_stability"]["max_spl_variation_all_melodies_db"] <= 0.60
+    assert summary["memory_metrics"]["zero_memory_leak"] is True
+    assert summary["memory_metrics"]["final_delta_kb"] < 20.0
+
+
+
 
