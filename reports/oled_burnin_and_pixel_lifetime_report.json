@@ -21,16 +21,16 @@
     "total_frames_profiled": 12000,
     "target_fps": 30.0,
     "mean_fps": 29.97,
-    "mean_interval_ms": 33.37,
+    "mean_interval_ms": 33.368,
     "frame_jitter_ms": 0.042,
     "min_interval_ms": 33.277,
-    "max_interval_ms": 33.508,
+    "max_interval_ms": 34.149,
     "dropped_frames": 0,
     "fps_stability_verified": true,
     "epoch_samples": [
       {
         "hour_epoch": 1,
-        "mean_interval_ms": 33.337,
+        "mean_interval_ms": 33.338,
         "epoch_fps": 30.0,
         "frame_count": 500
       },
@@ -60,32 +60,32 @@
       },
       {
         "hour_epoch": 6,
-        "mean_interval_ms": 33.377,
+        "mean_interval_ms": 33.373,
         "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
         "hour_epoch": 7,
-        "mean_interval_ms": 33.374,
+        "mean_interval_ms": 33.383,
         "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
         "hour_epoch": 8,
-        "mean_interval_ms": 33.372,
+        "mean_interval_ms": 33.382,
         "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
         "hour_epoch": 9,
-        "mean_interval_ms": 33.372,
-        "epoch_fps": 29.97,
+        "mean_interval_ms": 33.373,
+        "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
         "hour_epoch": 10,
-        "mean_interval_ms": 33.372,
-        "epoch_fps": 29.97,
+        "mean_interval_ms": 33.373,
+        "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
@@ -97,25 +97,25 @@
       {
         "hour_epoch": 12,
         "mean_interval_ms": 33.372,
-        "epoch_fps": 29.97,
+        "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
         "hour_epoch": 13,
-        "mean_interval_ms": 33.374,
+        "mean_interval_ms": 33.373,
         "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
         "hour_epoch": 14,
-        "mean_interval_ms": 33.372,
-        "epoch_fps": 29.97,
+        "mean_interval_ms": 33.373,
+        "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
         "hour_epoch": 15,
-        "mean_interval_ms": 33.372,
-        "epoch_fps": 29.97,
+        "mean_interval_ms": 33.373,
+        "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
@@ -126,50 +126,50 @@
       },
       {
         "hour_epoch": 17,
-        "mean_interval_ms": 33.372,
-        "epoch_fps": 29.97,
+        "mean_interval_ms": 33.373,
+        "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
         "hour_epoch": 18,
-        "mean_interval_ms": 33.374,
+        "mean_interval_ms": 33.378,
         "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
         "hour_epoch": 19,
-        "mean_interval_ms": 33.391,
-        "epoch_fps": 29.95,
-        "frame_count": 500
-      },
-      {
-        "hour_epoch": 20,
-        "mean_interval_ms": 33.387,
-        "epoch_fps": 29.95,
-        "frame_count": 500
-      },
-      {
-        "hour_epoch": 21,
-        "mean_interval_ms": 33.387,
-        "epoch_fps": 29.95,
-        "frame_count": 500
-      },
-      {
-        "hour_epoch": 22,
         "mean_interval_ms": 33.383,
         "epoch_fps": 29.96,
         "frame_count": 500
       },
       {
+        "hour_epoch": 20,
+        "mean_interval_ms": 33.371,
+        "epoch_fps": 29.97,
+        "frame_count": 500
+      },
+      {
+        "hour_epoch": 21,
+        "mean_interval_ms": 33.371,
+        "epoch_fps": 29.97,
+        "frame_count": 500
+      },
+      {
+        "hour_epoch": 22,
+        "mean_interval_ms": 33.372,
+        "epoch_fps": 29.96,
+        "frame_count": 500
+      },
+      {
         "hour_epoch": 23,
-        "mean_interval_ms": 33.387,
-        "epoch_fps": 29.95,
+        "mean_interval_ms": 33.371,
+        "epoch_fps": 29.97,
         "frame_count": 500
       },
       {
         "hour_epoch": 24,
-        "mean_interval_ms": 33.371,
-        "epoch_fps": 29.97,
+        "mean_interval_ms": 33.372,
+        "epoch_fps": 29.96,
         "frame_count": 500
       }
     ]
