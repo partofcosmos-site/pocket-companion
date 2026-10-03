@@ -520,5 +520,23 @@ def test_fuzz_pet_7day_lifecycle_and_zero_leak():
     assert summary["sleep_cycles_completed"] > 50
 
 
+def test_fuzz_pomodoro_study_soak_zero_jitter():
+    """Verify Pomodoro focus/break cycles, pause/resume drift, and zero timing jitter."""
+    from run_pomodoro_study_soak import run_pomodoro_study_soak
+    summary = run_pomodoro_study_soak(total_study_intervals=10)
+
+    assert summary["status"] == "PASSED"
+    assert summary["study_sessions_completed"] == 10
+    assert summary["short_breaks_completed"] == 8
+    assert summary["long_breaks_completed"] == 2
+    assert summary["total_alarms_fired"] == 20
+    assert summary["pause_drift_errors"] == 0
+    assert summary["timing_jitter"]["zero_jitter_verified"] is True
+    assert summary["timing_jitter"]["max_jitter_ms"] == 0.0
+    assert summary["zero_memory_leak"] is True
+    assert summary["final_delta_kb"] < 50.0
+
+
+
 
 
