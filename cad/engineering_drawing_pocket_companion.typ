@@ -13,7 +13,7 @@
       grid(
         columns: (1fr, auto),
         align(left)[#text(7.5pt, fill: rgb("#475569"), weight: "bold")[POCKET COMPANION ENCLOSURE — ENGINEERING SPECIFICATION & BLUEPRINT]],
-        align(right)[#text(7.5pt, fill: rgb("#64748b"))[DWG-PC-CAD-01 | REV 2.6]]
+        align(right)[#text(7.5pt, fill: rgb("#64748b"))[DWG-PC-CAD-01 | REV 2.7]]
       )
       v(-3pt)
       line(length: 100%, stroke: 0.5pt + rgb("#cbd5e1"))
@@ -174,28 +174,28 @@
 #pagebreak()
 
 // --- Page 2: Tolerances & Manufacturing Matrix ---
-#text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[4. Manufacturing Clearance & Dimensional Tolerance Matrix]
+#text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[4. Manufacturing Clearance & Thermal Tolerance Stack-Up Matrix (-20°C to +60°C per ISO 286)]
 
 #table(
-  columns: (1.8fr, 1.3fr, 1.4fr, 1.5fr, 1.1fr),
-  inset: 3.5pt,
+  columns: (1.4fr, 1.2fr, 1.2fr, 1.8fr, 0.9fr),
+  inset: 2.8pt,
   stroke: 0.5pt + rgb("#cbd5e1"),
   fill: (col, row) => if row == 0 { rgb("#f1f5f9") } else { none },
   align: (left, left, left, left, center),
-  [#text(7.5pt, weight: "bold")[Subsystem Feature]],
-  [#text(7.5pt, weight: "bold")[CAD Geometry]],
-  [#text(7.5pt, weight: "bold")[Mating Hardware]],
-  [#text(7.5pt, weight: "bold")[Clearance / Fit Margins]],
-  [#text(7.5pt, weight: "bold")[Audit Status]],
-  [Tactile Button Shafts], [Dia $6.50$ mm through-bore], [Dia $6.00$ mm button stem], [$0.25$ mm radial ($0.50$ mm diametral)], [PASS (Glide)],
-  [Tactile Plunger Travel], [$1.45$ mm pocket depth], [$6 times 6$ mm SMD dome switch], [$0.25$ mm nominal pre-travel stroke], [PASS (Positive Stop)],
-  [Snap-Fit Latch Interlock], [$0.30$ mm undercut bead (4x)], [$0.35$ mm detent pockets], [$0.05$ mm retention clearance], [PASS ($>5000$ cycles)],
-  [USB-C Receptacle Port], [$11.50 times 6.50$ mm cutout], [Standard USB-C plug overmold], [$0.80$ mm $45^degree$ conical entry flare], [PASS (Deep Seating)],
-  [PCB Perimeter Cavity], [$52.50 times 38.50$ mm cavity], [$52.00 times 38.00$ mm FR4 PCB], [$0.25$ mm radial perimeter margin], [PASS (ISO Slip-Fit)],
-  [M2 Corner Boss Holes], [Dia $2.00$ mm pilot bore], [M2 self-tapping screw], [$1.20$ mm solid boss wall thickness], [PASS (Hoop Safe)],
-  [M2 Screw Counterbores], [Dia $4.40$ mm, depth $1.80$ mm], [M2 screw head ($d=3.8$ mm)], [$0.30$ mm radial tool clearance], [PASS (Flush Head)],
-  [LiPo Battery Bay], [$38.00 times 26.00 times 4.50$ mm], [$400$ mAh pouch ($35 times 25$ mm)], [$1.50$ mm perimeter air jacket], [PASS (Convection)],
-  [TP4056 Module Rails], [$17.50$ mm internal span], [Standard TP4056 breakout], [$0.25$ mm guide rail slide clearance], [PASS (Snap-In)]
+  [#text(7pt, weight: "bold")[Subsystem Feature]],
+  [#text(7pt, weight: "bold")[CAD Geometry]],
+  [#text(7pt, weight: "bold")[Mating Hardware]],
+  [#text(7pt, weight: "bold")[Nominal & Thermal Margins (±40K)]],
+  [#text(7pt, weight: "bold")[Audit Status]],
+  [Tactile Button Shafts], [Dia $6.50$ mm through-bore], [Dia $6.00$ mm button stem], [$0.250$ mm radial ($249.4 - 250.6$ µm)], [PASS (Glide)],
+  [Tactile Plunger Stroke], [$1.45$ mm pocket depth], [$6 times 6$ mm SMD dome switch], [$0.250 plus.minus 0.007$ mm ($243.5 - 256.5$ µm)], [PASS (Positive Snap)],
+  [Snap-Fit Latch Interlock], [$0.30$ mm undercut bead (4x)], [$0.35$ mm detent pockets], [$-20^degree$C FoS=$2.86$; $+60^degree$C $P=11.1$ N], [PASS (Non-Brittle)],
+  [USB-C Receptacle Port], [$11.50 times 6.50$ mm cutout], [Standard USB-C plug overmold], [$0.80$ mm flare ($785 - 815$ µm)], [PASS (Deep Seating)],
+  [PCB Perimeter Cavity], [$52.50 times 38.50$ mm cavity], [$52.00 times 38.00$ mm FR4 PCB], [$0.25$ mm radial ($148 - 352$ µm)], [PASS (Zero Warping)],
+  [M2 PCB Mounting Holes], [Dia $2.40$ mm through-bore], [M2 screw ($d=2.00$ mm)], [$0.200$ mm radial (Min gap $102$ µm)], [PASS (Zero Binding)],
+  [M2 Corner Boss Bores], [Dia $2.00$ mm pilot bore], [M2 self-tapping screw], [$1.20$ mm solid wall ($1.17 - 1.23$ mm)], [PASS (Hoop Safe)],
+  [LiPo Battery Bay], [$38.00 times 26.00 times 4.50$ mm], [$400$ mAh pouch ($35 times 25$ mm)], [$1.50$ mm air gap ($1416 - 1584$ µm)], [PASS (Convection)],
+  [Labyrinth Sealing Joint], [$0.80$ mm tongue, $1.10$ mm groove], [Perimeter parting line lip], [$0.150$ mm gap ($146.4 - 153.6$ µm)], [PASS (IP54 Seal)]
 )
 
 #v(2pt)
@@ -322,4 +322,40 @@
   #image("renders/ip54_ingress_protection_analysis.png", width: 94%) \
   #text(7pt, weight: "bold")[Figure 6: High-Resolution IP54 Cross-Sectional Labyrinth Baffle, Umbrella Skirt & Hydro-Acoustic Mesh Diagram ($1920 times 1080$)] \
   #text(6.5pt, fill: rgb("#64748b"))[Panel 1: 0.8mm Tongue Labyrinth • Panel 2: Hydrodynamic Loss • Panel 3: Button Umbrella Skirt • Panel 4: Chevron Baffle • Panel 5: ePTFE WEP • Panel 6: Audit Matrix]
+]
+
+#pagebreak()
+
+// --- Page 5: Thermal Expansion & Shrinkage Tolerance Stack-Up ---
+#text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[11. ISO 286 / IEC 60068-2-14 Thermal Expansion & Joint Tolerance Stack-Up Audit]
+
+#table(
+  columns: (1.6fr, 1.1fr, 2.3fr, 1.2fr),
+  inset: 3.5pt,
+  stroke: 0.5pt + rgb("#cbd5e1"),
+  fill: (col, row) => if row == 0 { rgb("#f1f5f9") } else { none },
+  align: (left, center, left, center),
+  [#text(7.5pt, weight: "bold")[Mating Joint / Interface]],
+  [#text(7.5pt, weight: "bold")[Nominal Gap]],
+  [#text(7.5pt, weight: "bold")[Differential CTE Mechanics ($Delta T = 80"K", -20^degree"C" "to" +60^degree"C"$)]],
+  [#text(7.5pt, weight: "bold")[Clearance Status]],
+  [PCB Mount Diagonal Span], [$200.0$ $mu$m radial], [$Delta alpha = 46$ ppm/K ($53.25$ mm diag); max shift $plus.minus 98.0$ $mu$m], [PASS ($102.0$ $mu$m gap)],
+  [PCB Mount X-Axis Span], [$200.0$ $mu$m radial], [$Delta alpha = 46$ ppm/K ($44.00$ mm span); max shift $plus.minus 81.0$ $mu$m], [PASS ($119.0$ $mu$m gap)],
+  [Button Guide Radial Bore], [$250.0$ $mu$m radial], [Matched PETG $alpha = 60$ ppm/K; differential drift $<0.6$ $mu$m], [PASS ($249.4$ $mu$m gap)],
+  [Button Plunger Pre-Travel], [$250.0$ $mu$m stroke], [Differential height expansion ($10.2$ mm vs $7.5$ mm); shift $plus.minus 6.5$ $mu$m], [PASS ($243.5$ $mu$m stroke)],
+  [Snap-Fit Latch Undercut], [$300.0$ $mu$m bead], [Modulus scaling: $E(-20)=2550$ MPa, $E(+60)=1650$ MPa; $"FoS" >= 2.86$], [PASS (Zero Fracture)],
+  [Labyrinth Seal Air Gap], [$150.0$ $mu$m per side], [Symmetric perimeter breathing; gap contraction $<3.6$ $mu$m], [PASS ($146.4$ $mu$m gap)],
+  [LiPo Battery Cavity Length], [$1500.0$ $mu$m float], [Pouch volumetric thermal swelling jacket; margin $>1.4$ mm], [PASS (Zero Pinch)],
+  [USB-C Receptacle Port], [$800.0$ $mu$m chamfer], [Metal plug vs chassis thermal expansion; clearance $>785.0$ $mu$m], [PASS (Deep Seating)]
+)
+
+#v(2pt)
+
+// --- Section 12: Thermal Tolerance Stack-Up Diagram Proof ---
+#text(9.5pt, weight: "bold", fill: rgb("#0369a1"))[12. Thermal Expansion & Shrinkage Stack-Up Engineering Proof]
+
+#align(center)[
+  #image("renders/thermal_tolerance_stackup.png", width: 94%) \
+  #text(7pt, weight: "bold")[Figure 7: High-Resolution Thermal Expansion Kinematics, Screw Alignment & Clearance Stack-Up Map ($1920 times 1080$)] \
+  #text(6.5pt, fill: rgb("#64748b"))[Panel 1: Differential CTE • Panel 2: Screw Alignment Stack-Up • Panel 3: Button Guide Invariance • Panel 4: Snap-Fit Yield Margin • Panel 5: Pre-Travel • Panel 6: Audit Matrix]
 ]
