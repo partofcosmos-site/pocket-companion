@@ -537,6 +537,24 @@ def test_fuzz_pomodoro_study_soak_zero_jitter():
     assert summary["final_delta_kb"] < 50.0
 
 
+def test_fuzz_multimode_marathon_soak_and_displayio_stability():
+    """Verify 10,000 sequential mode shifts, displayio buffer caps, and zero heap growth."""
+    from run_multimode_marathon import run_multimode_marathon
+    summary = run_multimode_marathon(total_shifts=10000)
+
+    assert summary["status"] == "PASSED"
+    assert summary["total_shifts"] == 10000
+    assert summary["full_revolutions"] == 2500
+    assert summary["crashes"] == 0
+    assert summary["display_buffer_stable"] is True
+    assert summary["zero_memory_leak"] is True
+    assert summary["steady_state_bytes_per_shift"] < 2.0
+    assert summary["final_delta_kb"] < 30.0
+    for m in (0, 1, 2, 3):
+        assert summary["mode_distribution"][m] == 2500
+
+
+
 
 
 
