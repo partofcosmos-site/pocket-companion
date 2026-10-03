@@ -8,6 +8,7 @@
 
 import time
 import random
+import json
 
 try:
     import board
