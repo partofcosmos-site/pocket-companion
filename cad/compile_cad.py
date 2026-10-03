@@ -61,6 +61,7 @@ def parse_binary_stl(filepath):
         
         edges = {}
         vertices = set()
+        total_vol_mm3 = 0.0
         
         for _ in range(num_triangles):
             # Normal (3 floats = 12 bytes)
@@ -93,6 +94,12 @@ def parse_binary_stl(filepath):
             for edge in tri_edges:
                 edges[edge] = edges.get(edge, 0) + 1
 
+            total_vol_mm3 += (
+                verts[0] * (verts[4] * verts[8] - verts[5] * verts[7]) +
+                verts[1] * (verts[5] * verts[6] - verts[3] * verts[8]) +
+                verts[2] * (verts[3] * verts[7] - verts[4] * verts[6])
+            ) / 6.0
+
     # Check 2-manifold condition (every edge shared by exactly 2 faces)
     boundary_edges = sum(1 for count in edges.values() if count == 1)
     non_manifold_edges = sum(1 for count in edges.values() if count > 2)
@@ -101,6 +108,7 @@ def parse_binary_stl(filepath):
     dim_x = round(max_x - min_x, 2)
     dim_y = round(max_y - min_y, 2)
     dim_z = round(max_z - min_z, 2)
+    volume_cm3 = round(abs(total_vol_mm3) / 1000.0, 3)
     
     return {
         "file": filepath.name,
@@ -112,6 +120,7 @@ def parse_binary_stl(filepath):
             "max": [max_x, max_y, max_z],
             "dimensions_mm": [dim_x, dim_y, dim_z]
         },
+        "volume_cm3": volume_cm3,
         "is_watertight": is_watertight,
         "boundary_edges": boundary_edges,
         "non_manifold_edges": non_manifold_edges
