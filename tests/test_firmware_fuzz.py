@@ -690,4 +690,17 @@ def test_fuzz_display_graphics_stress():
     assert summary["final_delta_kb"] < 35.0
 
 
+def test_fuzz_boundary_conditions_and_corrupted_state():
+    """Verify 10,000-cycle boundary condition fuzzing, corrupted flash handling, and ADC noise filtering."""
+    from run_boundary_condition_fuzz import run_boundary_condition_fuzz
+    summary = run_boundary_condition_fuzz(total_cycles=10000)
+
+    assert summary["status"] == "PASSED"
+    assert summary["total_cycles"] == 10000
+    assert summary["crashes"] == 0
+    assert summary["state_recoveries_verified"] == 10000
+    assert summary["flash_fallbacks_verified"] == 200
+    assert summary["adc_spikes_filtered"] == 500
+    assert summary["zero_memory_leak"] is True
+    assert summary["final_delta_kb"] < 35.0
 

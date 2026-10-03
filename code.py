@@ -93,13 +93,117 @@ class PocketCompanion:
         self.last_frame_time = time.monotonic()
         self.alarm_events_count = 0
 
+    @staticmethod
+    def _safe_val(val, min_val, max_val):
+        """Safely parse integer within bounds, strictly rejecting NaN, Inf, and non-numerics."""
+        try:
+            if isinstance(val, int) and not isinstance(val, bool):
+                if min_val <= val <= max_val:
+                    return val
+            elif isinstance(val, float):
+                if val == val and abs(val) != float("inf"):
+                    iv = int(val)
+                    if min_val <= iv <= max_val:
+                        return iv
+            return None
+        except Exception:
+            return None
+
+    def reset_defaults(self):
+        """Restore all state machine variables to known valid factory defaults."""
+        self.mode = 0
+        self.pet_happiness = 85
+        self.pet_hunger = 20
+        self.pet_sleepiness = 15
+        self.best_reflex_ms = 999
+        self.best_memory_score = 0
+
+    def sanitize_state(self):
+        """Guard against corrupted runtime variables and enforce valid bounds."""
+        if not isinstance(self.mode, int) or isinstance(self.mode, bool) or not (0 <= self.mode < len(self.modes)):
+            self.mode = 0
+        if self.reflex_state not in (0, 1, 2, 3):
+            self.reflex_state = 0
+        if self.memory_state not in (0, 1, 2, 3, 4):
+            self.memory_state = 0
+
+        v_h = self._safe_val(self.pet_happiness, 0, 100)
+        self.pet_happiness = 85 if v_h is None else v_h
+
+        v_u = self._safe_val(self.pet_hunger, 0, 100)
+        self.pet_hunger = 20 if v_u is None else v_u
+
+        v_s = self._safe_val(self.pet_sleepiness, 0, 100)
+        self.pet_sleepiness = 15 if v_s is None else v_s
+
+    def save_state(self, filepath: str = "pocket_state.json") -> bool:
+        """Serialize current state (high scores, pet emotional stats) to flash storage."""
+        try:
+            state = {
+                "best_reflex_ms": self.best_reflex_ms,
+                "best_memory_score": self.best_memory_score,
+                "pet_happiness": self.pet_happiness,
+                "pet_hunger": self.pet_hunger,
+                "pet_sleepiness": self.pet_sleepiness,
+                "mode": self.mode,
+            }
+            with open(filepath, "w", encoding="utf-8") as f:
+                json.dump(state, f)
+            return True
+        except Exception:
+            return False
+
+    def load_state(self, filepath: str = "pocket_state.json") -> bool:
+        """Load state from flash storage with automatic validation and fallback to defaults."""
+        try:
+            with open(filepath, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            if not isinstance(data, dict):
+                self.reset_defaults()
+                return False
+
+            req_keys = ["best_reflex_ms", "best_memory_score", "pet_happiness", "pet_hunger", "pet_sleepiness", "mode"]
+            if not all(k in data for k in req_keys):
+                self.reset_defaults()
+                return False
+
+            v_reflex = self._safe_val(data.get("best_reflex_ms"), 0, 999)
+            v_mem = self._safe_val(data.get("best_memory_score"), 0, 9999)
+            v_happy = self._safe_val(data.get("pet_happiness"), 0, 100)
+            v_hunger = self._safe_val(data.get("pet_hunger"), 0, 100)
+            v_sleepy = self._safe_val(data.get("pet_sleepiness"), 0, 100)
+            v_mode = self._safe_val(data.get("mode"), 0, len(self.modes) - 1)
+
+            if None in (v_reflex, v_mem, v_happy, v_hunger, v_sleepy, v_mode):
+                self.reset_defaults()
+                return False
+
+            self.best_reflex_ms = v_reflex
+            self.best_memory_score = v_mem
+            self.pet_happiness = v_happy
+            self.pet_hunger = v_hunger
+            self.pet_sleepiness = v_sleepy
+            self.mode = v_mode
+            return True
+        except Exception:
+            self.reset_defaults()
+            return False
+
+
     def update_battery(self, voltage: float = None):
-        """Monitor battery voltage decay and enforce safe low-voltage cutoff."""
+        """Monitor battery voltage decay and enforce safe low-voltage cutoff with noise filtering."""
         if voltage is not None:
-            self.battery_voltage = float(voltage)
+            try:
+                v = float(voltage)
+                if not (v != v or v == float("inf") or v == float("-inf")):
+                    self.battery_voltage = max(2.5, min(4.5, v))
+            except (ValueError, TypeError):
+                pass
         elif self.vbat_pin is not None:
             try:
                 raw = self.vbat_pin.value
+                raw = max(0, min(65535, raw))
                 self.battery_voltage = (raw / 65535.0) * 3.3 * 2.0
             except Exception:
                 pass
@@ -113,6 +217,7 @@ class PocketCompanion:
         else:
             self.low_battery = False
             self.power_cutoff = False
+
 
     def sound_tone(self, freq: int, duration: float = 0.06):
         """Play a clean square wave tone on the piezo buzzer."""
@@ -506,6 +611,7 @@ class PocketCompanion:
         """Compose and push frame to OLED with I2C fault tolerance."""
         if not self.oled:
             return
+        self.sanitize_state()
         try:
             self.draw_header()
             if self.mode == 0:
@@ -529,6 +635,7 @@ class PocketCompanion:
         if now is None:
             now = time.monotonic()
 
+        self.sanitize_state()
         self.update_battery()
 
         # Automatic OLED reconnection check when offline
@@ -696,6 +803,18 @@ def draw_memory():
 
 def render(now: float):
     app.render(now)
+
+
+def save_state(filepath: str = "pocket_state.json") -> bool:
+    return app.save_state(filepath)
+
+
+def load_state(filepath: str = "pocket_state.json") -> bool:
+    return app.load_state(filepath)
+
+
+def reset_defaults():
+    app.reset_defaults()
 
 
 def main(max_ticks: int = None):

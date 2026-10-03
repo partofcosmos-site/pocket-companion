@@ -16,6 +16,7 @@ Validates:
 import sys
 import time
 import random
+import math
 import runpy
 import pytest
 
@@ -1147,3 +1148,146 @@ def test_benchmark_simulation_frame_execution_speed():
     print(f"[BENCHMARK] Latency: {ms_per_frame:.3f} ms/frame")
 
     assert fps > 100.0, f"Headless execution throughput {fps:.1f} FPS is below 100 FPS threshold"
+
+
+def test_boundary_conditions_and_persistence_unit(tmp_path):
+    """Verify state persistence, sanitization, boundary checks, and ADC noise filtering."""
+    import code
+    fw, oled, _, _, _, _, vbat_pin = create_mock_firmware()
+
+    # 1. _safe_val tests
+    assert code.PocketCompanion._safe_val(10, 0, 100) == 10
+    assert code.PocketCompanion._safe_val(True, 0, 100) is None  # bool rejected
+    assert code.PocketCompanion._safe_val(150, 0, 100) is None  # out of bounds int
+    assert code.PocketCompanion._safe_val(50.5, 0, 100) == 50   # valid float truncated
+    assert code.PocketCompanion._safe_val(float("nan"), 0, 100) is None
+    assert code.PocketCompanion._safe_val(float("inf"), 0, 100) is None
+    assert code.PocketCompanion._safe_val(float("-inf"), 0, 100) is None
+    assert code.PocketCompanion._safe_val(150.5, 0, 100) is None
+    assert code.PocketCompanion._safe_val("invalid", 0, 100) is None
+
+    class ExplodingVal:
+        def __int__(self):
+            raise RuntimeError("kaboom")
+
+    assert code.PocketCompanion._safe_val(ExplodingVal(), 0, 100) is None
+
+    # 2. reset_defaults
+    fw.mode = 3
+    fw.pet_happiness = 10
+    fw.reset_defaults()
+    assert fw.mode == 0
+    assert fw.pet_happiness == 85
+    assert fw.pet_hunger == 20
+    assert fw.pet_sleepiness == 15
+    assert fw.best_reflex_ms == 999
+    assert fw.best_memory_score == 0
+
+    # Module-level reset_defaults
+    code.reset_defaults()
+    assert code.app.mode == 0
+
+    # 3. sanitize_state
+    fw.mode = 99
+    fw.sanitize_state()
+    assert fw.mode == 0
+
+    fw.mode = -5
+    fw.sanitize_state()
+    assert fw.mode == 0
+
+    fw.mode = True
+    fw.sanitize_state()
+    assert fw.mode == 0
+
+    fw.reflex_state = 88
+    fw.sanitize_state()
+    assert fw.reflex_state == 0
+
+    fw.memory_state = 88
+    fw.sanitize_state()
+    assert fw.memory_state == 0
+
+    fw.pet_happiness = 200
+    fw.sanitize_state()
+    assert fw.pet_happiness == 85
+
+    fw.pet_hunger = -50
+    fw.sanitize_state()
+    assert fw.pet_hunger == 20
+
+    fw.pet_sleepiness = float("nan")
+    fw.sanitize_state()
+    assert fw.pet_sleepiness == 15
+
+    # 4. save_state and load_state
+    valid_file = str(tmp_path / "valid_state.json")
+    fw.best_reflex_ms = 195
+    fw.best_memory_score = 12
+    fw.pet_happiness = 95
+    fw.pet_hunger = 10
+    fw.pet_sleepiness = 5
+    fw.mode = 2
+    assert fw.save_state(valid_file) is True
+
+    # Test load_state
+    fw2, _, _, _, _, _, _ = create_mock_firmware()
+    assert fw2.load_state(valid_file) is True
+    assert fw2.best_reflex_ms == 195
+    assert fw2.best_memory_score == 12
+    assert fw2.pet_happiness == 95
+    assert fw2.pet_hunger == 10
+    assert fw2.pet_sleepiness == 5
+    assert fw2.mode == 2
+
+    # Module-level aliases
+    mod_file = str(tmp_path / "mod_state.json")
+    assert code.save_state(mod_file) is True
+    assert code.load_state(mod_file) is True
+
+    # Error handling paths
+    assert fw.save_state("/non_existent_folder_abc_123/state.json") is False
+    assert fw.load_state(str(tmp_path / "non_existent.json")) is False
+
+    # Non-dict JSON
+    arr_file = str(tmp_path / "array.json")
+    with open(arr_file, "w") as f:
+        f.write("[1, 2, 3]")
+    assert fw.load_state(arr_file) is False
+
+    # Missing keys JSON
+    missing_file = str(tmp_path / "missing.json")
+    with open(missing_file, "w") as f:
+        f.write('{"best_reflex_ms": 100}')
+    assert fw.load_state(missing_file) is False
+
+    # Corrupted / out-of-range field JSON
+    corrupt_file = str(tmp_path / "corrupt_val.json")
+    with open(corrupt_file, "w") as f:
+        f.write(
+            '{"best_reflex_ms": -99, "best_memory_score": 0, "pet_happiness": 85, '
+            '"pet_hunger": 20, "pet_sleepiness": 15, "mode": 0}'
+        )
+    assert fw.load_state(corrupt_file) is False
+
+    # Broken JSON syntax
+    broken_file = str(tmp_path / "broken.json")
+    with open(broken_file, "w") as f:
+        f.write('{"best_reflex_ms":')
+    assert fw.load_state(broken_file) is False
+
+    # 5. update_battery noise filtering
+    fw.update_battery("corrupted_analog_data")
+    assert fw.battery_voltage >= 2.5
+
+    fw.update_battery(float("nan"))
+    assert not math.isnan(fw.battery_voltage)
+
+    fw.update_battery(float("inf"))
+    assert not math.isinf(fw.battery_voltage)
+
+    fw.update_battery(15.0)  # Over-voltage spike clamped
+    assert fw.battery_voltage <= 4.5
+
+    fw.update_battery(-10.0)  # Negative dip clamped
+    assert fw.battery_voltage >= 2.5
