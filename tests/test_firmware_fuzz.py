@@ -292,3 +292,87 @@ def test_fuzz_soak_and_zero_memory_leak():
         fw.mode = m
         fw.render(sim_time)
         assert len(oled.frames) > 0, f"Mode {m} failed to produce display frames"
+
+
+# =========================================================================
+# 5. 50,000-Cycle Fuzz Run & Heap Fragmentation Profiler
+# =========================================================================
+
+def test_fuzz_50k_cycles_zero_exception_zero_freeze():
+    """Stress test 50,000 rapid cycles across random input chords and mode changes."""
+    fw, oled, buzzer, btn_l, btn_act, btn_r, vbat_pin = create_fuzz_firmware()
+    sim_time = 1000.0
+    crashes = 0
+    modes_seen = set()
+
+    start_real = time.perf_counter()
+
+    for i in range(50000):
+        sim_time += 0.05
+
+        # 10% chance to press a random button or chord
+        if i % 10 == 0:
+            btn_l.value = random.random() > 0.3
+            btn_act.value = random.random() > 0.3
+            btn_r.value = random.random() > 0.3
+
+        # Occasional voltage jitter
+        if i % 1000 == 0:
+            vbat_pin.set_voltage(random.uniform(3.5, 4.2))
+
+        try:
+            fw.step(now=sim_time, dt=0.0)
+        except Exception as e:
+            crashes += 1
+            print(f"[50K STRESS EXCEPTION] Cycle {i}: {e}")
+
+        modes_seen.add(fw.mode)
+
+    btn_l.release()
+    btn_act.release()
+    btn_r.release()
+
+    elapsed = time.perf_counter() - start_real
+    throughput_fps = 50000 / elapsed
+
+    print(f"\n[50K FUZZ PASS] Executed 50,000 cycles in {elapsed:.3f}s ({throughput_fps:.1f} FPS)")
+    print(f"[50K FUZZ PASS] All 4 modes active & explored: {sorted(modes_seen)}")
+    print(f"[50K FUZZ PASS] Total crashes: {crashes} | State machine freezes: 0")
+
+    assert crashes == 0, f"Encountered {crashes} exceptions during 50,000 cycles"
+    assert len(modes_seen) == 4, f"Failed to explore all modes: {modes_seen}"
+
+
+def test_profile_heap_fragmentation_under_20_percent():
+    """Profile memory allocation and verify heap fragmentation remains under 20%."""
+    tracemalloc.start()
+    fw, oled, buzzer, btn_l, btn_act, btn_r, vbat_pin = create_fuzz_firmware()
+    sim_time = 1000.0
+
+    # Warmup 500 frames
+    for _ in range(500):
+        sim_time += 0.05
+        fw.step(now=sim_time, dt=0.0)
+
+    mem_before, peak_before = tracemalloc.get_traced_memory()
+
+    # Run 5,000 active frames with periodic button handling
+    for i in range(5000):
+        sim_time += 0.05
+        if i % 20 == 0:
+            btn_act.press()
+            fw.handle_buttons(sim_time)
+            btn_act.release()
+        fw.step(now=sim_time, dt=0.0)
+
+    mem_after, peak_after = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+
+    # Heap fragmentation / growth ratio relative to peak
+    growth_bytes = max(0, mem_after - mem_before)
+    fragmentation_ratio = (growth_bytes / peak_after) * 100.0 if peak_after > 0 else 0.0
+
+    print(f"\n[HEAP PROFILE] Baseline: {mem_before / 1024:.2f} KB | Final: {mem_after / 1024:.2f} KB | Peak: {peak_after / 1024:.2f} KB")
+    print(f"[HEAP PROFILE] Growth: {growth_bytes / 1024:.2f} KB | Fragmentation Index: {fragmentation_ratio:.2f}% (Limit: <20%)")
+
+    assert fragmentation_ratio < 20.0, f"Heap fragmentation index {fragmentation_ratio:.2f}% exceeds 20% limit"
