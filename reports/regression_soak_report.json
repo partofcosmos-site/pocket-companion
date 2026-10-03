@@ -1,14 +1,14 @@
 {
   "status": "PASSED",
-  "iterations": 1,
-  "total_test_executions": 63,
-  "total_passed": 63,
+  "iterations": 3,
+  "total_test_executions": 189,
+  "total_passed": 189,
   "total_failed": 0,
   "pass_rate_pct": 100.0,
   "flakiness_score_pct": 0.0,
   "flaky_tests": [],
-  "total_wallclock_seconds": 85.45,
-  "average_pass_duration_seconds": 85.45,
+  "total_wallclock_seconds": 255.33,
+  "average_pass_duration_seconds": 85.11,
   "code_coverage": {
     "target": "code.py",
     "statements": 505,
@@ -17,8 +17,8 @@
     "verified": true
   },
   "baseline_heap_kb": 0.0,
-  "peak_heap_kb": 46.16,
-  "final_delta_kb": 6.23,
+  "peak_heap_kb": 49.35,
+  "final_delta_kb": 9.06,
   "zero_memory_leak": true,
   "iteration_results": [
     {
@@ -27,10 +27,32 @@
       "exit_code": 0,
       "passed_tests": 63,
       "failed_tests": 0,
-      "duration_seconds": 85.45,
-      "heap_kb": 5.66,
-      "peak_heap_kb": 46.16,
-      "delta_kb": 5.66
+      "duration_seconds": 79.18,
+      "heap_kb": 5.61,
+      "peak_heap_kb": 45.94,
+      "delta_kb": 5.61
+    },
+    {
+      "iteration": 2,
+      "status": "PASSED",
+      "exit_code": 0,
+      "passed_tests": 63,
+      "failed_tests": 0,
+      "duration_seconds": 85.76,
+      "heap_kb": 7.14,
+      "peak_heap_kb": 47.88,
+      "delta_kb": 7.14
+    },
+    {
+      "iteration": 3,
+      "status": "PASSED",
+      "exit_code": 0,
+      "passed_tests": 63,
+      "failed_tests": 0,
+      "duration_seconds": 90.39,
+      "heap_kb": 8.56,
+      "peak_heap_kb": 49.35,
+      "delta_kb": 8.56
     }
   ]
 }
