@@ -8,3 +8,15 @@ upload_cart.py
 upload_video.py
 inspect_step3.py
 submit_warmup.py
+.coverage
+*.tmp
+.coverage
+check_*.py
+inspect_*.py
+test_cart_upload.py
+dump_modal_details.py
+advance_to_step3_and_submit.py
+capture_live_confirmation.py
+upload_video_and_submit.py
+map_scripts_to_images.py
+modal_details.json
