@@ -735,3 +735,20 @@ def test_fuzz_low_power_sleep_and_wake_latency():
     assert summary["memory_metrics"]["final_delta_kb"] < 20.0
 
 
+def test_fuzz_temperature_compensated_battery_discharge():
+    """Verify discharge curves across -10C to +50C, Peukert derating, ADC calibration, and HUD progression."""
+    from run_temperature_battery_simulation import run_temperature_battery_simulation
+    summary = run_temperature_battery_simulation()
+
+    assert summary["status"] == "PASSED"
+    assert summary["peukert_derating_at_neg10c"]["capacity_reduction_pct"] == 35.0
+    assert summary["peukert_derating_at_neg10c"]["verified_35pct_reduction"] is True
+    assert len(summary["adc_lookup_table_calibration"]) == 7
+    assert summary["hud_icon_progression"]["verified_all_stages"] is True
+    assert summary["temperature_results"]["-10C"]["hud_progression_verified"] is True
+    assert summary["temperature_results"]["25C"]["hud_progression_verified"] is True
+    assert summary["memory_metrics"]["zero_memory_leak"] is True
+    assert summary["memory_metrics"]["final_delta_kb"] < 20.0
+
+
+

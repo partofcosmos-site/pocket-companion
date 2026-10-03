@@ -1370,3 +1370,81 @@ def test_low_power_sleep_and_wake_transitions():
     assert code.app.sleep_mode is False
     assert code.app.wake_events_count == 0
 
+
+# =========================================================================
+# 12. Temperature-Compensated Battery Discharge & HUD Progression Tests
+# =========================================================================
+
+def test_temperature_compensated_battery_discharge():
+    """Verify temperature-compensated Peukert derating, HUD progression, and ADC lookup table."""
+    import run_temperature_battery_simulation as temp_sim
+
+    # 1. Peukert derating and internal resistance coefficients
+    factor_neg10, r_neg10 = temp_sim.TemperatureCompensatedLiPo._get_temp_coefficients(-10.0)
+    assert factor_neg10 == 0.650  # Exactly 35.0% capacity reduction
+    assert r_neg10 == 0.550
+
+    factor_0, r_0 = temp_sim.TemperatureCompensatedLiPo._get_temp_coefficients(0.0)
+    assert round(factor_0, 3) == 0.820  # 18.0% capacity reduction
+    assert round(r_0, 3) == 0.320
+
+    factor_25, r_25 = temp_sim.TemperatureCompensatedLiPo._get_temp_coefficients(25.0)
+    assert factor_25 == 1.000  # Nominal capacity
+    assert r_25 == 0.150
+
+    factor_50, r_50 = temp_sim.TemperatureCompensatedLiPo._get_temp_coefficients(50.0)
+    assert factor_50 == 1.025
+    assert r_50 == 0.120
+
+    # 2. Terminal voltage and cell drainage under active load
+    cell = temp_sim.TemperatureCompensatedLiPo(400.0, 25.0)
+    assert cell.usable_capacity_mah == 400.0
+    v_ocv = cell.get_open_circuit_voltage()
+    assert v_ocv >= 4.10
+    v_term = cell.get_terminal_voltage(22.5)
+    assert v_term < v_ocv  # IR drop under load
+    consumed = cell.drain(22.5, 1.0)
+    assert consumed == 22.5
+    assert cell.remaining_mah == 400.0 - 22.5
+
+    # 3. HUD resolution across all voltage tiers
+    hud_full = temp_sim.resolve_battery_hud(4.15)
+    assert hud_full["bars"] == 4
+    assert hud_full["icon"] == "[||||]"
+    assert hud_full["status"] == "FULL"
+
+    hud_nominal = temp_sim.resolve_battery_hud(3.85)
+    assert hud_nominal["bars"] == 3
+    assert hud_nominal["icon"] == "[||| ]"
+
+    hud_low = temp_sim.resolve_battery_hud(3.65)
+    assert hud_low["bars"] == 2
+    assert hud_low["icon"] == "[||  ]"
+
+    hud_reserve = temp_sim.resolve_battery_hud(3.45)
+    assert hud_reserve["bars"] == 1
+    assert hud_reserve["hud_display"] == "< L  R >"
+
+    hud_alert = temp_sim.resolve_battery_hud(3.35)
+    assert hud_alert["bars"] == 1
+    assert hud_alert["hud_display"] == "!BAT!"
+    assert hud_alert["status"] == "BLINKING_ALERT"
+
+    hud_cutoff = temp_sim.resolve_battery_hud(3.10)
+    assert hud_cutoff["bars"] == 0
+    assert hud_cutoff["hud_display"] == "!CUTOFF!"
+    assert hud_cutoff["auto_sleep"] is True
+
+    # 4. ADC lookup table calibration
+    lut = temp_sim.calibrate_adc_lookup_table()
+    assert len(lut) == 7
+    assert all(pt["conversion_accuracy_pct"] >= 99.9 for pt in lut)
+
+    # 5. Full simulation engine execution
+    report = temp_sim.run_temperature_battery_simulation()
+    assert report["status"] == "PASSED"
+    assert report["peukert_derating_at_neg10c"]["verified_35pct_reduction"] is True
+    assert report["hud_icon_progression"]["verified_all_stages"] is True
+    assert report["memory_metrics"]["zero_memory_leak"] is True
+
+

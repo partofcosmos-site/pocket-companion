@@ -1,0 +1,236 @@
+{
+  "status": "PASSED",
+  "benchmark_name": "Temperature-Compensated Battery Discharge & HUD Progression",
+  "temperatures_evaluated": [
+    -10.0,
+    0.0,
+    15.0,
+    25.0,
+    40.0,
+    50.0
+  ],
+  "temperature_results": {
+    "-10C": {
+      "temperature_c": -10.0,
+      "peukert_derating_factor": 0.65,
+      "capacity_derating_pct": 35.0,
+      "usable_capacity_mah": 260.0,
+      "internal_resistance_ohm": 0.55,
+      "discharge_runtime_hours": 11.3,
+      "energy_delivered_mwh": 962.0,
+      "hud_progression_verified": true,
+      "hud_stages": {
+        "4_bars": true,
+        "3_bars": true,
+        "2_bars": true,
+        "1_bar": true,
+        "blinking_alert": true,
+        "auto_sleep_cutoff": true
+      },
+      "auto_sleep_cutoff_triggered": true
+    },
+    "0C": {
+      "temperature_c": 0.0,
+      "peukert_derating_factor": 0.82,
+      "capacity_derating_pct": 18.0,
+      "usable_capacity_mah": 328.0,
+      "internal_resistance_ohm": 0.32,
+      "discharge_runtime_hours": 14.2,
+      "energy_delivered_mwh": 1213.6,
+      "hud_progression_verified": true,
+      "hud_stages": {
+        "4_bars": true,
+        "3_bars": true,
+        "2_bars": true,
+        "1_bar": true,
+        "blinking_alert": true,
+        "auto_sleep_cutoff": true
+      },
+      "auto_sleep_cutoff_triggered": true
+    },
+    "15C": {
+      "temperature_c": 15.0,
+      "peukert_derating_factor": 0.928,
+      "capacity_derating_pct": 7.2,
+      "usable_capacity_mah": 371.2,
+      "internal_resistance_ohm": 0.218,
+      "discharge_runtime_hours": 16.1,
+      "energy_delivered_mwh": 1373.4,
+      "hud_progression_verified": true,
+      "hud_stages": {
+        "4_bars": true,
+        "3_bars": true,
+        "2_bars": true,
+        "1_bar": true,
+        "blinking_alert": true,
+        "auto_sleep_cutoff": true
+      },
+      "auto_sleep_cutoff_triggered": true
+    },
+    "25C": {
+      "temperature_c": 25.0,
+      "peukert_derating_factor": 1.0,
+      "capacity_derating_pct": 0.0,
+      "usable_capacity_mah": 400.0,
+      "internal_resistance_ohm": 0.15,
+      "discharge_runtime_hours": 17.3,
+      "energy_delivered_mwh": 1480.0,
+      "hud_progression_verified": true,
+      "hud_stages": {
+        "4_bars": true,
+        "3_bars": true,
+        "2_bars": true,
+        "1_bar": true,
+        "blinking_alert": true,
+        "auto_sleep_cutoff": true
+      },
+      "auto_sleep_cutoff_triggered": true
+    },
+    "40C": {
+      "temperature_c": 40.0,
+      "peukert_derating_factor": 1.015,
+      "capacity_derating_pct": -1.5,
+      "usable_capacity_mah": 406.0,
+      "internal_resistance_ohm": 0.132,
+      "discharge_runtime_hours": 17.6,
+      "energy_delivered_mwh": 1502.2,
+      "hud_progression_verified": true,
+      "hud_stages": {
+        "4_bars": true,
+        "3_bars": true,
+        "2_bars": true,
+        "1_bar": true,
+        "blinking_alert": true,
+        "auto_sleep_cutoff": true
+      },
+      "auto_sleep_cutoff_triggered": true
+    },
+    "50C": {
+      "temperature_c": 50.0,
+      "peukert_derating_factor": 1.025,
+      "capacity_derating_pct": -2.5,
+      "usable_capacity_mah": 410.0,
+      "internal_resistance_ohm": 0.12,
+      "discharge_runtime_hours": 17.7,
+      "energy_delivered_mwh": 1517.0,
+      "hud_progression_verified": true,
+      "hud_stages": {
+        "4_bars": true,
+        "3_bars": true,
+        "2_bars": true,
+        "1_bar": true,
+        "blinking_alert": true,
+        "auto_sleep_cutoff": true
+      },
+      "auto_sleep_cutoff_triggered": true
+    }
+  },
+  "peukert_derating_at_neg10c": {
+    "capacity_reduction_pct": 35.0,
+    "verified_35pct_reduction": true
+  },
+  "adc_lookup_table_calibration": [
+    {
+      "target_voltage": 4.2,
+      "nominal_raw_adc": 41704,
+      "calibrated_neg10c": 43893,
+      "calibrated_25c": 41704,
+      "calibrated_50c": 40140,
+      "conversion_accuracy_pct": 99.92
+    },
+    {
+      "target_voltage": 4.0,
+      "nominal_raw_adc": 39718,
+      "calibrated_neg10c": 41803,
+      "calibrated_25c": 39718,
+      "calibrated_50c": 38228,
+      "conversion_accuracy_pct": 99.92
+    },
+    {
+      "target_voltage": 3.8,
+      "nominal_raw_adc": 37732,
+      "calibrated_neg10c": 39712,
+      "calibrated_25c": 37732,
+      "calibrated_50c": 36317,
+      "conversion_accuracy_pct": 99.92
+    },
+    {
+      "target_voltage": 3.6,
+      "nominal_raw_adc": 35746,
+      "calibrated_neg10c": 37622,
+      "calibrated_25c": 35746,
+      "calibrated_50c": 34405,
+      "conversion_accuracy_pct": 99.92
+    },
+    {
+      "target_voltage": 3.4,
+      "nominal_raw_adc": 33760,
+      "calibrated_neg10c": 35532,
+      "calibrated_25c": 33760,
+      "calibrated_50c": 32494,
+      "conversion_accuracy_pct": 99.92
+    },
+    {
+      "target_voltage": 3.2,
+      "nominal_raw_adc": 31774,
+      "calibrated_neg10c": 33442,
+      "calibrated_25c": 31774,
+      "calibrated_50c": 30582,
+      "conversion_accuracy_pct": 99.92
+    },
+    {
+      "target_voltage": 3.0,
+      "nominal_raw_adc": 29788,
+      "calibrated_neg10c": 31351,
+      "calibrated_25c": 29788,
+      "calibrated_50c": 28670,
+      "conversion_accuracy_pct": 99.92
+    }
+  ],
+  "hud_icon_progression": {
+    "tiers": [
+      {
+        "bars": 4,
+        "icon": "[||||]",
+        "voltage_range": ">= 3.95V",
+        "status": "FULL"
+      },
+      {
+        "bars": 3,
+        "icon": "[||| ]",
+        "voltage_range": "3.75V - 3.95V",
+        "status": "NOMINAL"
+      },
+      {
+        "bars": 2,
+        "icon": "[||  ]",
+        "voltage_range": "3.55V - 3.75V",
+        "status": "LOW"
+      },
+      {
+        "bars": 1,
+        "icon": "[|   ]",
+        "voltage_range": "3.40V - 3.55V",
+        "status": "RESERVE"
+      },
+      {
+        "bars": 1,
+        "icon": "[|   ]",
+        "voltage_range": "3.00V - 3.40V",
+        "status": "BLINKING_ALERT (!BAT!)"
+      },
+      {
+        "bars": 0,
+        "icon": "[    ]",
+        "voltage_range": "<= 3.20V",
+        "status": "AUTO_SLEEP_CUTOFF (!CUTOFF!)"
+      }
+    ],
+    "verified_all_stages": true
+  },
+  "memory_metrics": {
+    "peak_heap_kb": 8.43,
+    "final_delta_kb": 7.87,
+    "zero_memory_leak": true
+  }
+}
