@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-03T18:16:27Z",
+  "timestamp": "2026-10-03T18:26:30Z",
   "cad_suite": "Pocket Companion Enclosure v1.0",
   "stls": [
     {
@@ -79,6 +79,33 @@
         ]
       },
       "volume_cm3": 0.801,
+      "is_watertight": true,
+      "boundary_edges": 0,
+      "non_manifold_edges": 0
+    },
+    {
+      "file": "print_bed_plate.stl",
+      "triangles": 16444,
+      "unique_vertices": 8184,
+      "unique_edges": 24666,
+      "bounding_box": {
+        "min": [
+          -32.25,
+          -42.5,
+          0.0
+        ],
+        "max": [
+          88.75,
+          42.5,
+          11.1
+        ],
+        "dimensions_mm": [
+          121.0,
+          85.0,
+          11.1
+        ]
+      },
+      "volume_cm3": 17.595,
       "is_watertight": true,
       "boundary_edges": 0,
       "non_manifold_edges": 0

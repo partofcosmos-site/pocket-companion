@@ -403,4 +403,18 @@ if (part == "base") {
         translate([outer_w/2, -5, -5])
             cube([outer_w + 10, outer_h + 10, total_enclosure_h + 10]);
     }
+} else if (part == "print_bed") {
+    // Optimized single-plate batch layout for Bambu Lab X1C / Prusa MK4 (250x210mm)
+    // 1. Base Shell (sitting flat on bottom floor)
+    translate([-outer_w/2 - 4.0, 0, 0])
+        enclosure_base();
+    
+    // 2. Top Lid (sitting flat on top roof, outer face down for 100% support-free surface)
+    translate([outer_w/2 + 4.0, 0, lid_total_h])
+        rotate([180, 0, 0])
+        enclosure_lid();
+    
+    // 3. Tactile Button Caps (batch array of 3, flat tops on bed)
+    translate([0, outer_h/2 + 10.0, 0])
+        button_caps_array(spacing = 12.0);
 }

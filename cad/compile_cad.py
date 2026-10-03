@@ -157,6 +157,12 @@ def compile_all():
             "file": button_caps_scad,
             "defines": ['mode="print"'],
             "desc": "3x Snap-Fit Tactile Button Caps STL (captive brim, dished top)"
+        },
+        {
+            "name": "print_bed_plate.stl",
+            "file": enclosure_scad,
+            "defines": ['part="print_bed"'],
+            "desc": "Combined Batch Print Bed Plate (Base + Lid + 3x Buttons on 250x210mm Bed)"
         }
     ]
     
@@ -338,7 +344,8 @@ def audit_meshes():
     stls = [
         {"name": "enclosure_base.stl", "desc": "Base Shell STL (LiPo bay, TP4056 cradle, switch slot, standoffs)"},
         {"name": "enclosure_lid.stl", "desc": "Top Lid STL (OLED bezel window, 3x button shafts, buzzer vents)"},
-        {"name": "button_caps.stl", "desc": "3x Snap-Fit Tactile Button Caps STL (captive brim, dished top)"}
+        {"name": "button_caps.stl", "desc": "3x Snap-Fit Tactile Button Caps STL (captive brim, dished top)"},
+        {"name": "print_bed_plate.stl", "desc": "Combined Batch Print Bed Plate (Base + Lid + 3x Buttons on 250x210mm Bed)"}
     ]
     stl_reports = []
     for item in stls:
