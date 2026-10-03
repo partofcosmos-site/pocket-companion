@@ -16,7 +16,7 @@
 
 1. [2026-10-03 — ![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/71f1e30cb4aaa1d3645ea29fa7da0e0f4d5774497b45c4ee4927fcc0c868b5](#2026-10-03-01systemarchitectureblockdiagramhttpshalflifehack)
 2. [2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)](#2026-10-03-05easyedaschematiccapturehttpshalflifehackclub-as)
-3. [2026-10-03 — ![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/31c80fc77adb978b6a8c0ec8ddcf674d65880f699093b55a0e8af75322cdd94c.png)](#2026-10-03-09jlcpcbdrcvalidationpasshttpshalflifehackclub-as)
+3. [2026-10-03 — ![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f4fd3f28e1eb4d983b4e0c02e1d72f5e47a18cd43a5570abfe2c30a984876071.png)](#2026-10-03-09jlcpcbdrcvalidationpasshttpshalflifehackclub-as)
 
 ## Design
 
@@ -88,17 +88,17 @@ In this design phase, I transferred the hardware architecture into EasyEDA Stand
 - Ran EasyEDA Electrical Rule Check (ERC) with zero dangling nets or unconnected floating pins.
 - Verified voltage compatibility: all peripherals run strictly on 3.3V logic matching the RP2040 GPIO tolerance.
 
-### 2026-10-03 — ![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/31c80fc77adb978b6a8c0ec8ddcf674d65880f699093b55a0e8af75322cdd94c.png)
+### 2026-10-03 — ![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f4fd3f28e1eb4d983b4e0c02e1d72f5e47a18cd43a5570abfe2c30a984876071.png)
 
 **3.5h**
 
-![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/31c80fc77adb978b6a8c0ec8ddcf674d65880f699093b55a0e8af75322cdd94c.png)
+![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f4fd3f28e1eb4d983b4e0c02e1d72f5e47a18cd43a5570abfe2c30a984876071.png)
 
-![10_gerber_manufacturing_stackup_preview](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/ac1da79e0a8a9c1d080045783c8e4c6ce0afacb721fdf441d88b5819bc9910a3.png)
+![10_gerber_manufacturing_stackup_preview](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/83ee80aaa95dd163d5ea2e2f3fed2f73f7b971ac7ab93308adfa669440d1617a.png)
 
-![11_circuitpython_firmware_state_machine](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/5b67f2950893f91ab5f5ceec9553a5a82d7538d645da95f56ce5e3a2c45503fa.png)
+![11_circuitpython_firmware_state_machine](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/8b0883b320b9a22ea11839199b1c6237220fbd59cfaa9dd3f0a876422835b96f.png)
 
-![12_reaction_game_timing_oscilloscope](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/dfcb901adfd5a66c6567bee498a3d4d345566500515dd494eaad717e810e4830.png)
+![12_reaction_game_timing_oscilloscope](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/663c98819a35280e7834c2e614e8f6ecaba066d9b0f043f7295a1e3015651059.png)
 
 # PCB Layout, DRC Validation & Manufacturing Gerbers
 
