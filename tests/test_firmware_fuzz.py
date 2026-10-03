@@ -506,4 +506,19 @@ def test_fuzz_game_states_and_submillisecond_score_tracking():
     assert summary["simon_metrics"]["latency_stats"]["max_ms"] < 1.0
 
 
+def test_fuzz_pet_7day_lifecycle_and_zero_leak():
+    """Verify 168 hours of continuous virtual pet transitions with zero memory leaks."""
+    from run_pet_7day_soak import run_pet_7day_simulation
+    summary = run_pet_7day_simulation(time_step_sec=60.0)
+
+    assert summary["status"] == "PASSED"
+    assert summary["total_sim_hours"] == 168.0
+    assert summary["crashes"] == 0
+    assert summary["zero_memory_leak"] is True
+    assert summary["final_delta_kb"] < 50.0
+    assert summary["feeding_events"] > 50
+    assert summary["sleep_cycles_completed"] > 50
+
+
+
 
