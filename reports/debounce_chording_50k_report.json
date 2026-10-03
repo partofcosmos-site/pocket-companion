@@ -1,8 +1,8 @@
 {
   "status": "PASSED",
   "cycles": 50000,
-  "elapsed_seconds": 2.336,
-  "fps": 21404.1,
+  "elapsed_seconds": 6.973,
+  "fps": 7170.1,
   "crashes": 0,
   "bounces_injected": 400,
   "bounces_filtered": 400,
