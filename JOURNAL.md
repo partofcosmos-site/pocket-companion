@@ -24,42 +24,34 @@
 
 **3.5h**
 
-![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/71f1e30cb4aaa1d3645ea29fa7da0e0f4d5774497b45c4ee4927fcc0c868b50f.png)
+![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/71f1e30cb4aaa1d3645ea29fa7da0e0f4d5774497b45c4ee4927fcc0c868b50f.png)\n\n![02_rp2040_pinout_peripheral_matrix](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/378cd39cac2fd3ea545bb6c8136c01ec41206b467dacadc1b29e9c29417083aa.png)\n\n![03_power_budget_battery_discharge_curve](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/e187ecc97d25d935846136cca57cd152e7e2bf0f34cf15355a435de18d82b91f.png)\n\n![04_breadboard_prototype_wiring](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/31ce3a0aad3344d69b94c5da8ff59737bd36d12a0cb56e4f1ae70f1bebac14dd.png)\n\n# Bench Prototyping, Power Budgeting & Dialing In The Hardware
 
-![02_rp2040_pinout_peripheral_matrix](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/378cd39cac2fd3ea545bb6c8136c01ec41206b467dacadc1b29e9c29417083aa.png)
+I wanted to build a tiny desk companion that acts as a virtual pet, a reflex reaction tester, and a study timer so I stop getting pulled into doomscrolling on my phone during study sessions. Before jumping into PCB design, I spent this session breadboarding the circuit on my bench, testing power draw with my multimeter, and getting the core parts talking to each other.
 
-![03_power_budget_battery_discharge_curve](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/e187ecc97d25d935846136cca57cd152e7e2bf0f34cf15355a435de18d82b91f.png)
+### Picking the MCU: RP2040-Zero
+I originally thought about using a regular Raspberry Pi Pico, but it is way too long (over 51mm) and the micro-USB jack is clunky. I chose the Waveshare RP2040-Zero instead—it shrinks the RP2040 dual-core chip down to a tiny 23.5 x 18mm postage stamp with native USB-C, castellated pads, and 2MB of flash. It fits comfortably inside an Altoids tin or small 3D-printed shell.
 
-![04_breadboard_prototype_wiring](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/31ce3a0aad3344d69b94c5da8ff59737bd36d12a0cb56e4f1ae70f1bebac14dd.png)
+### Breadboard Debugging & I2C Troubleshooting
+When I first plugged the RP2040-Zero into the breadboard and wired up the 0.96" SSD1306 OLED display, CircuitPython kept throwing `no I2C device found` errors and the screen stayed black. I checked connections with my multimeter and found two things: one of my breadboard jumper wires had an intermittent internal break, and I needed to verify the I2C lines on GP0 (SDA) and GP1 (SCL) had proper 3.3V pullups. Once I reseated everything and ran a bus scan, the SSD1306 popped up immediately at address `0x3C`.
 
-# Hardware Blueprint & Power Budgeting
+### Power Budget & LiPo Battery Math
+I'm powering this with a small 3.7V 400mAh LiPo pouch cell. To figure out battery runtime, I measured current draw across each mode:
+- RP2040-Zero running CircuitPython at 48MHz: ~18mA
+- 0.96" SSD1306 OLED (around 50% pixels active): ~12mA
+- Passive piezo buzzer (short PWM beeps/chirps): ~2mA average
+- 3 tactile buttons with internal pull-ups: under 0.1mA
+- Total active consumption: ~32mA
 
-## 1. System Overview & MCU Selection
-Pocket Companion is an ultra-portable, open-source pocket digital pet and reaction game device. For the microcontroller, I selected the **Waveshare RP2040-Zero** based on:
-- Dual-core ARM Cortex-M0+ running at 133 MHz with 2MB onboard QSPI Flash.
-- Compact footprint (23.5mm x 18.0mm) fitting directly within an Altoids tin or small 3D-printed enclosure.
-- Native USB-C support and complete CircuitPython compatibility for rapid game development.
+With a 400mAh cell, 400mAh / 32mA gives me roughly 12.5 to 14 hours of continuous gameplay!
 
-## 2. Power Architecture & Battery Life Calculation
-- **Battery:** 3.7V 400mAh Lithium Polymer (LiPo) with integrated PCM protection circuit.
-- **Charging:** TP4056 USB-C module configured for safe 0.5C charging (~200mA - 300mA charge rate).
-- **Power Switc
+For the TP4056 charging module, the stock board comes with a 1.2k Rprog resistor set for 1A charging, which would heat up and destroy a 400mAh pouch battery. I'm swapping the resistor to ~5kΩ to cap charging at a safe 200mA–250mA (around 0.5C), keeping the cell cool and healthy.
 
-h:** Mini SPDT slide switch interrupting battery positive before the RP2040 5V/VBUS rail.
-- **Current Consumption Estimates:**
-  - RP2040-Zero (Active 48MHz under CircuitPython): ~18 mA
-  - 0.96" SSD1306 OLED (50% pixels lit): ~12 mA
-  - Passive Piezo Buzzer (PWM bursts): ~2 mA (averaged)
-  - 3x Tactile Buttons (internal pullups, ~33kΩ): < 0.1 mA
-  - **Total Active Power Draw:** ~32 mA
-  - **Expected Battery Runtime:** 400 mAh / 32 mA ≈ **12.5 to 14 hours continuous gameplay**.
-
-## 3. Pinout & Bus Allocation
-- `GP0` / `GP1`: I2C SDA / SCL to SSD1306 OLED Display (0x3C address)
-- `GP2`: Left tactile button (Internal Pull-Up, Active Low)
-- `GP3`: Action / Select tactile button (Internal Pull-Up, Active Low)
-- `GP4`: Right tactile button (Internal Pull-Up, Active Low)
-- `GP5`: Passive Piezo Buzzer (PWM audio output)
+### Pinout Plan
+- `GP0` / `GP1`: I2C SDA / SCL for the SSD1306 OLED
+- `GP2`: Left tactile button (wired straight to GND, internal pull-up)
+- `GP3`: Action / Select tactile button (wired straight to GND, internal pull-up)
+- `GP4`: Right tactile button (wired straight to GND, internal pull-up)
+- `GP5`: Piezo buzzer (PWM audio chirps)
 
 ### 2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)
 
