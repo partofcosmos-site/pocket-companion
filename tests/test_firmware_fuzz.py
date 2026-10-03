@@ -782,6 +782,39 @@ def test_fuzz_oled_burnin_and_pixel_lifetime():
     assert summary["memory_metrics"]["final_delta_kb"] < 35.0
 
 
+def test_fuzz_200k_cycles_and_render_latency():
+    """Verify 200,000-iteration state machine fuzz test, zero memory leak, and 30 FPS render latency."""
+    from run_fuzz_200k_and_render_latency import run_200k_fuzz_and_render_benchmark
+    summary = run_200k_fuzz_and_render_benchmark()
+
+    assert summary["status"] == "PASSED"
+    assert summary["fuzz_metrics"]["total_cycles"] == 200000
+    assert summary["fuzz_metrics"]["total_crashes"] == 0
+    assert summary["render_latency_metrics"]["mean_latency_us"] < 1000.0  # Sub-millisecond render
+    assert summary["render_latency_metrics"]["cpu_utilization_pct"] < 5.0
+    assert summary["memory_metrics"]["zero_memory_leak"] is True
+    assert summary["memory_metrics"]["final_delta_kb"] < 35.0
+
+
+def test_fuzz_flash_500k_endurance_and_brownout_recovery():
+    """Verify 500k wear-leveled flash writes, 2.7V brownout fault recovery, and sub-ms serialization."""
+    from run_flash_wear_leveling_endurance_simulation import run_flash_endurance_and_brownout_simulation
+    summary = run_flash_endurance_and_brownout_simulation(total_writes=500000)
+
+    assert summary["status"] == "PASSED"
+    assert summary["wear_leveling_endurance"]["endurance_gate_passed"] is True
+    assert summary["wear_leveling_endurance"]["max_sector_writes"] <= 62500
+    assert summary["wear_leveling_endurance"]["remaining_margin_pct"] >= 35.0
+    assert summary["brownout_recovery_at_2v7"]["zero_corruption_verified"] is True
+    assert summary["brownout_recovery_at_2v7"]["corrupted_boots"] == 0
+    assert summary["brownout_recovery_at_2v7"]["recovery_success_rate_pct"] == 100.0
+    assert summary["serialization_speed_metrics"]["sub_millisecond_verified"] is True
+    assert summary["memory_metrics"]["zero_memory_leak"] is True
+    assert summary["memory_metrics"]["final_delta_kb"] < 25.0
+
+
+
+
 
 
 

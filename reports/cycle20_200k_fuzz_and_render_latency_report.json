@@ -1,0 +1,132 @@
+{
+  "status": "PASSED",
+  "benchmark_name": "Cycle 20: 200,000-Iteration Fuzz & 30 FPS V-Sync Render Latency",
+  "fuzz_metrics": {
+    "total_cycles": 200000,
+    "elapsed_seconds": 52.495,
+    "throughput_fps": 3809.9,
+    "total_crashes": 0,
+    "mode_distribution": {
+      "0": 39040,
+      "1": 48960,
+      "2": 54880,
+      "3": 57120
+    },
+    "checkpoints": [
+      {
+        "cycle": 25000,
+        "current_kb": 9.66,
+        "delta_kb": 9.66,
+        "segment_fps": 3657.8,
+        "mode_counts": {
+          "0": 4550,
+          "1": 6860,
+          "2": 6410,
+          "3": 7180
+        }
+      },
+      {
+        "cycle": 50000,
+        "current_kb": 10.88,
+        "delta_kb": 10.88,
+        "segment_fps": 3058.7,
+        "mode_counts": {
+          "0": 9790,
+          "1": 12150,
+          "2": 13690,
+          "3": 14370
+        }
+      },
+      {
+        "cycle": 75000,
+        "current_kb": 11.85,
+        "delta_kb": 11.85,
+        "segment_fps": 3207.7,
+        "mode_counts": {
+          "0": 14650,
+          "1": 17850,
+          "2": 20850,
+          "3": 21650
+        }
+      },
+      {
+        "cycle": 100000,
+        "current_kb": 12.39,
+        "delta_kb": 12.39,
+        "segment_fps": 4261.6,
+        "mode_counts": {
+          "0": 19750,
+          "1": 24490,
+          "2": 27490,
+          "3": 28270
+        }
+      },
+      {
+        "cycle": 125000,
+        "current_kb": 13.23,
+        "delta_kb": 13.23,
+        "segment_fps": 3886.9,
+        "mode_counts": {
+          "0": 24870,
+          "1": 30640,
+          "2": 34250,
+          "3": 35240
+        }
+      },
+      {
+        "cycle": 150000,
+        "current_kb": 13.97,
+        "delta_kb": 13.97,
+        "segment_fps": 4201.2,
+        "mode_counts": {
+          "0": 29450,
+          "1": 36540,
+          "2": 41390,
+          "3": 42620
+        }
+      },
+      {
+        "cycle": 175000,
+        "current_kb": 14.81,
+        "delta_kb": 14.81,
+        "segment_fps": 4419.4,
+        "mode_counts": {
+          "0": 33920,
+          "1": 42960,
+          "2": 48040,
+          "3": 50080
+        }
+      },
+      {
+        "cycle": 200000,
+        "current_kb": 15.43,
+        "delta_kb": 15.43,
+        "segment_fps": 4320.0,
+        "mode_counts": {
+          "0": 39040,
+          "1": 48960,
+          "2": 54880,
+          "3": 57120
+        }
+      }
+    ]
+  },
+  "render_latency_metrics": {
+    "frames_profiled": 5000,
+    "v_sync_budget_us": 33333.33,
+    "mean_latency_us": 255.22,
+    "median_latency_us": 245.0,
+    "p95_latency_us": 295.1,
+    "p99_latency_us": 453.0,
+    "min_latency_us": 235.8,
+    "max_latency_us": 714.6,
+    "cpu_utilization_pct": 0.77,
+    "idle_margin_pct": 99.23,
+    "sub_millisecond_verified": true
+  },
+  "memory_metrics": {
+    "peak_heap_kb": 232.35,
+    "final_delta_kb": 14.41,
+    "zero_memory_leak": true
+  }
+}
