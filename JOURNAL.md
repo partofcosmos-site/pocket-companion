@@ -14,23 +14,23 @@
 
 ## Contents
 
-1. [2026-10-03 — ![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/569f28b2738f06d6ec6aa3e46aadad179cdf3235c9aa0d5f1ba847364a63b8](#2026-10-03-01systemarchitectureblockdiagramhttpshalflifehack)
+1. [2026-10-03 — ![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/71f1e30cb4aaa1d3645ea29fa7da0e0f4d5774497b45c4ee4927fcc0c868b5](#2026-10-03-01systemarchitectureblockdiagramhttpshalflifehack)
 2. [2026-10-03 — ![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f78d60506d27933e9864e1f215d1e03127209aa5e71ed517c3eb85ade911bdc8.png)](#2026-10-03-05easyedaschematiccapturehttpshalflifehackclub-as)
 3. [2026-10-03 — ![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/31c80fc77adb978b6a8c0ec8ddcf674d65880f699093b55a0e8af75322cdd94c.png)](#2026-10-03-09jlcpcbdrcvalidationpasshttpshalflifehackclub-as)
 
 ## Design
 
-### 2026-10-03 — ![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/569f28b2738f06d6ec6aa3e46aadad179cdf3235c9aa0d5f1ba847364a63b8
+### 2026-10-03 — ![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/71f1e30cb4aaa1d3645ea29fa7da0e0f4d5774497b45c4ee4927fcc0c868b5
 
 **3.5h**
 
-![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/569f28b2738f06d6ec6aa3e46aadad179cdf3235c9aa0d5f1ba847364a63b88e.png)
+![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/71f1e30cb4aaa1d3645ea29fa7da0e0f4d5774497b45c4ee4927fcc0c868b50f.png)
 
-![02_rp2040_pinout_peripheral_matrix](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/2d076e5575ecb2dec78d78a78468eff4bce03ffca9062cfbc69a1c3536fc96e9.png)
+![02_rp2040_pinout_peripheral_matrix](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/378cd39cac2fd3ea545bb6c8136c01ec41206b467dacadc1b29e9c29417083aa.png)
 
-![03_power_budget_battery_discharge_curve](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/3510f5a2275c088fc1c00dba23c23b4a8f471bcfe927c7064ae0767491128f8e.png)
+![03_power_budget_battery_discharge_curve](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/e187ecc97d25d935846136cca57cd152e7e2bf0f34cf15355a435de18d82b91f.png)
 
-![04_breadboard_prototype_wiring](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/1647d234f946769d86f2b88d8a0699e0c0b434a20d9e656c8a3315feb6060726.png)
+![04_breadboard_prototype_wiring](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/31ce3a0aad3344d69b94c5da8ff59737bd36d12a0cb56e4f1ae70f1bebac14dd.png)
 
 # Hardware Blueprint & Power Budgeting
 
@@ -43,7 +43,9 @@ Pocket Companion is an ultra-portable, open-source pocket digital pet and reacti
 ## 2. Power Architecture & Battery Life Calculation
 - **Battery:** 3.7V 400mAh Lithium Polymer (LiPo) with integrated PCM protection circuit.
 - **Charging:** TP4056 USB-C module configured for safe 0.5C charging (~200mA - 300mA charge rate).
-- **Power Switch:** Mini SPDT slide switch interrupting battery positive before the RP2040 5V/VBUS rail.
+- **Power Switc
+
+h:** Mini SPDT slide switch interrupting battery positive before the RP2040 5V/VBUS rail.
 - **Current Consumption Estimates:**
   - RP2040-Zero (Active 48MHz under CircuitPython): ~18 mA
   - 0.96" SSD1306 OLED (50% pixels lit): ~12 mA
