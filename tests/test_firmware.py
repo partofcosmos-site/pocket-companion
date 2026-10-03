@@ -1215,7 +1215,7 @@ def test_boundary_conditions_and_persistence_unit(tmp_path):
     fw.sanitize_state()
     assert fw.pet_sleepiness == 15
 
-    # 4. save_state and load_state
+    # 4. save_state and load_state with debounce
     valid_file = str(tmp_path / "valid_state.json")
     fw.best_reflex_ms = 195
     fw.best_memory_score = 12
@@ -1223,7 +1223,14 @@ def test_boundary_conditions_and_persistence_unit(tmp_path):
     fw.pet_hunger = 10
     fw.pet_sleepiness = 5
     fw.mode = 2
-    assert fw.save_state(valid_file) is True
+    assert fw.save_state(valid_file, force=True) is True
+
+    # Debounce suppression test
+    assert fw.save_state(valid_file, force=False, now=fw.last_save_time + 0.1) is False
+    assert fw.flash_save_skipped_count >= 1
+
+    # Forced save bypasses debounce
+    assert fw.save_state(valid_file, force=True, now=fw.last_save_time + 0.1) is True
 
     # Test load_state
     fw2, _, _, _, _, _, _ = create_mock_firmware()
@@ -1237,12 +1244,13 @@ def test_boundary_conditions_and_persistence_unit(tmp_path):
 
     # Module-level aliases
     mod_file = str(tmp_path / "mod_state.json")
-    assert code.save_state(mod_file) is True
+    assert code.save_state(mod_file, force=True) is True
     assert code.load_state(mod_file) is True
 
     # Error handling paths
-    assert fw.save_state("/non_existent_folder_abc_123/state.json") is False
+    assert fw.save_state("/non_existent_folder_abc_123/state.json", force=True) is False
     assert fw.load_state(str(tmp_path / "non_existent.json")) is False
+
 
     # Non-dict JSON
     arr_file = str(tmp_path / "array.json")

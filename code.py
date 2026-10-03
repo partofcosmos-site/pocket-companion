@@ -92,6 +92,10 @@ class PocketCompanion:
         self.last_button_time = 0.0
         self.last_frame_time = time.monotonic()
         self.alarm_events_count = 0
+        self.save_debounce_sec = 2.0
+        self.last_save_time = -10.0
+        self.flash_write_count = 0
+        self.flash_save_skipped_count = 0
 
     @staticmethod
     def _safe_val(val, min_val, max_val):
@@ -115,6 +119,9 @@ class PocketCompanion:
         self.pet_sleepiness = 15
         self.best_reflex_ms = 999
         self.best_memory_score = 0
+        self.last_save_time = -10.0
+        self.flash_write_count = 0
+        self.flash_save_skipped_count = 0
 
     def sanitize_state(self):
         """Guard against corrupted runtime variables and enforce valid bounds."""
@@ -134,8 +141,15 @@ class PocketCompanion:
         v_s = self._safe_val(self.pet_sleepiness, 0, 100)
         self.pet_sleepiness = 15 if v_s is None else v_s
 
-    def save_state(self, filepath: str = "pocket_state.json") -> bool:
-        """Serialize current state (high scores, pet emotional stats) to flash storage."""
+    def save_state(self, filepath: str = "pocket_state.json", force: bool = False, now: float = None) -> bool:
+        """Serialize current state (high scores, pet emotional stats) to flash storage with debounce."""
+        if now is None:
+            now = time.monotonic()
+
+        if not force and (now - self.last_save_time) < self.save_debounce_sec:
+            self.flash_save_skipped_count += 1
+            return False
+
         try:
             state = {
                 "best_reflex_ms": self.best_reflex_ms,
@@ -147,9 +161,12 @@ class PocketCompanion:
             }
             with open(filepath, "w", encoding="utf-8") as f:
                 json.dump(state, f)
+            self.last_save_time = now
+            self.flash_write_count += 1
             return True
         except Exception:
             return False
+
 
     def load_state(self, filepath: str = "pocket_state.json") -> bool:
         """Load state from flash storage with automatic validation and fallback to defaults."""
@@ -670,14 +687,14 @@ class PocketCompanion:
         self.update_memory(now)
         self.handle_buttons(now)
 
-        if (now - self.last_frame_time) >= 0.06:
+        if (now - self.last_frame_time) >= 0.033:
             self.last_frame_time = now
             self.render(now)
 
         if dt > 0:
             time.sleep(dt)
 
-    def run(self, max_ticks: int = None, target_fps: float = 15.0):
+    def run(self, max_ticks: int = None, target_fps: float = 30.0):
         """Main firmware execution loop."""
         self.sound_happy()
         ticks = 0
@@ -803,8 +820,8 @@ def render(now: float):
     app.render(now)
 
 
-def save_state(filepath: str = "pocket_state.json") -> bool:
-    return app.save_state(filepath)
+def save_state(filepath: str = "pocket_state.json", force: bool = False, now: float = None) -> bool:
+    return app.save_state(filepath, force=force, now=now)
 
 
 def load_state(filepath: str = "pocket_state.json") -> bool:

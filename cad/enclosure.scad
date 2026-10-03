@@ -326,7 +326,7 @@ module pcb_model() {
 // -----------------------------------------------------------------------------
 // Assembly & Exploded Visualizer
 // -----------------------------------------------------------------------------
-module enclosure_assembly(lid_z_offset = 0) {
+module enclosure_assembly(lid_z_offset = 0, lid_alpha = 0.92) {
     // Base Shell
     color([0.20, 0.22, 0.25]) // Sleek Matte Cyber Slate
         enclosure_base();
@@ -348,7 +348,7 @@ module enclosure_assembly(lid_z_offset = 0) {
     }
     
     // Top Lid
-    color([0.30, 0.34, 0.38, 0.92]) // Semi-transparent smoked slate
+    color([0.30, 0.38, 0.48, lid_alpha]) // Clear smoked acrylic preview
     translate([0, 0, base_total_h + lid_z_offset])
         enclosure_lid();
 }
@@ -368,7 +368,10 @@ if (part == "base") {
         button_caps_array();
 } else if (part == "assembly") {
     // Fully mated, closed assembly
-    enclosure_assembly(lid_z_offset = 0);
+    enclosure_assembly(lid_z_offset = 0, lid_alpha = 0.92);
+} else if (part == "transparent_assembly") {
+    // Transparent lid preview showing all internal components
+    enclosure_assembly(lid_z_offset = 0, lid_alpha = 0.38);
 } else if (part == "exploded") {
     // Exploded presentation view showing all internal hardware layers
     enclosure_assembly(lid_z_offset = 28.0);

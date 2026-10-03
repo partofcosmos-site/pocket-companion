@@ -1,12 +1,12 @@
 {
   "status": "PASSED",
   "total_cycles": 25000,
-  "wallclock_seconds": 1.379,
-  "fps": 18128.4,
+  "wallclock_seconds": 3.532,
+  "fps": 7078.9,
   "crashes": 0,
   "battery_drops_injected": 13,
   "i2c_nacks_injected": 13,
-  "oled_errors_caught": 3277,
+  "oled_errors_caught": 6301,
   "oled_reconnections": 12,
   "switch_chatter_events": 1000
 }
