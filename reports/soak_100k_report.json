@@ -2,12 +2,12 @@
   "status": "PASSED",
   "total_cycles": 100000,
   "sample_interval": 5000,
-  "elapsed_seconds": 52.14,
-  "overall_fps": 1917.9,
+  "elapsed_seconds": 19.515,
+  "overall_fps": 5124.3,
   "total_crashes": 0,
   "baseline_heap_kb": 0.0,
-  "peak_heap_kb": 31.44,
-  "final_heap_delta_kb": 29.87,
+  "peak_heap_kb": 30.26,
+  "final_heap_delta_kb": 29.73,
   "memory_leak_detected": false,
   "mode_distribution": {
     "0": 19980,
@@ -18,10 +18,10 @@
   "checkpoints": [
     {
       "cycle": 5000,
-      "current_kb": 14.81,
-      "peak_kb": 16.45,
-      "delta_kb": 14.81,
-      "segment_fps": 1597.1,
+      "current_kb": 14.67,
+      "peak_kb": 15.27,
+      "delta_kb": 14.67,
+      "segment_fps": 5868.7,
       "mode_counts": {
         "0": 1125,
         "1": 1305,
@@ -32,10 +32,10 @@
     },
     {
       "cycle": 10000,
-      "current_kb": 15.96,
-      "peak_kb": 17.47,
-      "delta_kb": 15.96,
-      "segment_fps": 1588.1,
+      "current_kb": 15.81,
+      "peak_kb": 16.3,
+      "delta_kb": 15.81,
+      "segment_fps": 4935.2,
       "mode_counts": {
         "0": 1890,
         "1": 2760,
@@ -46,10 +46,10 @@
     },
     {
       "cycle": 15000,
-      "current_kb": 16.88,
-      "peak_kb": 18.4,
-      "delta_kb": 16.88,
-      "segment_fps": 1509.7,
+      "current_kb": 16.73,
+      "peak_kb": 17.22,
+      "delta_kb": 16.73,
+      "segment_fps": 4487.1,
       "mode_counts": {
         "0": 3045,
         "1": 3750,
@@ -60,10 +60,10 @@
     },
     {
       "cycle": 20000,
-      "current_kb": 17.51,
-      "peak_kb": 19.16,
-      "delta_kb": 17.51,
-      "segment_fps": 1632.1,
+      "current_kb": 17.37,
+      "peak_kb": 17.98,
+      "delta_kb": 17.37,
+      "segment_fps": 4802.8,
       "mode_counts": {
         "0": 4005,
         "1": 4815,
@@ -74,10 +74,10 @@
     },
     {
       "cycle": 25000,
-      "current_kb": 18.08,
-      "peak_kb": 19.91,
-      "delta_kb": 18.08,
-      "segment_fps": 1540.4,
+      "current_kb": 17.93,
+      "peak_kb": 18.74,
+      "delta_kb": 17.93,
+      "segment_fps": 4517.1,
       "mode_counts": {
         "0": 5235,
         "1": 6190,
@@ -88,10 +88,10 @@
     },
     {
       "cycle": 30000,
-      "current_kb": 18.66,
-      "peak_kb": 20.65,
-      "delta_kb": 18.66,
-      "segment_fps": 1578.5,
+      "current_kb": 18.51,
+      "peak_kb": 19.47,
+      "delta_kb": 18.51,
+      "segment_fps": 4738.7,
       "mode_counts": {
         "0": 6285,
         "1": 7350,
@@ -102,10 +102,10 @@
     },
     {
       "cycle": 35000,
-      "current_kb": 19.96,
-      "peak_kb": 21.46,
-      "delta_kb": 19.96,
-      "segment_fps": 1492.7,
+      "current_kb": 19.82,
+      "peak_kb": 20.29,
+      "delta_kb": 19.82,
+      "segment_fps": 4409.3,
       "mode_counts": {
         "0": 7275,
         "1": 8145,
@@ -116,10 +116,10 @@
     },
     {
       "cycle": 40000,
-      "current_kb": 20.87,
-      "peak_kb": 22.22,
-      "delta_kb": 20.87,
-      "segment_fps": 1652.4,
+      "current_kb": 20.73,
+      "peak_kb": 21.05,
+      "delta_kb": 20.73,
+      "segment_fps": 4987.2,
       "mode_counts": {
         "0": 8205,
         "1": 9280,
@@ -130,10 +130,10 @@
     },
     {
       "cycle": 45000,
-      "current_kb": 20.96,
-      "peak_kb": 22.98,
-      "delta_kb": 20.96,
-      "segment_fps": 1426.5,
+      "current_kb": 20.82,
+      "peak_kb": 21.81,
+      "delta_kb": 20.82,
+      "segment_fps": 4358.2,
       "mode_counts": {
         "0": 9120,
         "1": 10605,
@@ -144,10 +144,10 @@
     },
     {
       "cycle": 50000,
-      "current_kb": 21.78,
-      "peak_kb": 23.8,
-      "delta_kb": 21.78,
-      "segment_fps": 1696.7,
+      "current_kb": 21.64,
+      "peak_kb": 22.63,
+      "delta_kb": 21.64,
+      "segment_fps": 4698.8,
       "mode_counts": {
         "0": 9990,
         "1": 12080,
@@ -158,10 +158,10 @@
     },
     {
       "cycle": 55000,
-      "current_kb": 22.65,
-      "peak_kb": 24.51,
-      "delta_kb": 22.65,
-      "segment_fps": 2082.2,
+      "current_kb": 22.51,
+      "peak_kb": 23.39,
+      "delta_kb": 22.51,
+      "segment_fps": 4626.6,
       "mode_counts": {
         "0": 10870,
         "1": 13305,
@@ -172,10 +172,10 @@
     },
     {
       "cycle": 60000,
-      "current_kb": 23.69,
-      "peak_kb": 25.32,
-      "delta_kb": 23.69,
-      "segment_fps": 2464.0,
+      "current_kb": 23.55,
+      "peak_kb": 24.14,
+      "delta_kb": 23.55,
+      "segment_fps": 4738.6,
       "mode_counts": {
         "0": 11670,
         "1": 14280,
@@ -186,10 +186,10 @@
     },
     {
       "cycle": 65000,
-      "current_kb": 24.32,
-      "peak_kb": 26.07,
-      "delta_kb": 24.32,
-      "segment_fps": 2447.6,
+      "current_kb": 24.18,
+      "peak_kb": 24.9,
+      "delta_kb": 24.18,
+      "segment_fps": 4461.4,
       "mode_counts": {
         "0": 12870,
         "1": 15755,
@@ -200,10 +200,10 @@
     },
     {
       "cycle": 70000,
-      "current_kb": 25.16,
-      "peak_kb": 26.8,
-      "delta_kb": 25.16,
-      "segment_fps": 2591.6,
+      "current_kb": 25.02,
+      "peak_kb": 25.63,
+      "delta_kb": 25.02,
+      "segment_fps": 4505.1,
       "mode_counts": {
         "0": 13920,
         "1": 17055,
@@ -214,10 +214,10 @@
     },
     {
       "cycle": 75000,
-      "current_kb": 25.94,
-      "peak_kb": 27.53,
-      "delta_kb": 25.94,
-      "segment_fps": 2449.0,
+      "current_kb": 25.8,
+      "peak_kb": 26.36,
+      "delta_kb": 25.8,
+      "segment_fps": 4956.5,
       "mode_counts": {
         "0": 15105,
         "1": 18465,
@@ -228,10 +228,10 @@
     },
     {
       "cycle": 80000,
-      "current_kb": 26.83,
-      "peak_kb": 28.31,
-      "delta_kb": 26.83,
-      "segment_fps": 2572.3,
+      "current_kb": 26.69,
+      "peak_kb": 27.14,
+      "delta_kb": 26.69,
+      "segment_fps": 6678.2,
       "mode_counts": {
         "0": 16140,
         "1": 19815,
@@ -242,10 +242,10 @@
     },
     {
       "cycle": 85000,
-      "current_kb": 27.49,
-      "peak_kb": 29.06,
-      "delta_kb": 27.49,
-      "segment_fps": 2493.2,
+      "current_kb": 27.35,
+      "peak_kb": 27.88,
+      "delta_kb": 27.35,
+      "segment_fps": 7215.1,
       "mode_counts": {
         "0": 17250,
         "1": 20925,
@@ -256,10 +256,10 @@
     },
     {
       "cycle": 90000,
-      "current_kb": 28.29,
-      "peak_kb": 29.89,
-      "delta_kb": 28.29,
-      "segment_fps": 2569.5,
+      "current_kb": 28.14,
+      "peak_kb": 28.71,
+      "delta_kb": 28.14,
+      "segment_fps": 7005.9,
       "mode_counts": {
         "0": 18120,
         "1": 22230,
@@ -270,10 +270,10 @@
     },
     {
       "cycle": 95000,
-      "current_kb": 29.18,
-      "peak_kb": 30.59,
-      "delta_kb": 29.18,
-      "segment_fps": 2500.5,
+      "current_kb": 29.04,
+      "peak_kb": 29.47,
+      "delta_kb": 29.04,
+      "segment_fps": 6687.7,
       "mode_counts": {
         "0": 19110,
         "1": 23730,
@@ -284,10 +284,10 @@
     },
     {
       "cycle": 100000,
-      "current_kb": 29.41,
-      "peak_kb": 31.44,
-      "delta_kb": 29.41,
-      "segment_fps": 2624.6,
+      "current_kb": 29.27,
+      "peak_kb": 30.26,
+      "delta_kb": 29.27,
+      "segment_fps": 7082.7,
       "mode_counts": {
         "0": 19980,
         "1": 24955,
