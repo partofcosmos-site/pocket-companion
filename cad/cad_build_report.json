@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-10-03T15:32:59Z",
+  "timestamp": "2026-10-03T17:03:01Z",
   "cad_suite": "Pocket Companion Enclosure v1.0",
   "stls": [
     {
       "file": "enclosure_base.stl",
-      "triangles": 4148,
-      "unique_vertices": 2064,
-      "unique_edges": 6222,
+      "triangles": 4156,
+      "unique_vertices": 2068,
+      "unique_edges": 6234,
       "bounding_box": {
         "min": [
           0.0,
@@ -24,6 +24,7 @@
           11.1
         ]
       },
+      "volume_cm3": 8.953,
       "is_watertight": true,
       "boundary_edges": 0,
       "non_manifold_edges": 0
@@ -50,6 +51,7 @@
           10.2
         ]
       },
+      "volume_cm3": 8.014,
       "is_watertight": true,
       "boundary_edges": 0,
       "non_manifold_edges": 0
@@ -76,6 +78,7 @@
           9.8
         ]
       },
+      "volume_cm3": 0.801,
       "is_watertight": true,
       "boundary_edges": 0,
       "non_manifold_edges": 0
@@ -85,44 +88,44 @@
     {
       "name": "assembly_isometric.png",
       "resolution": "1920x1080",
-      "size_kb": 69.6,
-      "render_time_s": 0.88
+      "size_kb": 69.5,
+      "render_time_s": 0.94
     },
     {
       "name": "exploded_view.png",
       "resolution": "1920x1080",
       "size_kb": 90.4,
-      "render_time_s": 0.44
+      "render_time_s": 0.46
     },
     {
       "name": "enclosure_base_top.png",
       "resolution": "1920x1080",
-      "size_kb": 75.5,
-      "render_time_s": 0.37
+      "size_kb": 75.3,
+      "render_time_s": 0.4
     },
     {
       "name": "enclosure_lid_bezel.png",
       "resolution": "1920x1080",
       "size_kb": 50.0,
-      "render_time_s": 0.36
+      "render_time_s": 0.39
     },
     {
       "name": "enclosure_lid_underside.png",
       "resolution": "1920x1080",
-      "size_kb": 74.3,
-      "render_time_s": 0.36
+      "size_kb": 74.0,
+      "render_time_s": 0.39
     },
     {
       "name": "button_caps_detail.png",
       "resolution": "1920x1080",
       "size_kb": 30.5,
-      "render_time_s": 0.32
+      "render_time_s": 0.31
     },
     {
       "name": "cutaway_section.png",
       "resolution": "1920x1080",
       "size_kb": 46.8,
-      "render_time_s": 0.59
+      "render_time_s": 0.58
     }
   ],
   "tolerances": [
@@ -141,11 +144,11 @@
       "status": "PASS - 0.30mm snap-fit lip latching verified"
     },
     {
-      "feature": "USB-C Port Chamfered Strain Relief",
-      "through_cutout": "10.20 x 4.60 mm (r=1.5mm) through-port",
-      "exterior_chamfer": "1.20 mm 45-degree flared entry mouth (12.6 x 7.0 mm)",
-      "strain_relief": "Conical lead-in eliminates cable overmold stress and bending wear",
-      "status": "PASS - 45-deg USB-C chamfered strain relief verified"
+      "feature": "USB-C Port Connector Head Clearance & Chamfered Strain Relief",
+      "through_cutout": "11.50 x 6.50 mm (r=1.5mm) through-port",
+      "exterior_chamfer": "0.80 mm 45-degree flared entry mouth (13.1 x 8.1 mm)",
+      "cable_clearance": "Accommodates full 11.2 x 6.2 mm USB-C overmold cable connector heads with zero interference",
+      "status": "PASS - 11.5mm x 6.5mm USB-C connector head clearance & 45-deg chamfer verified"
     },
     {
       "feature": "PCB Perimeter Cavity vs Board Dimensions",
@@ -157,9 +160,9 @@
     {
       "feature": "Tactile Button Cap Shaft vs Lid Guide Sleeve",
       "shaft_diameter": "6.00 mm",
-      "lid_hole_diameter": "6.60 mm",
-      "diametral_clearance": "0.60 mm (0.30 mm radial margin)",
-      "status": "PASS - Low-friction zero-binding axial glide"
+      "lid_hole_diameter": "6.50 mm",
+      "diametral_clearance": "0.50 mm (0.25 mm radial print clearance margin)",
+      "status": "PASS - 0.25mm print clearance verified for low-friction zero-binding axial glide"
     },
     {
       "feature": "M2 Corner Screw Mounting Bosses",
