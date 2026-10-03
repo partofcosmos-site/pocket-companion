@@ -14,12 +14,14 @@ try:
     import busio
     import digitalio
     import pwmio
+    import analogio
     import adafruit_ssd1306
 except ImportError:  # pragma: no cover
     board = None
     busio = None
     digitalio = None
     pwmio = None
+    analogio = None
     adafruit_ssd1306 = None
 
 
@@ -28,12 +30,18 @@ class PocketCompanion:
 
     BUTTON_TONES = [330, 440, 554]  # Left (E4), Action (A4), Right (C#5)
 
-    def __init__(self, oled=None, buzzer=None, btn_left=None, btn_action=None, btn_right=None):
+    def __init__(self, oled=None, buzzer=None, btn_left=None, btn_action=None, btn_right=None, vbat_pin=None):
         self.oled = oled
         self.buzzer = buzzer
         self.btn_left = btn_left
         self.btn_action = btn_action
         self.btn_right = btn_right
+        self.vbat_pin = vbat_pin
+
+        # Power & Battery monitoring (3.7V LiPo: 4.2V max, 3.4V low warning, 3.2V cutoff)
+        self.battery_voltage = 4.2
+        self.low_battery = False
+        self.power_cutoff = False
 
         # UI & Modes
         self.modes = ["Pet", "Reflex", "Timer", "Memory"]
@@ -78,6 +86,27 @@ class PocketCompanion:
         self.last_button_time = 0.0
         self.last_frame_time = time.monotonic()
         self.alarm_events_count = 0
+
+    def update_battery(self, voltage: float = None):
+        """Monitor battery voltage decay and enforce safe low-voltage cutoff."""
+        if voltage is not None:
+            self.battery_voltage = float(voltage)
+        elif self.vbat_pin is not None:
+            try:
+                raw = self.vbat_pin.value
+                self.battery_voltage = (raw / 65535.0) * 3.3 * 2.0
+            except Exception:
+                pass
+
+        if self.battery_voltage <= 3.2:
+            self.power_cutoff = True
+            self.low_battery = True
+        elif self.battery_voltage <= 3.4:
+            self.low_battery = True
+            self.power_cutoff = False
+        else:
+            self.low_battery = False
+            self.power_cutoff = False
 
     def sound_tone(self, freq: int, duration: float = 0.06):
         """Play a clean square wave tone on the piezo buzzer."""
@@ -360,12 +389,17 @@ class PocketCompanion:
                         self.memory_state = 4
 
     def draw_header(self):
-        """Render top navigation bar."""
+        """Render top navigation bar with battery status indicator."""
         if not self.oled:
             return
         self.oled.fill(0)
         self.oled.text(f"[{self.modes[self.mode]}]", 0, 0, 1)
-        self.oled.text("< L  R >", 76, 0, 1)
+        if self.power_cutoff:
+            self.oled.text("!CUTOFF!", 64, 0, 1)
+        elif self.low_battery:
+            self.oled.text("!BAT!", 72, 0, 1)
+        else:
+            self.oled.text("< L  R >", 76, 0, 1)
         self.oled.hline(0, 10, 128, 1)
 
     def draw_pet(self, now: float):
@@ -478,9 +512,23 @@ class PocketCompanion:
         self.oled.show()
 
     def step(self, now: float = None, dt: float = 0.01):
-        """Execute one simulation cycle."""
+        """Execute one simulation cycle with low-voltage cutoff guard."""
         if now is None:
             now = time.monotonic()
+
+        self.update_battery()
+        if self.power_cutoff:
+            if (now - self.last_frame_time) >= 0.06:
+                self.last_frame_time = now
+                if self.oled:
+                    self.oled.fill(0)
+                    self.oled.text("POWER CUTOFF!", 16, 20, 1)
+                    self.oled.text(f"Batt: {self.battery_voltage:.2f}V <= 3.2V", 4, 36, 1)
+                    self.oled.show()
+            if dt > 0:
+                time.sleep(dt)
+            return
+
         self.update_timer(now)
         self.update_pet(now)
         self.update_reflex(now)
@@ -514,10 +562,11 @@ btn_left = None
 btn_action = None
 btn_right = None
 buzzer = None
+vbat_pin = None
 
 
 def init_hardware():
-    global i2c, oled, btn_left, btn_action, btn_right, buzzer
+    global i2c, oled, btn_left, btn_action, btn_right, buzzer, vbat_pin
     if board is not None and busio is not None and digitalio is not None:
         try:
             i2c = busio.I2C(scl=board.GP1, sda=board.GP0, frequency=400000)
@@ -548,6 +597,12 @@ def init_hardware():
             except Exception:
                 buzzer = None
 
+        if analogio is not None and hasattr(board, "GP26"):
+            try:
+                vbat_pin = analogio.AnalogIn(board.GP26)
+            except Exception:
+                vbat_pin = None
+
     return oled, buzzer, btn_left, btn_action, btn_right
 
 
@@ -561,6 +616,7 @@ app = PocketCompanion(
     btn_left=btn_left,
     btn_action=btn_action,
     btn_right=btn_right,
+    vbat_pin=vbat_pin,
 )
 
 # Module-level aliases to preserve existing API
