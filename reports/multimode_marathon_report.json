@@ -3,8 +3,8 @@
   "total_shifts": 10000,
   "full_revolutions": 2500,
   "frames_rendered": 10000,
-  "wallclock_seconds": 3.364,
-  "shifts_per_second": 2972.5,
+  "wallclock_seconds": 14.116,
+  "shifts_per_second": 708.4,
   "crashes": 0,
   "mode_distribution": {
     "0": 2500,
@@ -13,81 +13,81 @@
     "3": 2500
   },
   "baseline_heap_kb": 2.25,
-  "peak_heap_kb": 18.31,
-  "final_delta_kb": 10.28,
+  "peak_heap_kb": 19.35,
+  "final_delta_kb": 10.42,
   "steady_state_bytes_per_shift": 0.3573,
   "display_buffer_stable": true,
   "zero_memory_leak": true,
   "checkpoints": [
     {
       "shift": 1000,
-      "cur_heap_kb": 14.76,
-      "peak_heap_kb": 15.02,
-      "delta_kb": 12.52,
-      "frag_index_pct": 83.37
+      "cur_heap_kb": 14.91,
+      "peak_heap_kb": 16.21,
+      "delta_kb": 12.66,
+      "frag_index_pct": 78.11
     },
     {
       "shift": 2000,
-      "cur_heap_kb": 15.37,
-      "peak_heap_kb": 15.62,
-      "delta_kb": 13.13,
-      "frag_index_pct": 84.02
+      "cur_heap_kb": 15.51,
+      "peak_heap_kb": 16.82,
+      "delta_kb": 13.27,
+      "frag_index_pct": 78.9
     },
     {
       "shift": 3000,
-      "cur_heap_kb": 15.68,
-      "peak_heap_kb": 15.93,
-      "delta_kb": 13.43,
-      "frag_index_pct": 84.32
+      "cur_heap_kb": 15.82,
+      "peak_heap_kb": 17.12,
+      "delta_kb": 13.57,
+      "frag_index_pct": 79.28
     },
     {
       "shift": 4000,
-      "cur_heap_kb": 15.98,
-      "peak_heap_kb": 16.23,
-      "delta_kb": 13.74,
-      "frag_index_pct": 84.62
+      "cur_heap_kb": 16.12,
+      "peak_heap_kb": 17.43,
+      "delta_kb": 13.88,
+      "frag_index_pct": 79.64
     },
     {
       "shift": 5000,
-      "cur_heap_kb": 16.29,
-      "peak_heap_kb": 16.54,
-      "delta_kb": 14.04,
-      "frag_index_pct": 84.9
+      "cur_heap_kb": 16.43,
+      "peak_heap_kb": 17.73,
+      "delta_kb": 14.18,
+      "frag_index_pct": 79.99
     },
     {
       "shift": 6000,
-      "cur_heap_kb": 16.62,
-      "peak_heap_kb": 16.88,
-      "delta_kb": 14.38,
-      "frag_index_pct": 85.2
+      "cur_heap_kb": 16.76,
+      "peak_heap_kb": 18.07,
+      "delta_kb": 14.52,
+      "frag_index_pct": 80.36
     },
     {
       "shift": 7000,
-      "cur_heap_kb": 16.93,
-      "peak_heap_kb": 17.18,
-      "delta_kb": 14.68,
-      "frag_index_pct": 85.46
+      "cur_heap_kb": 17.07,
+      "peak_heap_kb": 18.37,
+      "delta_kb": 14.82,
+      "frag_index_pct": 80.69
     },
     {
       "shift": 8000,
-      "cur_heap_kb": 17.23,
-      "peak_heap_kb": 17.48,
-      "delta_kb": 14.99,
-      "frag_index_pct": 85.72
+      "cur_heap_kb": 17.37,
+      "peak_heap_kb": 18.68,
+      "delta_kb": 15.13,
+      "frag_index_pct": 81.0
     },
     {
       "shift": 9000,
-      "cur_heap_kb": 17.54,
-      "peak_heap_kb": 17.79,
-      "delta_kb": 15.29,
-      "frag_index_pct": 85.96
+      "cur_heap_kb": 17.68,
+      "peak_heap_kb": 18.98,
+      "delta_kb": 15.43,
+      "frag_index_pct": 81.31
     },
     {
       "shift": 10000,
-      "cur_heap_kb": 17.9,
-      "peak_heap_kb": 18.16,
-      "delta_kb": 15.66,
-      "frag_index_pct": 86.25
+      "cur_heap_kb": 18.05,
+      "peak_heap_kb": 19.35,
+      "delta_kb": 15.8,
+      "frag_index_pct": 81.66
     }
   ]
 }

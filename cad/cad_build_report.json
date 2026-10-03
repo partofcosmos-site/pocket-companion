@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-03T18:26:30Z",
+  "timestamp": "2026-10-03T18:28:06Z",
   "cad_suite": "Pocket Companion Enclosure v1.0",
   "stls": [
     {
@@ -115,14 +115,14 @@
     {
       "name": "assembly_isometric.png",
       "resolution": "1920x1080",
-      "size_kb": 69.5,
-      "render_time_s": 0.94
+      "size_kb": 70.8,
+      "render_time_s": 0.96
     },
     {
       "name": "exploded_view.png",
       "resolution": "1920x1080",
-      "size_kb": 90.4,
-      "render_time_s": 0.46
+      "size_kb": 91.9,
+      "render_time_s": 0.48
     },
     {
       "name": "enclosure_base_top.png",
@@ -151,8 +151,8 @@
     {
       "name": "cutaway_section.png",
       "resolution": "1920x1080",
-      "size_kb": 46.8,
-      "render_time_s": 0.58
+      "size_kb": 49.4,
+      "render_time_s": 0.54
     }
   ],
   "tolerances": [
