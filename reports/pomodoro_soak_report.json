@@ -1,22 +1,22 @@
 {
   "status": "PASSED",
-  "total_study_intervals": 50,
-  "study_sessions_completed": 50,
-  "short_breaks_completed": 38,
-  "long_breaks_completed": 12,
-  "total_alarms_fired": 100,
-  "pause_resume_checks": 50,
+  "total_study_intervals": 10,
+  "study_sessions_completed": 10,
+  "short_breaks_completed": 8,
+  "long_breaks_completed": 2,
+  "total_alarms_fired": 20,
+  "pause_resume_checks": 10,
   "pause_drift_errors": 0,
   "timing_jitter": {
     "mean_jitter_ms": 0.0,
     "max_jitter_ms": 0.0,
     "zero_jitter_verified": true
   },
-  "total_sim_seconds": 97200.0,
-  "wallclock_seconds": 19.608,
-  "speedup_factor": 4957.2,
+  "total_sim_seconds": 79200.0,
+  "wallclock_seconds": 3.761,
+  "speedup_factor": 21059.6,
   "baseline_heap_kb": 0.0,
-  "peak_heap_kb": 21.28,
-  "final_delta_kb": 15.41,
+  "peak_heap_kb": 20.34,
+  "final_delta_kb": 14.42,
   "zero_memory_leak": true
 }
