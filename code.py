@@ -30,13 +30,18 @@ class PocketCompanion:
 
     BUTTON_TONES = [330, 440, 554]  # Left (E4), Action (A4), Right (C#5)
 
-    def __init__(self, oled=None, buzzer=None, btn_left=None, btn_action=None, btn_right=None, vbat_pin=None):
+    def __init__(self, oled=None, buzzer=None, btn_left=None, btn_action=None, btn_right=None, vbat_pin=None, reconnect_oled_fn=None):
         self.oled = oled
         self.buzzer = buzzer
         self.btn_left = btn_left
         self.btn_action = btn_action
         self.btn_right = btn_right
         self.vbat_pin = vbat_pin
+        self.reconnect_oled_fn = reconnect_oled_fn
+        self.oled_offline = False
+        self.oled_error_count = 0
+        self.oled_reconnect_count = 0
+        self.last_oled_reconnect_time = 0.0
 
         # Power & Battery monitoring (3.7V LiPo: 4.2V max, 3.4V low warning, 3.2V cutoff)
         self.battery_voltage = 4.2
@@ -497,19 +502,26 @@ class PocketCompanion:
             self.oled.text("[ACT] to retry", 20, 50, 1)
 
     def render(self, now: float):
-        """Compose and push frame to OLED."""
+        """Compose and push frame to OLED with I2C fault tolerance."""
         if not self.oled:
             return
-        self.draw_header()
-        if self.mode == 0:
-            self.draw_pet(now)
-        elif self.mode == 1:
-            self.draw_reflex()
-        elif self.mode == 2:
-            self.draw_timer()
-        elif self.mode == 3:
-            self.draw_memory()
-        self.oled.show()
+        try:
+            self.draw_header()
+            if self.mode == 0:
+                self.draw_pet(now)
+            elif self.mode == 1:
+                self.draw_reflex()
+            elif self.mode == 2:
+                self.draw_timer()
+            elif self.mode == 3:
+                self.draw_memory()
+            self.oled.show()
+            if self.oled_offline:
+                self.oled_offline = False
+                self.oled_reconnect_count += 1
+        except Exception:
+            self.oled_offline = True
+            self.oled_error_count += 1
 
     def step(self, now: float = None, dt: float = 0.01):
         """Execute one simulation cycle with low-voltage cutoff guard."""
@@ -517,14 +529,31 @@ class PocketCompanion:
             now = time.monotonic()
 
         self.update_battery()
+
+        # Automatic OLED reconnection check when offline
+        if self.oled_offline and self.reconnect_oled_fn and (now - self.last_oled_reconnect_time) >= 0.5:
+            self.last_oled_reconnect_time = now
+            try:
+                new_oled = self.reconnect_oled_fn()
+                if new_oled:
+                    self.oled = new_oled
+                    self.oled_offline = False
+                    self.oled_reconnect_count += 1
+            except Exception:
+                pass
+
         if self.power_cutoff:
             if (now - self.last_frame_time) >= 0.06:
                 self.last_frame_time = now
                 if self.oled:
-                    self.oled.fill(0)
-                    self.oled.text("POWER CUTOFF!", 16, 20, 1)
-                    self.oled.text(f"Batt: {self.battery_voltage:.2f}V <= 3.2V", 4, 36, 1)
-                    self.oled.show()
+                    try:
+                        self.oled.fill(0)
+                        self.oled.text("POWER CUTOFF!", 16, 20, 1)
+                        self.oled.text(f"Batt: {self.battery_voltage:.2f}V <= 3.2V", 4, 36, 1)
+                        self.oled.show()
+                    except Exception:
+                        self.oled_offline = True
+                        self.oled_error_count += 1
             if dt > 0:
                 time.sleep(dt)
             return

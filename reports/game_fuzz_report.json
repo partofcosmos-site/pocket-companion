@@ -1,8 +1,8 @@
 {
   "status": "PASSED",
   "total_cycles": 25000,
-  "elapsed_seconds": 3.706,
-  "throughput_fps": 6745.6,
+  "elapsed_seconds": 3.698,
+  "throughput_fps": 6760.6,
   "crashes": 0,
   "reflex_metrics": {
     "total_rounds": 4332,
@@ -10,11 +10,11 @@
     "false_starts": 649,
     "latency_stats": {
       "count": 4332,
-      "mean_us": 3.15,
-      "p95_us": 4.9,
-      "p99_us": 7.1,
-      "max_us": 69.2,
-      "max_ms": 0.0692,
+      "mean_us": 2.99,
+      "p95_us": 4.3,
+      "p99_us": 6.6,
+      "max_us": 19.3,
+      "max_ms": 0.0193,
       "sub_millisecond": true
     }
   },
@@ -24,11 +24,11 @@
     "games_over": 876,
     "latency_stats": {
       "count": 4369,
-      "mean_us": 2.62,
-      "p95_us": 4.4,
-      "p99_us": 7.0,
-      "max_us": 43.2,
-      "max_ms": 0.0432,
+      "mean_us": 2.52,
+      "p95_us": 4.1,
+      "p99_us": 6.4,
+      "max_us": 34.5,
+      "max_ms": 0.0345,
       "sub_millisecond": true
     }
   }

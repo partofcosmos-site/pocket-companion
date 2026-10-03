@@ -559,7 +559,76 @@ def test_fuzz_multimode_marathon_soak_and_displayio_stability():
         assert summary["mode_distribution"][m] == 2500
 
 
+def test_oled_fault_injection_and_reconnection_unit():
+    """Unit test every branch of OLED fault tolerance and automatic reconnection."""
+    from run_fault_injection_harness import FaultyOLED
+    import code
+
+    oled = FaultyOLED(128, 64)
+    reconnect_called = 0
+    should_fail_reconnect = True
+
+    def mock_reconnect():
+        nonlocal reconnect_called
+        reconnect_called += 1
+        if should_fail_reconnect:
+            raise OSError("I2C still down")
+        return FaultyOLED(128, 64)
+
+    fw = code.PocketCompanion(oled=oled, reconnect_oled_fn=mock_reconnect)
+    fw.last_frame_time = 0.0
+
+    # 1. Normal render succeeds
+    fw.render(1000.0)
+    assert fw.oled_offline is False
+    assert fw.oled_error_count == 0
+
+    # 2. OLED fails on show -> offline flag set
+    oled.fail_show = True
+    fw.render(1000.1)
+    assert fw.oled_offline is True
+    assert fw.oled_error_count == 1
+
+    # 3. Step attempts reconnect, but reconnect raises exception -> handled cleanly
+    fw.step(now=1000.7, dt=0.0)  # > 0.5s elapsed
+    assert reconnect_called == 1
+    assert fw.oled_offline is True
+
+    # 4. Reconnect function succeeds -> swaps new oled and clears offline
+    should_fail_reconnect = False
+    fw.step(now=1001.3, dt=0.0)
+    assert reconnect_called == 2
+    assert fw.oled_offline is False
+    assert fw.oled_reconnect_count == 1
+
+    # 5. Offline flag recovery inside render() directly
+    fw.oled_offline = True
+    reconnects_before = fw.oled_reconnect_count
+    fw.render(1001.4)
+    assert fw.oled_offline is False
+    assert fw.oled_reconnect_count == reconnects_before + 1
+
+    # 6. Power cutoff OLED exception handling
+    fw.power_cutoff = True
+    fw.battery_voltage = 3.0
+    fw.last_frame_time = 1000.0
+    fw.oled.fail_fill = True
+    errs_before = fw.oled_error_count
+    fw.step(now=1002.0, dt=0.0)
+    assert fw.oled_offline is True
+    assert fw.oled_error_count == errs_before + 1
 
 
 
+def test_fuzz_hardware_fault_injection_and_autonomous_recovery():
+    """Verify continuous fault tolerance under battery drops, I2C bus NACKs, and switch chatter."""
+    from run_fault_injection_harness import run_fault_injection_harness
+    summary = run_fault_injection_harness(total_cycles=25000)
 
+    assert summary["status"] == "PASSED"
+    assert summary["total_cycles"] == 25000
+    assert summary["crashes"] == 0
+    assert summary["battery_drops_injected"] > 0
+    assert summary["i2c_nacks_injected"] > 0
+    assert summary["oled_reconnections"] > 0
+    assert summary["switch_chatter_events"] > 0
