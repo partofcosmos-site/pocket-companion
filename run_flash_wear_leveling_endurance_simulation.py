@@ -264,7 +264,7 @@ def run_flash_endurance_and_brownout_simulation(total_writes: int = 500000) -> D
             "p99_latency_us": round(p99_ser_us, 2),
             "min_latency_us": round(min_ser_us, 2),
             "max_latency_us": round(max_ser_us, 2),
-            "sub_millisecond_verified": mean_ser_us < 500.0,
+            "sub_millisecond_verified": mean_ser_us < 1000.0,
         },
         "brownout_recovery_at_2v7": {
             "trials_injected": BROWNOUT_TRIALS,
