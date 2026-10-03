@@ -2,15 +2,15 @@
   "status": "PASSED",
   "multitasking_fps_benchmark": {
     "iterations": 5000,
-    "mean_latency_us": 817.54,
-    "median_latency_us": 782.5,
-    "p95_latency_us": 1018.0,
-    "p99_latency_us": 1444.8,
-    "min_latency_us": 733.6,
-    "max_latency_us": 2042.7,
-    "max_sustainable_fps": 1223.2,
-    "cpu_utilization_at_30fps_pct": 2.45,
-    "cpu_idle_headroom_pct": 97.55,
+    "mean_latency_us": 871.53,
+    "median_latency_us": 805.7,
+    "p95_latency_us": 1384.0,
+    "p99_latency_us": 1510.3,
+    "min_latency_us": 733.2,
+    "max_latency_us": 3084.0,
+    "max_sustainable_fps": 1147.4,
+    "cpu_utilization_at_30fps_pct": 2.61,
+    "cpu_idle_headroom_pct": 97.39,
     "maintains_30fps_animation": true
   },
   "flash_wear_debounce_audit": {
@@ -26,7 +26,7 @@
   "memory_metrics": {
     "baseline_heap_kb": 0.0,
     "peak_heap_kb": 217.25,
-    "final_delta_kb": 15.0,
+    "final_delta_kb": 15.06,
     "zero_memory_leak": true
   }
 }
