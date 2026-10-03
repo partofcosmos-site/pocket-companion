@@ -174,11 +174,12 @@ def run_100k_soak():
 
     total_time = time.perf_counter() - t_start
     overall_fps = TOTAL_CYCLES / total_time
+    gc.collect()
     final_cur, final_peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
 
     final_delta_kb = (final_cur - baseline_cur) / 1024.0
-    leak_detected = final_delta_kb > 150.0  # Threshold: 150KB for 100,000 cycles
+    leak_detected = final_delta_kb > 30.0  # Strict threshold: < 30.0 KB for 100,000 cycles
 
     print("=" * 86)
     print(f" 100,000-CYCLE SOAK TEST COMPLETE")
