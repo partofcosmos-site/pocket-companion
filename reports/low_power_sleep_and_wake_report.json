@@ -2,14 +2,14 @@
   "status": "PASSED",
   "benchmark_name": "Low-Power Sleep & Interrupt Wake-Up Latency",
   "total_cycles": 1000,
-  "elapsed_seconds": 0.676,
+  "elapsed_seconds": 0.654,
   "wake_latency_metrics": {
-    "mean_latency_us": 56.4,
-    "median_latency_us": 56.12,
-    "p95_latency_us": 72.57,
-    "p99_latency_us": 75.03,
-    "min_latency_us": 38.67,
-    "max_latency_us": 78.73,
+    "mean_latency_us": 56.05,
+    "median_latency_us": 55.82,
+    "p95_latency_us": 72.44,
+    "p99_latency_us": 73.04,
+    "min_latency_us": 38.65,
+    "max_latency_us": 76.92,
     "sub_millisecond_verified": true
   },
   "power_profile": {
