@@ -1,0 +1,135 @@
+{
+  "status": "PASSED",
+  "total_cycles": 10000,
+  "wallclock_seconds": 4.291,
+  "overall_fps": 2330.7,
+  "framebuffer_overruns": 0,
+  "text_clipping_events": 0,
+  "visual_artifacts": 0,
+  "bitmaps_rendered": 1600,
+  "progress_bars_rendered": 2500,
+  "total_pixels_drawn": 13834677,
+  "mode_render_counts": {
+    "0": 2500,
+    "1": 2500,
+    "2": 2500,
+    "3": 2500
+  },
+  "crashes": 0,
+  "baseline_heap_kb": 0.0,
+  "peak_heap_kb": 19.51,
+  "final_delta_kb": 13.0,
+  "zero_memory_leak": true,
+  "checkpoints": [
+    {
+      "cycle": 1000,
+      "fps": 2196.7,
+      "cur_heap_kb": 14.36,
+      "peak_heap_kb": 14.8,
+      "delta_kb": 14.36,
+      "overruns": 0,
+      "clipping": 0,
+      "bitmaps": 160,
+      "progress_bars": 250
+    },
+    {
+      "cycle": 2000,
+      "fps": 2181.0,
+      "cur_heap_kb": 15.12,
+      "peak_heap_kb": 15.54,
+      "delta_kb": 15.12,
+      "overruns": 0,
+      "clipping": 0,
+      "bitmaps": 320,
+      "progress_bars": 500
+    },
+    {
+      "cycle": 3000,
+      "fps": 2120.9,
+      "cur_heap_kb": 15.64,
+      "peak_heap_kb": 15.99,
+      "delta_kb": 15.64,
+      "overruns": 0,
+      "clipping": 0,
+      "bitmaps": 480,
+      "progress_bars": 750
+    },
+    {
+      "cycle": 4000,
+      "fps": 2089.0,
+      "cur_heap_kb": 16.0,
+      "peak_heap_kb": 16.44,
+      "delta_kb": 16.0,
+      "overruns": 0,
+      "clipping": 0,
+      "bitmaps": 640,
+      "progress_bars": 1000
+    },
+    {
+      "cycle": 5000,
+      "fps": 2222.4,
+      "cur_heap_kb": 16.48,
+      "peak_heap_kb": 16.9,
+      "delta_kb": 16.48,
+      "overruns": 0,
+      "clipping": 0,
+      "bitmaps": 800,
+      "progress_bars": 1250
+    },
+    {
+      "cycle": 6000,
+      "fps": 2315.4,
+      "cur_heap_kb": 17.03,
+      "peak_heap_kb": 17.38,
+      "delta_kb": 17.03,
+      "overruns": 0,
+      "clipping": 0,
+      "bitmaps": 960,
+      "progress_bars": 1500
+    },
+    {
+      "cycle": 7000,
+      "fps": 2282.3,
+      "cur_heap_kb": 17.39,
+      "peak_heap_kb": 17.83,
+      "delta_kb": 17.39,
+      "overruns": 0,
+      "clipping": 0,
+      "bitmaps": 1120,
+      "progress_bars": 1750
+    },
+    {
+      "cycle": 8000,
+      "fps": 2299.2,
+      "cur_heap_kb": 17.87,
+      "peak_heap_kb": 18.29,
+      "delta_kb": 17.87,
+      "overruns": 0,
+      "clipping": 0,
+      "bitmaps": 1280,
+      "progress_bars": 2000
+    },
+    {
+      "cycle": 9000,
+      "fps": 2283.7,
+      "cur_heap_kb": 18.39,
+      "peak_heap_kb": 18.74,
+      "delta_kb": 18.39,
+      "overruns": 0,
+      "clipping": 0,
+      "bitmaps": 1440,
+      "progress_bars": 2250
+    },
+    {
+      "cycle": 10000,
+      "fps": 2337.8,
+      "cur_heap_kb": 18.81,
+      "peak_heap_kb": 19.25,
+      "delta_kb": 18.81,
+      "overruns": 0,
+      "clipping": 0,
+      "bitmaps": 1600,
+      "progress_bars": 2500
+    }
+  ]
+}

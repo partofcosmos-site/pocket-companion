@@ -672,3 +672,22 @@ def test_fuzz_battery_endurance_1000days():
     assert summary["final_delta_kb"] < 35.0
 
 
+def test_fuzz_display_graphics_stress():
+    """Verify 10k-cycle display graphics rendering stress, zero framebuffer overruns, and zero visual clipping."""
+    from run_display_graphics_stress import run_display_graphics_stress
+    summary = run_display_graphics_stress(total_cycles=10000)
+
+    assert summary["status"] == "PASSED"
+    assert summary["total_cycles"] == 10000
+    assert summary["crashes"] == 0
+    assert summary["framebuffer_overruns"] == 0
+    assert summary["text_clipping_events"] == 0
+    assert summary["visual_artifacts"] == 0
+    assert summary["bitmaps_rendered"] > 1000
+    assert summary["progress_bars_rendered"] >= 2500
+    assert summary["total_pixels_drawn"] > 10000000
+    assert summary["zero_memory_leak"] is True
+    assert summary["final_delta_kb"] < 35.0
+
+
+
