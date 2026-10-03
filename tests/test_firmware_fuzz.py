@@ -766,5 +766,22 @@ def test_fuzz_piezo_acoustic_resonance_and_pitch_stability():
     assert summary["memory_metrics"]["final_delta_kb"] < 20.0
 
 
+def test_fuzz_oled_burnin_and_pixel_lifetime():
+    """Verify SSD1306 128x64 OLED wear dispersion, burn-in elimination, and 24-hour 30 FPS stability."""
+    from run_oled_burnin_and_pixel_lifetime_simulation import run_oled_burnin_and_pixel_lifetime_simulation
+    summary = run_oled_burnin_and_pixel_lifetime_simulation()
+
+    assert summary["status"] == "PASSED"
+    assert summary["screensaver_drift"]["wear_reduction_pct"] >= 70.0
+    assert summary["screensaver_drift"]["burn_in_eliminated"] is True
+    assert summary["screensaver_drift"]["lifespan_extension_ratio"] >= 3.0
+    assert summary["frame_rate_stability_24h"]["fps_stability_verified"] is True
+    assert summary["frame_rate_stability_24h"]["frame_jitter_ms"] < 0.20
+    assert summary["frame_rate_stability_24h"]["dropped_frames"] == 0
+    assert summary["memory_metrics"]["zero_memory_leak"] is True
+    assert summary["memory_metrics"]["final_delta_kb"] < 35.0
+
+
+
 
 
