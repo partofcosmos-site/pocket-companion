@@ -441,7 +441,7 @@ def test_fuzz_100k_cycles_soak_continuous_memory_tracking():
     assert result["total_cycles"] == 100000
     assert result["total_crashes"] == 0
     assert result["memory_leak_detected"] is False
-    assert result["final_heap_delta_kb"] < 150.0
+    assert result["final_heap_delta_kb"] < 35.0
     for mode_idx in (0, 1, 2, 3):
         assert result["mode_distribution"][mode_idx] > 10000
 
@@ -719,4 +719,19 @@ def test_fuzz_multitasking_fps_and_flash_wear_debounce():
     assert summary["flash_wear_debounce_audit"]["wear_reduction_pct"] > 95.0
     assert summary["memory_metrics"]["zero_memory_leak"] is True
     assert summary["memory_metrics"]["final_delta_kb"] < 35.0
+
+
+def test_fuzz_low_power_sleep_and_wake_latency():
+    """Verify 1,000 low-power sleep transitions and sub-millisecond interrupt wake-up latency."""
+    from run_low_power_sleep_and_wake_benchmark import run_sleep_and_wake_benchmark
+    summary = run_sleep_and_wake_benchmark()
+
+    assert summary["status"] == "PASSED"
+    assert summary["total_cycles"] == 1000
+    assert summary["wake_latency_metrics"]["p99_latency_us"] < 500.0  # < 0.5ms interrupt response
+    assert summary["wake_latency_metrics"]["mean_latency_us"] < 200.0
+    assert summary["power_profile"]["current_savings_pct"] > 90.0
+    assert summary["memory_metrics"]["zero_memory_leak"] is True
+    assert summary["memory_metrics"]["final_delta_kb"] < 20.0
+
 

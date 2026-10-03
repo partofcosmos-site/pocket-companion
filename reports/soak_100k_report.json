@@ -2,297 +2,297 @@
   "status": "PASSED",
   "total_cycles": 100000,
   "sample_interval": 5000,
-  "elapsed_seconds": 26.806,
-  "overall_fps": 3730.6,
+  "elapsed_seconds": 28.008,
+  "overall_fps": 3570.4,
   "total_crashes": 0,
   "baseline_heap_kb": 0.0,
-  "peak_heap_kb": 30.29,
-  "final_heap_delta_kb": 23.64,
+  "peak_heap_kb": 30.21,
+  "final_heap_delta_kb": 23.91,
   "memory_leak_detected": false,
   "mode_distribution": {
-    "0": 19980,
-    "1": 24955,
-    "2": 26700,
-    "3": 28365
+    "0": 19470,
+    "1": 23125,
+    "2": 28230,
+    "3": 29175
   },
   "checkpoints": [
     {
       "cycle": 5000,
-      "current_kb": 14.72,
+      "current_kb": 14.43,
       "peak_kb": 15.3,
-      "delta_kb": 14.72,
-      "segment_fps": 3649.4,
+      "delta_kb": 14.43,
+      "segment_fps": 3876.5,
       "mode_counts": {
-        "0": 1125,
-        "1": 1305,
-        "2": 1095,
-        "3": 1475
+        "0": 990,
+        "1": 1325,
+        "2": 1140,
+        "3": 1545
       },
       "voltage": 3.664
     },
     {
       "cycle": 10000,
-      "current_kb": 15.84,
-      "peak_kb": 16.32,
-      "delta_kb": 15.84,
-      "segment_fps": 4056.0,
+      "current_kb": 15.47,
+      "peak_kb": 16.41,
+      "delta_kb": 15.47,
+      "segment_fps": 4491.9,
       "mode_counts": {
-        "0": 1890,
-        "1": 2760,
-        "2": 2640,
-        "3": 2710
+        "0": 2035,
+        "1": 2565,
+        "2": 2580,
+        "3": 2820
       },
       "voltage": 4.2
     },
     {
       "cycle": 15000,
-      "current_kb": 16.74,
-      "peak_kb": 17.24,
-      "delta_kb": 16.74,
-      "segment_fps": 3789.6,
+      "current_kb": 16.42,
+      "peak_kb": 17.2,
+      "delta_kb": 16.42,
+      "segment_fps": 3474.0,
       "mode_counts": {
-        "0": 3045,
-        "1": 3750,
-        "2": 4110,
-        "3": 4095
+        "0": 3030,
+        "1": 3720,
+        "2": 4065,
+        "3": 4185
       },
       "voltage": 3.664
     },
     {
       "cycle": 20000,
-      "current_kb": 17.4,
-      "peak_kb": 18.01,
-      "delta_kb": 17.4,
-      "segment_fps": 4327.3,
+      "current_kb": 17.37,
+      "peak_kb": 18.0,
+      "delta_kb": 17.37,
+      "segment_fps": 4176.2,
       "mode_counts": {
-        "0": 4005,
+        "0": 4035,
         "1": 4815,
-        "2": 5775,
-        "3": 5405
+        "2": 5235,
+        "3": 5915
       },
       "voltage": 4.2
     },
     {
       "cycle": 25000,
-      "current_kb": 17.96,
-      "peak_kb": 18.77,
-      "delta_kb": 17.96,
-      "segment_fps": 3511.4,
+      "current_kb": 18.12,
+      "peak_kb": 18.76,
+      "delta_kb": 18.12,
+      "segment_fps": 3771.7,
       "mode_counts": {
-        "0": 5235,
-        "1": 6190,
-        "2": 6960,
-        "3": 6615
+        "0": 4770,
+        "1": 6105,
+        "2": 6760,
+        "3": 7365
       },
       "voltage": 3.664
     },
     {
       "cycle": 30000,
-      "current_kb": 18.59,
-      "peak_kb": 19.49,
-      "delta_kb": 18.59,
-      "segment_fps": 3900.2,
+      "current_kb": 18.92,
+      "peak_kb": 19.5,
+      "delta_kb": 18.92,
+      "segment_fps": 2884.9,
       "mode_counts": {
-        "0": 6285,
-        "1": 7350,
-        "2": 8190,
-        "3": 8175
+        "0": 5865,
+        "1": 7335,
+        "2": 7995,
+        "3": 8805
       },
       "voltage": 4.2
     },
     {
       "cycle": 35000,
-      "current_kb": 19.76,
+      "current_kb": 19.43,
       "peak_kb": 20.31,
-      "delta_kb": 19.76,
-      "segment_fps": 3811.4,
+      "delta_kb": 19.43,
+      "segment_fps": 3348.4,
       "mode_counts": {
-        "0": 7275,
-        "1": 8145,
-        "2": 9825,
-        "3": 9755
+        "0": 6750,
+        "1": 8180,
+        "2": 9780,
+        "3": 10290
       },
       "voltage": 3.664
     },
     {
       "cycle": 40000,
-      "current_kb": 20.73,
+      "current_kb": 20.4,
       "peak_kb": 21.07,
-      "delta_kb": 20.73,
-      "segment_fps": 4338.5,
+      "delta_kb": 20.4,
+      "segment_fps": 3907.4,
       "mode_counts": {
-        "0": 8205,
-        "1": 9280,
-        "2": 10995,
-        "3": 11520
+        "0": 7590,
+        "1": 9450,
+        "2": 10930,
+        "3": 12030
       },
       "voltage": 4.2
     },
     {
       "cycle": 45000,
-      "current_kb": 20.89,
-      "peak_kb": 21.83,
-      "delta_kb": 20.89,
-      "segment_fps": 3498.4,
+      "current_kb": 21.37,
+      "peak_kb": 21.82,
+      "delta_kb": 21.37,
+      "segment_fps": 3628.2,
       "mode_counts": {
-        "0": 9120,
-        "1": 10605,
-        "2": 12135,
-        "3": 13140
+        "0": 8610,
+        "1": 10665,
+        "2": 12210,
+        "3": 13515
       },
       "voltage": 3.664
     },
     {
       "cycle": 50000,
-      "current_kb": 21.67,
+      "current_kb": 22.03,
       "peak_kb": 22.65,
-      "delta_kb": 21.67,
-      "segment_fps": 4028.9,
+      "delta_kb": 22.03,
+      "segment_fps": 4048.1,
       "mode_counts": {
-        "0": 9990,
-        "1": 12080,
-        "2": 13650,
-        "3": 14280
+        "0": 9690,
+        "1": 11775,
+        "2": 13355,
+        "3": 15180
       },
       "voltage": 4.2
     },
     {
       "cycle": 55000,
-      "current_kb": 22.51,
-      "peak_kb": 23.41,
-      "delta_kb": 22.51,
-      "segment_fps": 3733.4,
+      "current_kb": 22.88,
+      "peak_kb": 23.43,
+      "delta_kb": 22.88,
+      "segment_fps": 3773.2,
       "mode_counts": {
-        "0": 10870,
-        "1": 13305,
-        "2": 15165,
-        "3": 15660
+        "0": 10620,
+        "1": 12960,
+        "2": 15115,
+        "3": 16305
       },
       "voltage": 3.664
     },
     {
       "cycle": 60000,
-      "current_kb": 23.56,
-      "peak_kb": 24.17,
-      "delta_kb": 23.56,
-      "segment_fps": 3310.7,
+      "current_kb": 23.51,
+      "peak_kb": 24.19,
+      "delta_kb": 23.51,
+      "segment_fps": 4090.6,
       "mode_counts": {
-        "0": 11670,
-        "1": 14280,
-        "2": 16815,
-        "3": 17235
+        "0": 11625,
+        "1": 14175,
+        "2": 16290,
+        "3": 17910
       },
       "voltage": 4.2
     },
     {
       "cycle": 65000,
-      "current_kb": 24.12,
+      "current_kb": 24.28,
       "peak_kb": 24.92,
-      "delta_kb": 24.12,
-      "segment_fps": 3224.2,
+      "delta_kb": 24.28,
+      "segment_fps": 3593.6,
       "mode_counts": {
-        "0": 12870,
-        "1": 15755,
-        "2": 17895,
-        "3": 18480
+        "0": 12465,
+        "1": 15225,
+        "2": 18020,
+        "3": 19290
       },
       "voltage": 3.664
     },
     {
       "cycle": 70000,
-      "current_kb": 25.04,
-      "peak_kb": 25.65,
-      "delta_kb": 25.04,
-      "segment_fps": 4139.5,
+      "current_kb": 24.76,
+      "peak_kb": 25.6,
+      "delta_kb": 24.76,
+      "segment_fps": 4123.1,
       "mode_counts": {
-        "0": 13920,
-        "1": 17055,
-        "2": 19050,
-        "3": 19975
+        "0": 13410,
+        "1": 16630,
+        "2": 19500,
+        "3": 20460
       },
       "voltage": 4.2
     },
     {
       "cycle": 75000,
-      "current_kb": 25.82,
-      "peak_kb": 26.38,
-      "delta_kb": 25.82,
-      "segment_fps": 3668.8,
+      "current_kb": 25.46,
+      "peak_kb": 26.41,
+      "delta_kb": 25.46,
+      "segment_fps": 3865.0,
       "mode_counts": {
-        "0": 15105,
-        "1": 18465,
-        "2": 20490,
-        "3": 20940
+        "0": 14430,
+        "1": 17790,
+        "2": 20895,
+        "3": 21885
       },
       "voltage": 3.664
     },
     {
       "cycle": 80000,
-      "current_kb": 26.61,
-      "peak_kb": 27.17,
-      "delta_kb": 26.61,
-      "segment_fps": 3939.4,
+      "current_kb": 26.58,
+      "peak_kb": 27.2,
+      "delta_kb": 26.58,
+      "segment_fps": 4179.2,
       "mode_counts": {
-        "0": 16140,
-        "1": 19815,
-        "2": 21660,
-        "3": 22385
+        "0": 15615,
+        "1": 18990,
+        "2": 22310,
+        "3": 23085
       },
       "voltage": 4.2
     },
     {
       "cycle": 85000,
-      "current_kb": 27.35,
-      "peak_kb": 27.91,
-      "delta_kb": 27.35,
-      "segment_fps": 3866.5,
+      "current_kb": 26.97,
+      "peak_kb": 27.96,
+      "delta_kb": 26.97,
+      "segment_fps": 3582.7,
       "mode_counts": {
-        "0": 17250,
-        "1": 20925,
-        "2": 22890,
-        "3": 23935
+        "0": 16495,
+        "1": 19905,
+        "2": 23955,
+        "3": 24645
       },
       "voltage": 3.664
     },
     {
       "cycle": 90000,
       "current_kb": 28.16,
-      "peak_kb": 28.73,
+      "peak_kb": 28.72,
       "delta_kb": 28.16,
-      "segment_fps": 3632.6,
+      "segment_fps": 3079.0,
       "mode_counts": {
-        "0": 18120,
-        "1": 22230,
-        "2": 24285,
-        "3": 25365
+        "0": 17445,
+        "1": 21045,
+        "2": 25155,
+        "3": 26355
       },
       "voltage": 4.2
     },
     {
       "cycle": 95000,
-      "current_kb": 28.96,
-      "peak_kb": 29.49,
-      "delta_kb": 28.96,
-      "segment_fps": 3284.6,
+      "current_kb": 28.98,
+      "peak_kb": 29.54,
+      "delta_kb": 28.98,
+      "segment_fps": 2437.5,
       "mode_counts": {
-        "0": 19110,
-        "1": 23730,
-        "2": 25395,
-        "3": 26765
+        "0": 18345,
+        "1": 22185,
+        "2": 26775,
+        "3": 27695
       },
       "voltage": 3.664
     },
     {
       "cycle": 100000,
-      "current_kb": 29.29,
-      "peak_kb": 30.29,
-      "delta_kb": 29.29,
-      "segment_fps": 3436.7,
+      "current_kb": 29.26,
+      "peak_kb": 30.21,
+      "delta_kb": 29.26,
+      "segment_fps": 2761.3,
       "mode_counts": {
-        "0": 19980,
-        "1": 24955,
-        "2": 26700,
-        "3": 28365
+        "0": 19470,
+        "1": 23125,
+        "2": 28230,
+        "3": 29175
       },
       "voltage": 4.2
     }
