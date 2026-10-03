@@ -81,35 +81,29 @@ Before converting to PCB tracks, I visualized where fingers land when holding th
 
 **3.5h**
 
-![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f4fd3f28e1eb4d983b4e0c02e1d72f5e47a18cd43a5570abfe2c30a984876071.png)
+![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f4fd3f28e1eb4d983b4e0c02e1d72f5e47a18cd43a5570abfe2c30a984876071.png)\n\n![10_gerber_manufacturing_stackup_preview](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/83ee80aaa95dd163d5ea2e2f3fed2f73f7b971ac7ab93308adfa669440d1617a.png)\n\n![11_circuitpython_firmware_state_machine](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/8b0883b320b9a22ea11839199b1c6237220fbd59cfaa9dd3f0a876422835b96f.png)\n\n![12_reaction_game_timing_oscilloscope](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/663c98819a35280e7834c2e614e8f6ecaba066d9b0f043f7295a1e3015651059.png)\n\n# PCB Routing, JLCPCB DRC, Soldering Clearance & Firmware Polish
 
-![10_gerber_manufacturing_stackup_preview](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/83ee80aaa95dd163d5ea2e2f3fed2f73f7b971ac7ab93308adfa669440d1617a.png)
+In this final warm-up session, I routed the 2-layer PCB, ran design rule checks against JLCPCB tolerances, generated manufacturing Gerbers, and optimized the CircuitPython firmware state machine for buttery-smooth animations.
 
-![11_circuitpython_firmware_state_machine](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/8b0883b320b9a22ea11839199b1c6237220fbd59cfaa9dd3f0a876422835b96f.png)
+### Sandwich Stackup & Physical Assembly Gotcha
+The board measures **52.0 x 38.0 mm** with smooth 3mm rounded corners so it won't snag on pocket linings.
 
-![12_reaction_game_timing_oscilloscope](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/663c98819a35280e7834c2e614e8f6ecaba066d9b0f043f7295a1e3015651059.png)
+To keep the footprint ultra-compact, I used a double-sided sandwich design:
+- **Top Side:** 0.96" OLED screen, 3 thumb tactile buttons, piezo buzzer, and slide switch.
+- **Bottom Side:** The RP2040-Zero board mounts inverted underneath the OLED.
 
-# PCB Layout, DRC Validation & Manufacturing Gerbers
+Here was a critical physical detail I caught: when through-hole pins poke through the bottom of the board, sharp solder spikes could press right into the 400mAh LiPo battery pouch. Puncturing a LiPo pouch is an instant fire risk! To make the assembly completely safe, all through-hole pins under the battery area will be clipped completely flush with precision side cutters and covered with a double layer of heat-resistant Kapton tape so the battery rests flat and protected.
 
-## 1. PCB Form Factor & Mechanical Constraints
-- Board Dimensions: **52.0 mm (Width) × 38.0 mm (Height)** with a 3.0 mm corner radius for comfortable handheld ergonomics.
-- **2-Layer Stackup:**
-  - **Top Layer:** 0.96" OLED female header centered across the top half. Three tactile buttons (SW1 Left, SW2 Action, SW3 Right) arranged along the bottom edge for thumb control. Piezo buzzer mounted on the upper right. Slide switch and battery header mounted along the left edge.
-  - **Bottom Layer:** RP2040-Zero module inverted beneath the display. This double-sided topology keeps the overall footprint pocket-sized.
+### Routing & DRC Checks
+- **Power Traces:** Routed `+3.3V`, `VBAT`, and `VBUS` lines wide at 24 mil (0.60 mm) to minimize trace resistance and voltage sag when the buzzer pulses.
+- **Signal Traces:** Routed I2C data/clock and button lines at 12 mil (0.30 mm).
+- **Ground Pour:** Filled top and bottom copper layers with continuous GND copper pours, connected with stitching vias to reduce EMI and provide clean signal return paths.
+- **Design Rule Check:** Ran the DRC using standard JLCPCB 2-layer constraints (6 mil minimum clearance, 6 mil minimum trace width). Result: **0 errors, 0 warnings**!
 
-## 2. Routing & Design Rules (JLCPCB Standard)
-- **Clearance:** 6 mil (0.152 mm) between traces, pads, and copper zones.
-- **Trace Widths:**
-  - Signal Traces (I2C SDA/SCL, button inputs, buzzer PWM): **12 mil (0.30 mm)**.
-  - Power Rails (+3.3V, VBAT, VBUS): **24 mil (0.60 mm)** for minimal impedance.
-- **Ground Pour:** Continuous copper planes on both TopLayer and BottomLayer tied to net `GND`, stitched together for clean signal return and RF shielding.
-- **Design Rule Check:** Ran DRC check in EasyEDA: **0 errors, 0 warnings**.
+### Gerber Export & Git Sync
+Exported standard RS-274X manufacturing Gerbers (top/bottom copper, solder mask, silkscreen, drill files) and packaged them into `hardware/gerbers/Gerber_Pocket_Companion_v1.zip`. Checked layer alignment in a gerber viewer before committing everything to GitHub.
 
-## 3. Gerber Generation & GitHub Commit
-- Exported complete RS-274X manufacturing files:
-  - Top & Bottom Copper (`.GTL`, `.GBL`)
-  - Top & Bottom Solder Masks (`.GTS`, `.GBS`)
-  - Top & Bottom Silkscreens (`.GTO`, `.GBO`)
-  - Board Outline (`.GKO`)
-  - Excellon Drill File (`.DRL`)
-- Packaged into `hardware/gerbers/Gerber_Pocket_Companion_v1.zip` and committed source JSONs to the repository.
+### Firmware Tuning: displayio TileGrid & Reflex Timing
+On the software side, I built the state machine in `code.py` handling Pet Mode, Reflex Tester, and Pomodoro Timer. During early testing, rendering pet animations using raw pixel loops in Python caused screen tearing and dropped frames down to ~12fps.
+
+I refactored the graphics pipeline to use CircuitPython's native `displayio` TileGrid and indexed bitmaps. Because `displayio` pushes frames in optimized C under the hood, the pet face animations now run at a buttery-smooth 30fps with zero hitching! For the reflex game, I used `time.monotonic_ns()` for sub-millisecond precision timing, making reaction score tracking rock solid.
