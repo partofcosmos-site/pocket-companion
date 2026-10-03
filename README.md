@@ -2,6 +2,14 @@
 
 ![Pocket Companion Hardware Preview](assets/pocket_companion_preview.jpg)
 
+<div align="center">
+
+[![Pocket Companion Demo Reel](assets/pocket_companion_demo.gif)](assets/reels/pocket_companion_demo_reel.mp4)
+
+*🎬 **Interactive Demonstration Reel** — [Watch Full 1080×1920 30fps MP4 Reel](assets/reels/pocket_companion_demo_reel.mp4) · Pixel Pet, Reflex Game, Hardware Teardown*
+
+</div>
+
 Pocket Companion is a tiny, Altoids-tin-sized handheld gadget I built from scratch! It packs an animated virtual pet, a quick reflex reaction mini-game, and a 25-minute Pomodoro study timer into a pocketable board powered by a Waveshare RP2040-Zero and a crisp 0.96" OLED screen.
 
 Everything runs on **CircuitPython**—so there is zero waiting around for C++ toolchains or Arduino IDE to compile. Whenever I want to tweak an ASCII pet face or adjust the reflex game delays, I just plug in USB-C, edit `code.py`, hit save, and the board reboots and runs the new code in under two seconds!
