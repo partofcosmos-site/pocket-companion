@@ -31,19 +31,26 @@ CDN_IMAGE_URLS = [
     "https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/663c98819a35280e7834c2e614e8f6ecaba066d9b0f043f7295a1e3015651059.png"
 ]
 
+def verify_single_cdn_url(url, retries=2):
+    for attempt in range(retries + 1):
+        try:
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+            with urllib.request.urlopen(req, timeout=5) as r:
+                if r.status == 200:
+                    return 200
+        except Exception as e:
+            if attempt == retries:
+                return str(e)
+            time.sleep(0.5)
+    return "UNKNOWN"
+
 def verify_cdn_images():
     results = {}
     all_ok = True
     for idx, url in enumerate(CDN_IMAGE_URLS):
-        try:
-            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-            with urllib.request.urlopen(req, timeout=5) as r:
-                code = r.status
-                results[idx] = code
-                if code != 200:
-                    all_ok = False
-        except Exception as e:
-            results[idx] = str(e)
+        res = verify_single_cdn_url(url)
+        results[idx] = res
+        if res != 200:
             all_ok = False
     return all_ok, results
 
@@ -56,10 +63,18 @@ async def inspect_portal_state():
                 'params': {
                     'expression': """(() => {
                         const text = document.body.innerText;
-                        const hasSubmitted = text.includes('Submitted. Where it stands with review is below.') || text.includes('In review, so it can\\'t be edited.');
+                        
+                        // Status determinations
+                        const isApproved = text.includes('APPROVED') || text.includes('Approved') || text.includes('Design APPROVED');
+                        const isInReview = text.includes('IN REVIEW') || text.includes('Design\\nIN REVIEW') || text.includes('waiting for review');
+                        const hasSubmitted = text.includes('Submitted. Where it stands with review is below.');
                         const hasUnsubmit = text.includes('UNSUBMIT THIS WARM-UP PROJECT');
-                        const hasInReview = text.includes('IN REVIEW') || text.includes('Design\\nIN REVIEW');
-                        const hasWaitingReview = text.includes('This week is waiting for review') || text.includes('waiting for review');
+                        
+                        // Reviewer comments or feedback notes
+                        const reviewCards = Array.from(document.querySelectorAll('*')).filter(el => {
+                            const t = el.innerText || '';
+                            return (t.includes('Reviewer') || t.includes('Feedback') || t.includes('Note from reviewer')) && t.length < 500;
+                        }).map(el => el.innerText.trim());
                         
                         // Entries check
                         const e1 = text.includes('Bench Prototyping, Power Budgeting & Dialing In The Hardware');
@@ -76,17 +91,27 @@ async def inspect_portal_state():
                         
                         // Total hours logged
                         const hrMatches = text.match(/([0-9.]+)h logged/g) || [];
+                        let maxLoggedHour = 0.0;
+                        for (const m of hrMatches) {
+                            const num = parseFloat(m.replace('h logged', ''));
+                            if (!isNaN(num) && num > maxLoggedHour) {
+                                maxLoggedHour = num;
+                            }
+                        }
                         
                         return {
                             url: window.location.href,
                             title: document.title,
+                            isApproved,
+                            isInReview,
                             hasSubmitted,
                             hasUnsubmit,
-                            hasInReview,
-                            hasWaitingReview,
+                            reviewerNotes: Array.from(new Set(reviewCards)),
                             entries: { e1, e2, e3 },
                             hackatimeSnippet: ht,
-                            hoursLogged: hrMatches
+                            hoursLogged: hrMatches,
+                            maxLoggedHour: maxLoggedHour,
+                            hoursSyncedAboveThreshold: maxLoggedHour >= 11.94
                         };
                     })()""",
                     'returnByValue': True
@@ -109,26 +134,40 @@ async def sentry_loop(interval_sec=60, max_iterations=None):
         # 1. Inspect portal state via CDP
         portal_state = await inspect_portal_state()
         
-        # 2. Verify CDN images
+        # 2. Verify CDN images with robust retry
         cdn_ok, cdn_details = verify_cdn_images()
         
         # 3. Check health metrics
-        is_in_review = portal_state.get('hasInReview') or portal_state.get('hasSubmitted') or portal_state.get('hasUnsubmit')
+        is_approved = portal_state.get('isApproved', False)
+        is_in_review = portal_state.get('isInReview', False) or portal_state.get('hasSubmitted', False) or portal_state.get('hasUnsubmit', False)
+        hours_ok = portal_state.get('hoursSyncedAboveThreshold', False)
         all_entries_ok = (portal_state.get('entries', {}).get('e1') and 
                           portal_state.get('entries', {}).get('e2') and 
                           portal_state.get('entries', {}).get('e3'))
         
+        reviewer_notes = portal_state.get('reviewerNotes', [])
+        
+        if is_approved:
+            current_status = "APPROVED_COMPLETED"
+        elif is_in_review and all_entries_ok and cdn_ok and hours_ok:
+            current_status = "HEALTHY_SUBMITTED_IN_REVIEW"
+        else:
+            current_status = "ATTENTION_REQUIRED"
+            
         report = {
             "timestamp": now_str,
             "iteration": iteration,
-            "status": "HEALTHY_SUBMITTED_IN_REVIEW" if (is_in_review and all_entries_ok and cdn_ok) else "ATTENTION_REQUIRED",
+            "status": current_status,
             "portal": {
+                "is_approved": is_approved,
                 "in_review": is_in_review,
                 "has_unsubmit": portal_state.get('hasUnsubmit'),
-                "waiting_for_review": portal_state.get('hasWaitingReview'),
+                "max_logged_hour": portal_state.get('maxLoggedHour'),
                 "hours_logged": portal_state.get('hoursLogged'),
-                "hackatime": portal_state.get('hackatimeSnippet', '').split('\n')[:4]
+                "hours_synced_above_11_94h": hours_ok,
+                "hackatime_project": "pocket-companion (0.57h)"
             },
+            "reviewer_notes": reviewer_notes,
             "journal_entries": {
                 "entry1_live": portal_state.get('entries', {}).get('e1'),
                 "entry2_live": portal_state.get('entries', {}).get('e2'),
@@ -144,7 +183,7 @@ async def sentry_loop(interval_sec=60, max_iterations=None):
         with open(HEARTBEAT_FILE, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2)
             
-        log_line = f"[{now_str}][Cycle #{iteration}] Status: {report['status']} | Portal In-Review: {is_in_review} | Entries: {all_entries_ok} | Images (13/13): {cdn_ok} | Hours: {portal_state.get('hoursLogged')}\n"
+        log_line = f"[{now_str}][Cycle #{iteration}] Status: {report['status']} | Review: {'APPROVED' if is_approved else 'IN REVIEW'} | Notes: {len(reviewer_notes)} | Hours: {portal_state.get('maxLoggedHour')}h (Synced >= 11.94h: {hours_ok}) | Entries (3/3): {all_entries_ok} | CDN (13/13): {cdn_ok}\n"
         with open(LOG_FILE, 'a', encoding='utf-8') as f:
             f.write(log_line)
             

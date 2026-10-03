@@ -1,2 +1,9 @@
 [2026-10-03 17:22:44][Cycle #1] Status: HEALTHY_SUBMITTED_IN_REVIEW | Portal In-Review: True | Entries: True | Images (13/13): True | Hours: ['10.5h logged', '11.94h logged', '3.5h logged', '3.5h logged', '3.5h logged']
 [2026-10-03 17:22:55][Cycle #1] Status: HEALTHY_SUBMITTED_IN_REVIEW | Portal In-Review: True | Entries: True | Images (13/13): True | Hours: ['10.5h logged', '11.94h logged', '3.5h logged', '3.5h logged', '3.5h logged']
+[2026-10-03 17:23:59][Cycle #2] Status: ATTENTION_REQUIRED | Portal In-Review: True | Entries: True | Images (13/13): False | Hours: ['10.5h logged', '11.94h logged', '3.5h logged', '3.5h logged', '3.5h logged']
+[2026-10-03 17:25:07][Cycle #3] Status: HEALTHY_SUBMITTED_IN_REVIEW | Portal In-Review: True | Entries: True | Images (13/13): True | Hours: ['10.5h logged', '11.94h logged', '3.5h logged', '3.5h logged', '3.5h logged']
+[2026-10-03 17:25:52][Cycle #1] Status: HEALTHY_SUBMITTED_IN_REVIEW | Review: IN REVIEW | Notes: 0 | Hours: 11.94h (Synced >= 11.94h: True) | Entries (3/3): True | CDN (13/13): True
+[2026-10-03 17:26:10][Cycle #4] Status: HEALTHY_SUBMITTED_IN_REVIEW | Portal In-Review: True | Entries: True | Images (13/13): True | Hours: ['10.5h logged', '11.94h logged', '3.5h logged', '3.5h logged', '3.5h logged']
+[2026-10-03 17:26:55][Cycle #2] Status: HEALTHY_SUBMITTED_IN_REVIEW | Review: IN REVIEW | Notes: 0 | Hours: 11.94h (Synced >= 11.94h: True) | Entries (3/3): True | CDN (13/13): True
+[2026-10-03 17:27:58][Cycle #3] Status: HEALTHY_SUBMITTED_IN_REVIEW | Review: IN REVIEW | Notes: 0 | Hours: 11.94h (Synced >= 11.94h: True) | Entries (3/3): True | CDN (13/13): True
+[2026-10-03 17:29:01][Cycle #4] Status: HEALTHY_SUBMITTED_IN_REVIEW | Review: IN REVIEW | Notes: 0 | Hours: 11.94h (Synced >= 11.94h: True) | Entries (3/3): True | CDN (13/13): True

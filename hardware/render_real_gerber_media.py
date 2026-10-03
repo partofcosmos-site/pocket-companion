@@ -344,8 +344,8 @@ def render_07_easyeda_pcb_2d_layout():
         ("Silkscreen Printing", "High-Resolution White"),
         ("Total Board Area", "19.76 cm² (Pocket Size)"),
         ("Total Net Count", "10 Fully Routed Nets"),
-        ("Total Pad Count", "26 Plated Pads"),
-        ("Total Drill Hits", "23 Holes (Ø0.900mm)"),
+        ("Total Pad Count", "46 Plated Pads (26 THT + 20 SMT)"),
+        ("Total Drill Hits", "43 Holes (Ø0.900mm)"),
         ("Min Signal Trace", "0.300 mm (11.81 mil)"),
         ("Min Power Trace", "0.600 mm (23.62 mil)"),
         ("Min Clearance Margin", "0.300 mm (200% JLCPCB)")
@@ -467,7 +467,7 @@ def render_07_easyeda_pcb_2d_layout():
         ("BZ1: Passive Buzzer", 44.0, 24.0, 50, -20, (245, 158, 11)),
         ("SW_PWR: Slide Switch", 6.0, 14.0, -60, -20, (239, 68, 68)),
         ("BAT1: JST LiPo (3.7V)", 6.0, 26.0, -60, 20, (239, 68, 68)),
-        ("U1: RP2040-Zero (Bottom)", 26.0, 18.0, 0, 0, (148, 163, 184))
+        ("U1: Waveshare RP2040-Zero (20 SMT Pads)", 26.0, 19.0, 0, 0, (148, 163, 184))
     ]
 
     for c_name, mx, my, dx, dy, col in comp_callouts:
@@ -522,7 +522,7 @@ def render_10_gerber_manufacturing_stackup_preview():
     draw.ellipse([(36, 15), (48, 27)], fill=(245, 158, 11))
     draw.ellipse([(56, 15), (68, 27)], fill=(34, 197, 94))
 
-    draw.text((90, 12), "Gerbv Pro / JLCPCB CAM Inspector — [Gerber_Pocket_Companion_v1.zip]", font=get_font(13, bold=True), fill=(241, 245, 249))
+    draw.text((90, 12), "Gerbv Pro / JLCPCB CAM Inspector — [Gerber_Pocket_Companion_v2.zip]", font=get_font(13, bold=True), fill=(241, 245, 249))
     draw.text((w - 580, 14), "Format: RS-274X (3:5 Metric) + Excellon DRL | Units: mm | DRC: 0 Errors", font=get_font(11, mono=True), fill=(148, 163, 184))
 
     # 2. CAM Toolbar (y: 44 to 88)
@@ -560,12 +560,12 @@ def render_10_gerber_manufacturing_stackup_preview():
 
     gerber_layer_rows = [
         ("Gerber_BoardOutline.GKO", "Contour Outline (52x38mm)", (250, 204, 21), "1 Ap (D10 Ø0.15mm)", "10 Prims"),
-        ("Gerber_TopLayer.GTL", "Top Copper (Signal & Power)", (225, 29, 72), "8 Aps (Min W 0.30mm)", "38 Prims"),
-        ("Gerber_BottomLayer.GBL", "Bottom Copper (GND Return)", (59, 130, 246), "8 Aps (Min W 0.30mm)", "28 Prims"),
-        ("Gerber_TopSolderMask.GTS", "Top Mask Apertures (+0.30mm)", (16, 185, 129), "2 Aps (D15/D16 2.2mm)", "24 Prims"),
-        ("Gerber_BottomSolderMask.GBS", "Bottom Mask Apertures (+0.30mm)", (139, 92, 246), "2 Aps (D15/D16 2.2mm)", "24 Prims"),
-        ("Gerber_TopSilkScreen.GTO", "Top Silkscreen Legend Text", (248, 250, 252), "1 Ap (D20 Ø0.20mm)", "11 Prims"),
-        ("Drill_PTH_Through.DRL", "Excellon NC Drill Tooling", (245, 158, 11), "Tool T01 (Ø0.900mm)", "23 Hits")
+        ("Gerber_TopLayer.GTL", "Top Copper (Signal & Power)", (225, 29, 72), "8 Aps (Min W 0.30mm)", "42 Prims"),
+        ("Gerber_BottomLayer.GBL", "Bottom Copper (RP2040 Pads & GND)", (59, 130, 246), "9 Aps (20 SMT Pads)", "64 Prims"),
+        ("Gerber_TopSolderMask.GTS", "Top Mask Apertures (+0.30mm)", (16, 185, 129), "3 Aps (THT + Fiducials)", "27 Prims"),
+        ("Gerber_BottomSolderMask.GBS", "Bottom Mask Apertures (+0.30mm)", (139, 92, 246), "3 Aps (47 Mask Openings)", "47 Prims"),
+        ("Gerber_TopSilkScreen.GTO", "Top Silkscreen Legend Text", (248, 250, 252), "1 Ap (D20 Ø0.20mm)", "17 Prims"),
+        ("Drill_PTH_Through.DRL", "Excellon NC Drill Tooling", (245, 158, 11), "Tool T01 (Ø0.900mm)", "43 Hits")
     ]
 
     ly = 132
@@ -592,7 +592,7 @@ def render_10_gerber_manufacturing_stackup_preview():
         ("Solder Mask Webbing", "0.300 mm", "PASS (> 0.10mm)"),
         ("Minimum Track Width", "0.300 mm", "PASS (> 0.127mm)"),
         ("Copper to Board Outline", "0.500 mm", "SAFE (> 0.20mm)"),
-        ("Total Hole Count", "23 Holes", "100% PLATED PTH")
+        ("Total Hole Count", "43 Holes", "100% PLATED PTH")
     ]
     ry = ly + 48
     for r_k, r_v, r_s in reg_metrics:

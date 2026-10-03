@@ -1,11 +1,12 @@
 {
-  "timestamp": "2026-10-03 17:22:55",
-  "iteration": 1,
+  "timestamp": "2026-10-03 17:29:01",
+  "iteration": 4,
   "status": "HEALTHY_SUBMITTED_IN_REVIEW",
   "portal": {
+    "is_approved": false,
     "in_review": true,
     "has_unsubmit": true,
-    "waiting_for_review": true,
+    "max_logged_hour": 11.94,
     "hours_logged": [
       "10.5h logged",
       "11.94h logged",
@@ -13,13 +14,10 @@
       "3.5h logged",
       "3.5h logged"
     ],
-    "hackatime": [
-      "HACKATIME",
-      "",
-      "Code hours count too: link the Hackatime project you wrote them in.",
-      ""
-    ]
+    "hours_synced_above_11_94h": true,
+    "hackatime_project": "pocket-companion (0.57h)"
   },
+  "reviewer_notes": [],
   "journal_entries": {
     "entry1_live": true,
     "entry2_live": true,

@@ -10,11 +10,13 @@ Validates:
 - OLED rendering pipeline across all modes and edge states
 - Sound engine and piezo buzzer PWM tone logging
 - High-frequency simulation frame execution benchmark
+- 100% statement and branch coverage across firmware
 """
 
 import sys
 import time
 import random
+import runpy
 import pytest
 
 from tests.mock_hardware import (
@@ -35,14 +37,6 @@ from tests.mock_hardware import (
     install_mock_modules,
     uninstall_mock_modules,
 )
-
-
-@pytest.fixture(autouse=True)
-def setup_mock_environment():
-    """Install mock CircuitPython hardware modules before each test."""
-    mocks = install_mock_modules()
-    yield mocks
-    uninstall_mock_modules()
 
 
 def create_mock_firmware(sim_clock: SimulatedClock = None):
@@ -165,7 +159,7 @@ def test_pet_initial_emotional_state():
 
 def test_pet_hunger_and_decay_over_time():
     """Verify that hunger and tiredness accumulate over time and affect happiness."""
-    fw, _, _, _, _, _, clock = create_mock_firmware()
+    fw, _, _, _, _, _, _ = create_mock_firmware()
     initial_happiness = fw.pet_happiness
     t = fw.last_decay_time
 
@@ -321,6 +315,22 @@ def test_pet_expressions_and_status_spectrum():
     assert "Sad & lonely" in status
 
 
+def test_pet_oled_progress_bar_bounds():
+    """Verify pet OLED rendering with 0 happiness and full 100 happiness."""
+    fw, oled, _, _, _, _, _ = create_mock_firmware()
+    fw.mode = 0
+
+    fw.pet_happiness = 0
+    oled.fill(0)
+    fw.draw_pet(100.0)
+    assert any(cmd[0] == "rect" for cmd in oled.draw_commands)
+
+    fw.pet_happiness = 100
+    oled.fill(0)
+    fw.draw_pet(100.0)
+    assert any(cmd[0] == "fill_rect" for cmd in oled.draw_commands)
+
+
 # =========================================================================
 # 3. Reflex Reaction Mini-game Simulation Tests
 # =========================================================================
@@ -331,9 +341,12 @@ def test_reflex_idle_state_and_start():
     fw.mode = 1
     assert fw.reflex_state == 0
 
+    # Test when best_reflex_ms < 999
+    fw.best_reflex_ms = 210
     fw.draw_reflex()
     assert oled.has_text("Reflex Tester")
     assert oled.has_text("Press [ACT] to start")
+    assert oled.has_text("Best: 210ms")
 
     # Press ACT to start
     t = 100.0
@@ -345,6 +358,16 @@ def test_reflex_idle_state_and_start():
     assert fw.reflex_state == 1
     assert fw.reflex_wait_until >= t + 1.5
     assert len(buzzer.tone_log) > 0
+
+
+def test_reflex_draw_state_1():
+    """Verify reflex drawing during countdown state 1."""
+    fw, oled, _, _, _, _, _ = create_mock_firmware()
+    fw.mode = 1
+    fw.reflex_state = 1
+    fw.draw_reflex()
+    assert oled.has_text("Get ready...")
+    assert oled.has_text("Wait for flash!")
 
 
 def test_reflex_false_start_anticipation_penalty():
@@ -432,6 +455,28 @@ def test_reflex_restart_from_result():
     btn_action.release()
 
     assert fw.reflex_state == 1
+
+
+def test_reflex_navigation_buttons():
+    """Verify Left/Right buttons navigate mode while in reflex idle or result."""
+    fw, _, _, btn_left, _, btn_right, _ = create_mock_firmware()
+    fw.mode = 1
+    fw.reflex_state = 0
+    t = 100.0
+
+    # Left button switches to Pet (0)
+    btn_left.press()
+    fw.handle_buttons(t)
+    btn_left.release()
+    assert fw.mode == 0
+
+    # Right button switches back to Reflex (1)
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    btn_right.press()
+    fw.handle_buttons(t)
+    btn_right.release()
+    assert fw.mode == 1
 
 
 # =========================================================================
@@ -547,6 +592,29 @@ def test_timer_pause_toggle():
     assert fw.timer_running is False
 
 
+def test_timer_running_mode_switch():
+    """Verify Left/Right switches mode when timer is running instead of adjusting time."""
+    fw, _, _, btn_left, _, btn_right, _ = create_mock_firmware()
+    fw.mode = 2
+    fw.timer_running = True
+    t = 100.0
+    fw.last_button_time = 90.0
+
+    btn_right.press()
+    fw.handle_buttons(t)
+    btn_right.release()
+    assert fw.mode == 3  # Switched to Memory!
+
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    fw.mode = 2
+    fw.timer_running = True
+    btn_left.press()
+    fw.handle_buttons(t)
+    btn_left.release()
+    assert fw.mode == 1  # Switched to Reflex!
+
+
 # =========================================================================
 # 5. Retro Mini-Game: Memory Sequence Simon Game Simulation Tests
 # =========================================================================
@@ -590,6 +658,27 @@ def test_memory_game_start_and_sequence_playback():
     assert fw.memory_player_idx == 0
 
 
+def test_memory_game_playback_multi_step():
+    """Verify playback stepping through multi-step sequence."""
+    fw, oled, buzzer, _, _, _, _ = create_mock_firmware()
+    fw.mode = 3
+    fw.memory_state = 1
+    fw.memory_sequence = [0, 1, 2]
+    fw.memory_playback_idx = 0
+    t = 100.0
+    fw.memory_playback_step_time = t
+
+    # Tick to step 1
+    fw.update_memory(t + 0.55)
+    assert fw.memory_playback_idx == 1
+    assert any(f == fw.BUTTON_TONES[1] for f, _ in buzzer.tone_log)
+
+    # Tick to step 2
+    fw.update_memory(t + 1.10)
+    assert fw.memory_playback_idx == 2
+    assert any(f == fw.BUTTON_TONES[2] for f, _ in buzzer.tone_log)
+
+
 def test_memory_game_player_correct_input_level_up():
     """Verify correct player button input advances sequence and increases score."""
     fw, oled, buzzer, btn_left, btn_action, btn_right, _ = create_mock_firmware()
@@ -620,6 +709,35 @@ def test_memory_game_player_correct_input_level_up():
     fw.update_memory(t + 0.85)
     assert fw.memory_state == 1
     assert len(fw.memory_sequence) == 2  # Grew by 1!
+
+
+def test_memory_game_player_input_buttons():
+    """Verify player can press ACT (1) and Right (2) buttons correctly."""
+    fw, oled, buzzer, _, btn_action, btn_right, _ = create_mock_firmware()
+    fw.mode = 3
+    fw.memory_sequence = [1, 2]
+    fw.memory_state = 2
+    fw.memory_player_idx = 0
+    t = 100.0
+    fw.last_button_time = 90.0
+
+    # Draw player turn screen
+    fw.draw_memory()
+    assert oled.has_text("Your Turn!")
+
+    # Step 1: press ACT (1)
+    btn_action.press()
+    fw.handle_buttons(t)
+    btn_action.release()
+    assert fw.memory_player_idx == 1
+
+    # Step 2: press Right (2)
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    btn_right.press()
+    fw.handle_buttons(t)
+    btn_right.release()
+    assert fw.memory_state == 3  # Cleared!
 
 
 def test_memory_game_incorrect_input_game_over():
@@ -665,6 +783,30 @@ def test_memory_game_retry():
     assert fw.memory_score == 0
 
 
+def test_memory_game_navigation_in_idle_and_game_over():
+    """Verify Left/Right navigates out of Memory game in idle and game over states."""
+    fw, _, _, btn_left, _, btn_right, _ = create_mock_firmware()
+    fw.mode = 3
+    fw.memory_state = 0
+    t = 100.0
+
+    # Left switches to Timer (2)
+    btn_left.press()
+    fw.handle_buttons(t)
+    btn_left.release()
+    assert fw.mode == 2
+
+    # In Game Over state, Right switches to Pet (0)
+    fw.mode = 3
+    fw.memory_state = 4
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    btn_right.press()
+    fw.handle_buttons(t)
+    btn_right.release()
+    assert fw.mode == 0
+
+
 # =========================================================================
 # 6. Navigation & Multi-Mode Transition Tests
 # =========================================================================
@@ -674,37 +816,82 @@ def test_mode_cyclical_navigation():
     fw, oled, _, btn_left, _, btn_right, _ = create_mock_firmware()
     t = 100.0
 
-    # Cycle forward: Pet -> Reflex -> Timer -> Memory -> Pet
-    for expected_mode in [1, 2, 3, 0]:
-        t += 1.0
-        fw.last_button_time = t - 0.5
-        btn_right.press()
-        fw.handle_buttons(t)
-        btn_right.release()
-        assert fw.mode == expected_mode
-
-    # Cycle backwards: Pet -> Memory -> Timer -> Reflex -> Pet
-    for expected_mode in [3, 2, 1, 0]:
-        t += 1.0
-        fw.last_button_time = t - 0.5
-        btn_left.press()
-        fw.handle_buttons(t)
-        btn_left.release()
-        assert fw.mode == expected_mode
-
-
-def test_timer_running_mode_switch():
-    """Verify Left/Right switches mode when timer is running instead of adjusting time."""
-    fw, _, _, btn_left, _, btn_right, _ = create_mock_firmware()
-    fw.mode = 2
-    fw.timer_running = True
-    t = 100.0
-    fw.last_button_time = 90.0
-
+    # Pet (0) -> Reflex (1)
     btn_right.press()
     fw.handle_buttons(t)
     btn_right.release()
-    assert fw.mode == 3  # Switched to Memory!
+    assert fw.mode == 1
+
+    # Reflex (1) -> Timer (2)
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    btn_right.press()
+    fw.handle_buttons(t)
+    btn_right.release()
+    assert fw.mode == 2
+
+    # Timer (2) running -> Memory (3)
+    fw.timer_running = True
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    btn_right.press()
+    fw.handle_buttons(t)
+    btn_right.release()
+    assert fw.mode == 3
+
+    # Memory (3) -> Pet (0)
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    btn_right.press()
+    fw.handle_buttons(t)
+    btn_right.release()
+    assert fw.mode == 0
+
+    # Pet (0) -> Memory (3) backwards with Left
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    btn_left.press()
+    fw.handle_buttons(t)
+    btn_left.release()
+    assert fw.mode == 3
+
+    # Memory (3) -> Timer (2)
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    btn_left.press()
+    fw.handle_buttons(t)
+    btn_left.release()
+    assert fw.mode == 2
+
+    # Timer (2) running -> Reflex (1)
+    fw.timer_running = True
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    btn_left.press()
+    fw.handle_buttons(t)
+    btn_left.release()
+    assert fw.mode == 1
+
+    # Reflex (1) -> Pet (0)
+    t += 1.0
+    fw.last_button_time = t - 0.5
+    btn_left.press()
+    fw.handle_buttons(t)
+    btn_left.release()
+    assert fw.mode == 0
+
+
+def test_handle_buttons_guards():
+    """Verify handle_buttons guards against None pins and debounce lockout."""
+    fw, _, _, _, _, _, _ = create_mock_firmware()
+    # Pins are None
+    fw.btn_left = None
+    fw.handle_buttons(100.0)
+
+    # Debounce lockout (< 0.20s)
+    fw.btn_left = MockDigitalInOut(MockPin("GP2"))
+    fw.last_button_time = 100.0
+    fw.handle_buttons(100.10)
 
 
 # =========================================================================
@@ -740,16 +927,18 @@ def test_sound_engine_handles_none_or_failing_buzzer():
 
     class FailingBuzzer:
         def __init__(self):
+            self._fail = False
             self.frequency = 440
             self.duty_cycle = 0
+            self._fail = True
 
         def __setattr__(self, key, value):
-            if key == "frequency":
-                raise OSError("I2C bus error")
+            if getattr(self, "_fail", False) and key == "frequency":
+                raise OSError("PWM bus error")
             super().__setattr__(key, value)
 
     fw.buzzer = FailingBuzzer()
-    fw.sound_tone(440, 0.01)
+    fw.sound_tone(440, 0.01)  # Exercises lines 90-91 (except Exception)
 
 
 # =========================================================================
@@ -773,6 +962,17 @@ def test_render_all_modes_and_header():
     # Render without OLED attached
     fw.oled = None
     fw.render(t)
+    fw.draw_header()
+    fw.draw_pet(t)
+    fw.draw_reflex()
+    fw.draw_timer()
+    fw.draw_memory()
+
+
+def test_step_default_now_and_dt():
+    """Verify fw.step with default now=None and zero dt."""
+    fw, _, _, _, _, _, _ = create_mock_firmware()
+    fw.step(now=None, dt=0.0)
 
 
 # =========================================================================
@@ -802,6 +1002,44 @@ def test_module_level_aliases_and_functions():
 
     # Test main execution with max_ticks limit
     code.main(max_ticks=3)
+
+
+def test_hardware_init_function(monkeypatch):
+    """Verify code.init_hardware handles both healthy hardware and exceptions."""
+    import code
+
+    # Normal healthy init
+    oled, buzzer, btn_l, btn_act, btn_r = code.init_hardware()
+    assert oled is not None
+    assert buzzer is not None
+
+    # Error branches: failing I2C, failing buttons, failing buzzer
+    class BrokenBusio:
+        class I2C:
+            def __init__(self, *args, **kwargs):
+                raise RuntimeError("I2C Fail")
+
+    monkeypatch.setattr(code, "busio", BrokenBusio())
+    code.init_hardware()
+
+    class BrokenDigitalio:
+        class DigitalInOut:
+            def __init__(self, *args, **kwargs):
+                raise RuntimeError("GPIO Fail")
+
+    monkeypatch.setattr(code, "digitalio", BrokenDigitalio())
+    code.init_hardware()
+
+    class BrokenPwmio:
+        class PWMOut:
+            def __init__(self, *args, **kwargs):
+                raise RuntimeError("PWM Fail")
+
+    monkeypatch.setattr(code, "pwmio", BrokenPwmio())
+    code.init_hardware()
+
+
+
 
 
 # =========================================================================

@@ -1,6 +1,6 @@
 G04 Layer: Board Outline*
-G04 Pocket Companion v1.0 (52mm x 38mm)*
-G04 EasyEDA / JLCPCB Standard Compatible*
+G04 Project: Pocket Companion v2.0 (52.0mm x 38.0mm)*
+G04 Standard: RS-274X / JLCPCB Class-2 Manufacturing*
 %FSLAX35Y35*%
 %MOMM*%
 %LPD*%
@@ -11,7 +11,13 @@ G04 EasyEDA / JLCPCB Standard Compatible*
 %ADD14C,1.600*%
 %ADD15C,2.200*%
 %ADD16R,2.200X2.200*%
+%ADD17R,1.600X1.600*%
+%ADD18R,1.800X1.800*%
+%ADD19C,1.000*%
 %ADD20C,0.200*%
+%ADD21C,2.200*%
+%ADD22C,0.400*%
+
 D10*
 X300000Y0D02*
 X4900000Y0D01*

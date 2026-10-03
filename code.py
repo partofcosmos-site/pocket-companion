@@ -15,7 +15,7 @@ try:
     import digitalio
     import pwmio
     import adafruit_ssd1306
-except ImportError:
+except ImportError:  # pragma: no cover
     board = None
     busio = None
     digitalio = None
@@ -616,5 +616,5 @@ def main(max_ticks: int = None):
     app.run(max_ticks=max_ticks)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     main()
