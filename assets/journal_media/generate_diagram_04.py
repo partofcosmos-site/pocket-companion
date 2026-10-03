@@ -95,14 +95,31 @@ def create_breadboard_diagram(output_path):
         ax.plot(cx, bb_y + 7.5, 's', color='#374151', markersize=2, zorder=3)
         ax.plot(cx, bb_y + 4.2, 's', color='#374151', markersize=2, zorder=3)
 
-        # Terminal holes rows: A,B,C,D,E (top half) - zorder=3
+        # Terminal holes rows: A,B,C,D,E (top half) - skip if covered by component
         for r_idx in range(5):
             ry = bb_y + bb_h/2 + 3.0 + r_idx * 3.0
+            # Check if covered by RP2040, OLED, or Buzzer
+            if (rp_x <= cx <= rp_x + rp_w and rp_y <= ry <= rp_y + rp_h):
+                continue
+            if (oled_x <= cx <= oled_x + oled_w and oled_y <= ry <= oled_y + oled_h):
+                continue
+            if ((bz_x - cx)**2 + (bz_y - ry)**2 <= 6.0**2):
+                continue
             ax.plot(cx, ry, 's', color='#4B5563', markersize=2.2, zorder=3)
 
-        # Terminal holes rows: F,G,H,I,J (bottom half) - zorder=3
+        # Terminal holes rows: F,G,H,I,J (bottom half) - skip if covered by component
         for r_idx in range(5):
             ry = bb_y + bb_h/2 - 3.0 - r_idx * 3.0
+            if (rp_x <= cx <= rp_x + rp_w and rp_y <= ry <= rp_y + rp_h):
+                continue
+            # Check if covered by buttons
+            btn_covered = False
+            for _, bx_col, _, _, _ in buttons:
+                if abs(cx - bx_col) <= 3.2 and abs(ry - (bb_y + 13.0)) <= 3.2:
+                    btn_covered = True
+                    break
+            if btn_covered:
+                continue
             ax.plot(cx, ry, 's', color='#4B5563', markersize=2.2, zorder=3)
 
     row_labels_top = ['A', 'B', 'C', 'D', 'E']
