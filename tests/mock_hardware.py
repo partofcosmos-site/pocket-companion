@@ -320,6 +320,45 @@ class SimulatedClock:
         self.current_time = t
 
 
+class MockAnalogIn:
+    """Mock `analogio.AnalogIn` ADC pin."""
+
+    def __init__(self, pin: Any):
+        self.pin = pin
+        self._reference_voltage = 3.3
+        # Default ~4.2V with 2.0x divider: 4.2 / 6.6 * 65535 = 41704
+        self._value = 41704
+        self._deinited = False
+
+    @property
+    def value(self) -> int:
+        return self._value
+
+    @value.setter
+    def value(self, val: int):
+        self._value = max(0, min(65535, int(val)))
+
+    @property
+    def reference_voltage(self) -> float:
+        return self._reference_voltage
+
+    def set_voltage(self, volts: float, divider_ratio: float = 2.0):
+        """Set simulated voltage in Volts."""
+        fraction = max(0.0, volts / (self._reference_voltage * divider_ratio))
+        self._value = max(0, min(65535, int(fraction * 65535)))
+
+    def deinit(self):
+        self._deinited = True
+
+
+class MockAnalogio(types.ModuleType):
+    """Mock `analogio` module."""
+
+    def __init__(self):
+        super().__init__("analogio")
+        self.AnalogIn = MockAnalogIn
+
+
 _ORIGINAL_MODULES = {}
 
 
@@ -329,6 +368,7 @@ def install_mock_modules(sim_clock: Optional[SimulatedClock] = None) -> Dict[str
     digitalio_mock = MockDigitalio()
     busio_mock = MockBusio()
     pwmio_mock = MockPwmio()
+    analogio_mock = MockAnalogio()
     ssd1306_mock = MockAdafruitSSD1306()
     displayio_mock = MockDisplayio()
 
@@ -337,6 +377,7 @@ def install_mock_modules(sim_clock: Optional[SimulatedClock] = None) -> Dict[str
         "digitalio": digitalio_mock,
         "busio": busio_mock,
         "pwmio": pwmio_mock,
+        "analogio": analogio_mock,
         "adafruit_ssd1306": ssd1306_mock,
         "displayio": displayio_mock,
     }
@@ -351,7 +392,7 @@ def install_mock_modules(sim_clock: Optional[SimulatedClock] = None) -> Dict[str
 
 def uninstall_mock_modules():
     """Restore original sys.modules state."""
-    for name in ["board", "digitalio", "busio", "pwmio", "adafruit_ssd1306", "displayio"]:
+    for name in ["board", "digitalio", "busio", "pwmio", "analogio", "adafruit_ssd1306", "displayio"]:
         if name in _ORIGINAL_MODULES:
             sys.modules[name] = _ORIGINAL_MODULES[name]
         elif name in sys.modules:

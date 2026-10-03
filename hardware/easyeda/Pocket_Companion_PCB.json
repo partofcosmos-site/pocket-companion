@@ -69,7 +69,11 @@
     },
     {
       "id": "U1",
-      "name": "RP2040-Zero",
+      "name": "Waveshare RP2040-Zero",
+      "package": "MODULE-SMD_RP2040-ZERO",
+      "castellated_pads": 20,
+      "drill_diameter": "0.900mm",
+      "pad_size": "1.6mm x 1.6mm",
       "x": 26.0,
       "y": 18.0,
       "side": "Bottom",
@@ -90,6 +94,30 @@
       "y": 24.0,
       "side": "Top",
       "rotation": 0
+    },
+    {
+      "id": "FID1",
+      "name": "SMT Optical Fiducial",
+      "x": 4.0,
+      "y": 34.0,
+      "side": "Both",
+      "diameter": "1.0mm"
+    },
+    {
+      "id": "FID2",
+      "name": "SMT Optical Fiducial",
+      "x": 48.0,
+      "y": 34.0,
+      "side": "Both",
+      "diameter": "1.0mm"
+    },
+    {
+      "id": "FID3",
+      "name": "SMT Optical Fiducial",
+      "x": 48.0,
+      "y": 4.0,
+      "side": "Both",
+      "diameter": "1.0mm"
     }
   ]
 }

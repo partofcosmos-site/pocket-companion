@@ -58,7 +58,7 @@ def render_jlcpcb_portal():
     lx, ly = 132, 51
     draw.rounded_rectangle([(lx, ly + 5), (lx + 10, ly + 13)], radius=2, fill=(34, 197, 94))
     draw.arc([(lx + 2, ly), (lx + 8, ly + 7)], start=180, end=0, fill=(34, 197, 94), width=2)
-    draw.text((152, 49), "https://cart.jlcpcb.com/quote?orderType=1&file=Pocket_Companion_v1.0_Gerber.zip", font=get_font(12), fill=(31, 35, 41))
+    draw.text((152, 49), "https://cart.jlcpcb.com/quote?orderType=1&file=Gerber_Pocket_Companion_v2.zip", font=get_font(12), fill=(31, 35, 41))
 
     # Profile Icon
     draw.ellipse([(w - 95, 48), (w - 75, 68)], fill=(0, 118, 247))
@@ -115,7 +115,7 @@ def render_jlcpcb_portal():
     # Vector Parsed Badge
     draw.rounded_rectangle([(48, 167), (115, 187)], radius=3, fill=(16, 185, 129))
     draw.text((54, 170), "VERIFIED", font=get_font(10, bold=True, mono=True), fill=(255, 255, 255))
-    draw.text((125, 168), "Pocket_Companion_v1.0_Gerber.zip (184.2 KB) — Dimensions 52.00 × 38.00 mm, 2 Layers auto-extracted from Edge.Cuts", font=get_font(11, mono=True), fill=(6, 78, 59))
+    draw.text((125, 168), "Gerber_Pocket_Companion_v2.zip (8 Layers) — Dimensions 52.00 × 38.00 mm, 2 Layers auto-extracted from GKO", font=get_font(11, mono=True), fill=(6, 78, 59))
     draw.text((w - 220, 168), "[ Re-upload ]  [ DFM Log ]", font=get_font(11, bold=True, mono=True), fill=(0, 118, 247))
 
     # =========================================================================
@@ -231,7 +231,7 @@ def render_jlcpcb_portal():
     # -------------------------------------------------------------------------
     g_h = 345
     draw.rounded_rectangle([(rx0, ry0), (rx0 + rw, ry0 + g_h)], radius=8, fill=(255, 255, 255), outline=(225, 230, 238), width=1)
-    draw.text((rx0 + 20, ry0 + 14), "Gerber RS-274X Inspection Canvas · Pocket Companion v1.0", font=get_font(14, bold=True), fill=(31, 35, 41))
+    draw.text((rx0 + 20, ry0 + 14), "Gerber RS-274X Inspection Canvas · Pocket Companion v2.0", font=get_font(14, bold=True), fill=(31, 35, 41))
     draw.text((rx0 + rw - 130, ry0 + 14), "Top / Bottom 2D", font=get_font(12, bold=True, mono=True), fill=(0, 118, 247))
     draw.line([(rx0 + 20, ry0 + 38), (rx0 + rw - 20, ry0 + 38)], fill=(238, 240, 244), width=1)
 
@@ -283,7 +283,7 @@ def render_jlcpcb_portal():
     draw.line([(u_x1, u_y0 + 80), (pcb_2d_x0 + 210, u_y0 + 80), (pcb_2d_x0 + 210, pcb_2d_y1 - 56)], fill=(225, 29, 72), width=2)
 
     draw.text((pcb_2d_x0 + 195, pcb_2d_y0 + 85), "Pocket Companion", font=get_font(12, bold=True), fill=(255, 255, 255))
-    draw.text((pcb_2d_x0 + 215, pcb_2d_y0 + 102), "v1.0 · HALF-LIFE", font=get_font(10, bold=True, mono=True), fill=(234, 179, 8))
+    draw.text((pcb_2d_x0 + 215, pcb_2d_y0 + 102), "v2.0 · HALF-LIFE", font=get_font(10, bold=True, mono=True), fill=(234, 179, 8))
 
     # Dimension Overlays on Gerber Canvas
     draw.line([(pcb_2d_x0, pcb_2d_y1 + 14), (pcb_2d_x1, pcb_2d_y1 + 14)], fill=(250, 204, 21), width=1)
