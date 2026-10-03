@@ -7,7 +7,7 @@ Asset 1: 01_system_architecture_block_diagram.png
 import os
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from matplotlib.patches import FancyBboxPatch, ArrowStyle
+from matplotlib.patches import FancyBboxPatch
 
 def create_block_diagram(output_path):
     fig, ax = plt.subplots(figsize=(16, 9), dpi=120)
@@ -66,14 +66,12 @@ def create_block_diagram(output_path):
     # =========================================================================
     # 1. POWER SUBSYSTEM (LEFT COLUMN)
     # =========================================================================
-    # Section title
     ax.text(22, 77.5, "[ POWER & BATTERY SUBSYSTEM ]", color='#F59E0B', fontsize=9,
             fontweight='bold', fontfamily='Consolas', ha='center')
 
     # Card A: LiPo Battery Pack
     draw_card(6, 61, 32, 14, "3.7V 400mAh LiPo Battery", "Model: 502535 | 1.48Wh Single-Cell",
               header_color='#D97706', border_color='#B45309')
-    # Details
     ax.text(8, 57.5, "• Nominal: 3.7V | Max: 4.2V", color='#D1D5DB', fontsize=7.5, fontfamily='Segoe UI')
     ax.text(8, 55.0, "• Cutoff: 3.0V (DW01A Prot.)", color='#D1D5DB', fontsize=7.5, fontfamily='Segoe UI')
     ax.text(8, 52.5, "• Connector: JST-PH 2.0mm 2P", color='#D1D5DB', fontsize=7.5, fontfamily='Segoe UI')
@@ -97,69 +95,66 @@ def create_block_diagram(output_path):
     ax.text(8, 13.5, "• Rating: 50V 0.5A Mini Slide", color='#9CA3AF', fontsize=7, fontfamily='Consolas')
 
     # Power interconnect lines
-    # Battery to TP4056
     ax.annotate('', xy=(22, 47), xytext=(22, 61),
                 arrowprops=dict(arrowstyle="<->", color='#F59E0B', lw=2))
     ax.text(23, 54, "VBAT / BATT+-\n(JST-PH 2P)", color='#FCD34D', fontsize=7, fontfamily='Consolas', va='center')
 
-    # TP4056 OUT+ to Switch
     ax.annotate('', xy=(22, 25), xytext=(22, 30),
                 arrowprops=dict(arrowstyle="->", color='#F59E0B', lw=2))
     ax.text(23, 27.5, "OUT+ (VBAT)", color='#FCD34D', fontsize=7, fontfamily='Consolas', va='center')
 
-    # Switch to RP2040 VBUS_IN (horizontal long routing to center)
-    ax.plot([38, 48, 48], [18.5, 18.5, 32], color='#EF4444', lw=2.5)
-    ax.annotate('', xy=(50, 32), xytext=(48, 32),
+    ax.plot([38, 46, 46], [18.5, 18.5, 32], color='#EF4444', lw=2.5)
+    ax.annotate('', xy=(48, 32), xytext=(46, 32),
                 arrowprops=dict(arrowstyle="-|>", color='#EF4444', lw=2.5, mutation_scale=12))
-    ax.text(40, 20, "VBUS_IN (+3.7V - 5V)", color='#FCA5A5', fontsize=7.5, fontweight='bold', fontfamily='Consolas')
+    ax.text(39, 20, "VBUS_IN (+3.7V - 5V)", color='#FCA5A5', fontsize=7.5, fontweight='bold', fontfamily='Consolas')
 
     # =========================================================================
     # 2. MICROCONTROLLER CORE (CENTER COLUMN)
     # =========================================================================
-    ax.text(80, 77.5, "[ CORE PROCESSING UNIT ]", color='#38BDF8', fontsize=9,
+    ax.text(77, 77.5, "[ CORE PROCESSING UNIT ]", color='#38BDF8', fontsize=9,
             fontweight='bold', fontfamily='Consolas', ha='center')
 
-    # Master RP2040 Card
-    draw_card(50, 10, 60, 65, "Waveshare RP2040-Zero",
+    # Master RP2040 Card (x: 48 to 106, width 58)
+    draw_card(48, 10, 58, 65, "Waveshare RP2040-Zero",
               "Dual ARM Cortex-M0+ @ 133MHz | 2MB Flash | Ultra-Compact SMD/DIP",
               header_color='#0284C7', border_color='#0284C7', body_color='#0F172A')
 
     # Sub-block inside RP2040: Silicon Architecture
-    mcu_sub = FancyBboxPatch((53, 53), 54, 18, boxstyle="round,pad=0.2,rounding_size=0.6",
+    mcu_sub = FancyBboxPatch((50.5, 53), 44, 18, boxstyle="round,pad=0.2,rounding_size=0.6",
                              facecolor='#1E293B', edgecolor='#38BDF8', linewidth=1)
     ax.add_patch(mcu_sub)
-    ax.text(80, 68.5, "Raspberry Pi RP2040 Silicon", color='#38BDF8', fontsize=9,
+    ax.text(72.5, 68.5, "Raspberry Pi RP2040 Silicon", color='#38BDF8', fontsize=9,
             fontweight='bold', fontfamily='Segoe UI', ha='center')
-    ax.text(56, 65.5, "• 2x ARM Cortex-M0+ Cores @ 133MHz", color='#E2E8F0', fontsize=7.5, fontfamily='Segoe UI')
-    ax.text(56, 63.0, "• 264KB Multi-Bank SRAM (6 independent banks)", color='#E2E8F0', fontsize=7.5, fontfamily='Segoe UI')
-    ax.text(56, 60.5, "• 2MB High-Speed QSPI NOR Flash (W25Q16JV)", color='#E2E8F0', fontsize=7.5, fontfamily='Segoe UI')
-    ax.text(56, 58.0, "• 2x UART, 2x SPI, 2x I2C, 16x PWM Channels", color='#94A3B8', fontsize=7.5, fontfamily='Segoe UI')
-    ax.text(56, 55.5, "• 8x Programmable I/O (PIO) State Machines", color='#94A3B8', fontsize=7.5, fontfamily='Segoe UI')
+    ax.text(53, 65.5, "• 2x ARM Cortex-M0+ Cores @ 133MHz", color='#E2E8F0', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(53, 63.0, "• 264KB Multi-Bank SRAM (6 banks)", color='#E2E8F0', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(53, 60.5, "• 2MB High-Speed QSPI NOR Flash", color='#E2E8F0', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(53, 58.0, "• 2x UART, 2x SPI, 2x I2C, 16x PWM", color='#94A3B8', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(53, 55.5, "• 8x Programmable I/O (PIO) Machines", color='#94A3B8', fontsize=7.2, fontfamily='Segoe UI')
 
     # Sub-block: Firmware & Environment
-    fw_sub = FancyBboxPatch((53, 38.5), 54, 12.5, boxstyle="round,pad=0.2,rounding_size=0.6",
+    fw_sub = FancyBboxPatch((50.5, 38.5), 44, 12.5, boxstyle="round,pad=0.2,rounding_size=0.6",
                             facecolor='#1E293B', edgecolor='#10B981', linewidth=1)
     ax.add_patch(fw_sub)
-    ax.text(80, 48.5, "CircuitPython 9.x Runtime Engine", color='#34D399', fontsize=8.5,
+    ax.text(72.5, 48.5, "CircuitPython 9.x Runtime", color='#34D399', fontsize=8.5,
             fontweight='bold', fontfamily='Segoe UI', ha='center')
-    ax.text(56, 45.5, "• code.py Main Loop: Mode State Machine (Pet / Reflex / Timer)", color='#E2E8F0', fontsize=7.5, fontfamily='Segoe UI')
-    ax.text(56, 43.0, "• Frame Driver: adafruit_ssd1306 Framebuffer over I2C", color='#E2E8F0', fontsize=7.5, fontfamily='Segoe UI')
-    ax.text(56, 40.5, "• Audio Engine: pwmio.PWMOut dynamic frequency synthesis", color='#E2E8F0', fontsize=7.5, fontfamily='Segoe UI')
+    ax.text(53, 45.5, "• code.py: Mode State Machine (Pet/Game)", color='#E2E8F0', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(53, 43.0, "• Frame Driver: adafruit_ssd1306 (I2C)", color='#E2E8F0', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(53, 40.5, "• Audio Engine: pwmio.PWMOut dynamic sound", color='#E2E8F0', fontsize=7.2, fontfamily='Segoe UI')
 
     # Sub-block: On-board Power & Peripherals
-    pwr_sub = FancyBboxPatch((53, 23.5), 54, 13, boxstyle="round,pad=0.2,rounding_size=0.6",
+    pwr_sub = FancyBboxPatch((50.5, 23.5), 44, 13, boxstyle="round,pad=0.2,rounding_size=0.6",
                              facecolor='#1E293B', edgecolor='#F59E0B', linewidth=1)
     ax.add_patch(pwr_sub)
-    ax.text(80, 34.0, "On-Board Power Regulation & IO", color='#FBBF24', fontsize=8.5,
+    ax.text(72.5, 34.0, "On-Board Power & IO", color='#FBBF24', fontsize=8.5,
             fontweight='bold', fontfamily='Segoe UI', ha='center')
-    ax.text(56, 31.0, "• ME6211 / RT9193 3.3V Low-Dropout LDO Regulator (500mA)", color='#E2E8F0', fontsize=7.5, fontfamily='Segoe UI')
-    ax.text(56, 28.5, "• Type-C USB Port: Native USB 1.1 Bootloader / REPL", color='#E2E8F0', fontsize=7.5, fontfamily='Segoe UI')
-    ax.text(56, 26.0, "• WS2812 RGB LED (GP16) & BOOT/RESET tactile buttons", color='#E2E8F0', fontsize=7.5, fontfamily='Segoe UI')
+    ax.text(53, 31.0, "• ME6211 / RT9193 3.3V LDO (500mA)", color='#E2E8F0', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(53, 28.5, "• Type-C USB Port: Native USB REPL", color='#E2E8F0', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(53, 26.0, "• WS2812 RGB LED & BOOT/RESET buttons", color='#E2E8F0', fontsize=7.2, fontfamily='Segoe UI')
 
-    # Pin badges on RP2040 right border
+    # Pin badges on RP2040 right border (from x=96 to 112)
     pins = [
-        (72, "GP0 / I2C0_SDA", '#06B6D4'),
-        (68, "GP1 / I2C0_SCL", '#06B6D4'),
+        (71, "GP0 / I2C0_SDA", '#06B6D4'),
+        (67, "GP1 / I2C0_SCL", '#06B6D4'),
         (51, "GP5 / PWM2B", '#EAB308'),
         (25, "GP2 / BTN_LEFT", '#10B981'),
         (21, "GP3 / BTN_ACTION", '#10B981'),
@@ -167,91 +162,91 @@ def create_block_diagram(output_path):
         (13, "+3V3 Rail Out", '#FB923C'),
     ]
     for py, label, col in pins:
-        p_badge = FancyBboxPatch((102, py - 1.2), 18, 2.4, boxstyle="round,pad=0.1,rounding_size=0.4",
+        p_badge = FancyBboxPatch((96, py - 1.2), 15, 2.4, boxstyle="round,pad=0.1,rounding_size=0.4",
                                  facecolor='#0F172A', edgecolor=col, linewidth=1.2)
         ax.add_patch(p_badge)
-        ax.text(111, py, label, color=col, fontsize=6.8, fontweight='bold',
+        ax.text(103.5, py, label, color=col, fontsize=6.6, fontweight='bold',
                 fontfamily='Consolas', ha='center', va='center')
 
     # =========================================================================
     # 3. PERIPHERALS SUBSYSTEM (RIGHT COLUMN)
     # =========================================================================
-    ax.text(141, 77.5, "[ HARDWARE PERIPHERALS ]", color='#A78BFA', fontsize=9,
+    ax.text(139, 77.5, "[ HARDWARE PERIPHERALS ]", color='#A78BFA', fontsize=9,
             fontweight='bold', fontfamily='Consolas', ha='center')
 
-    # Card 1: 0.96" SSD1306 OLED Display
-    draw_card(122, 60, 34, 15, "0.96\" SSD1306 OLED Display", "128x64 Monochrome Graphic I2C",
+    # Card 1: 0.96" SSD1306 OLED Display (y: 59 to 75.5, height 16.5)
+    draw_card(122, 59, 34, 16.5, "0.96\" SSD1306 OLED Display", "128x64 Monochrome Graphic I2C",
               header_color='#0284C7', border_color='#0369A1')
-    ax.text(124, 57.0, "• Resolution: 128 x 64 pixels (Blue phosphor)", color='#D1D5DB', fontsize=7.2, fontfamily='Segoe UI')
-    ax.text(124, 54.5, "• Interface: I2C (Address: 0x3C @ 400kHz)", color='#38BDF8', fontsize=7.2, fontfamily='Segoe UI')
-    ax.text(124, 52.0, "• Internal Charge Pump: 7.5V boost from 3.3V", color='#D1D5DB', fontsize=7.2, fontfamily='Segoe UI')
-    ax.text(124, 49.5, "• Current: ~7mA (25% on) / ~20mA (100% on)", color='#9CA3AF', fontsize=7.2, fontfamily='Segoe UI')
-    ax.text(124, 47.0, "• Pins: VCC (+3.3V), GND, SCL, SDA", color='#67E8F9', fontsize=7.2, fontfamily='Consolas')
+    ax.text(124, 69.8, "• Resolution: 128 x 64 pixels (Blue phosphor)", color='#D1D5DB', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(124, 67.5, "• Interface: I2C (Address: 0x3C @ 400kHz)", color='#38BDF8', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(124, 65.2, "• Internal Charge Pump: 7.5V boost from 3.3V", color='#D1D5DB', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(124, 62.9, "• Current: ~7mA (25% on) / ~20mA (100% on)", color='#9CA3AF', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(124, 60.6, "• Pins: VCC (+3.3V), GND, SCL, SDA", color='#67E8F9', fontsize=7.2, fontfamily='Consolas')
 
-    # Card 2: Passive Piezo Buzzer
-    draw_card(122, 42, 34, 14, "Passive Piezo Buzzer", "Audio Tones & Haptic Sound Fx",
+    # Card 2: Passive Piezo Buzzer (y: 40.5 to 57, height 16.5)
+    draw_card(122, 40.5, 34, 16.5, "Passive Piezo Buzzer", "Audio Tones & Haptic Sound Fx",
               header_color='#CA8A04', border_color='#A16207')
-    ax.text(124, 38.5, "• Transducer: 3V-5V Passive Piezo Disc", color='#D1D5DB', fontsize=7.2, fontfamily='Segoe UI')
-    ax.text(124, 36.0, "• Drive: PWM Square Wave via GP5", color='#FACC15', fontsize=7.2, fontfamily='Segoe UI')
-    ax.text(124, 33.5, "• Freq: 440Hz - 2000Hz (Buzzer Chimes)", color='#D1D5DB', fontsize=7.2, fontfamily='Segoe UI')
-    ax.text(124, 31.0, "• Peak Current: ~4mA during active chirps", color='#9CA3AF', fontsize=7.2, fontfamily='Segoe UI')
-    ax.text(124, 28.5, "• Zero current consumption when silent", color='#34D399', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(124, 51.3, "• Transducer: 3V-5V Passive Piezo Disc", color='#D1D5DB', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(124, 49.0, "• Drive: PWM Square Wave via GP5", color='#FACC15', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(124, 46.7, "• Freq: 440Hz - 2000Hz (Buzzer Chimes)", color='#D1D5DB', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(124, 44.4, "• Peak Current: ~4mA during active chirps", color='#9CA3AF', fontsize=7.2, fontfamily='Segoe UI')
+    ax.text(124, 42.1, "• Zero current consumption when silent", color='#34D399', fontsize=7.2, fontfamily='Segoe UI')
 
-    # Card 3: 3x Tactile Push Buttons
-    draw_card(122, 10, 34, 28, "3x Tactile Push Buttons", "User Input Navigation & Action",
+    # Card 3: 3x Tactile Push Buttons (y: 10 to 38.5, height 28.5)
+    draw_card(122, 10, 34, 28.5, "3x Tactile Push Buttons", "User Input Navigation & Action",
               header_color='#059669', border_color='#047857')
     # SW1
-    sw1_box = FancyBboxPatch((124, 26.5), 30, 4.2, boxstyle="round,pad=0.1,rounding_size=0.4",
+    sw1_box = FancyBboxPatch((124, 27.2), 30, 4.3, boxstyle="round,pad=0.1,rounding_size=0.4",
                              facecolor='#1E293B', edgecolor='#10B981', linewidth=0.8)
     ax.add_patch(sw1_box)
-    ax.text(125.5, 29.2, "SW1 [Left Button] → GP2", color='#6EE7B7', fontsize=7.2, fontweight='bold', fontfamily='Consolas')
-    ax.text(125.5, 27.2, "Navigates left / previous mode | Active LOW", color='#9CA3AF', fontsize=6.5, fontfamily='Segoe UI')
+    ax.text(125.5, 29.8, "SW1 [Left Button] → GP2", color='#6EE7B7', fontsize=7.2, fontweight='bold', fontfamily='Consolas')
+    ax.text(125.5, 28.0, "Navigates left / previous mode | Active LOW", color='#9CA3AF', fontsize=6.5, fontfamily='Segoe UI')
 
     # SW2
-    sw2_box = FancyBboxPatch((124, 21.0), 30, 4.2, boxstyle="round,pad=0.1,rounding_size=0.4",
+    sw2_box = FancyBboxPatch((124, 21.7), 30, 4.3, boxstyle="round,pad=0.1,rounding_size=0.4",
                              facecolor='#1E293B', edgecolor='#10B981', linewidth=0.8)
     ax.add_patch(sw2_box)
-    ax.text(125.5, 23.7, "SW2 [Action Button] → GP3", color='#6EE7B7', fontsize=7.2, fontweight='bold', fontfamily='Consolas')
-    ax.text(125.5, 21.7, "Interact / Feed pet / Game trigger | Active LOW", color='#9CA3AF', fontsize=6.5, fontfamily='Segoe UI')
+    ax.text(125.5, 24.3, "SW2 [Action Button] → GP3", color='#6EE7B7', fontsize=7.2, fontweight='bold', fontfamily='Consolas')
+    ax.text(125.5, 22.5, "Interact / Feed pet / Game trigger | Active LOW", color='#9CA3AF', fontsize=6.5, fontfamily='Segoe UI')
 
     # SW3
-    sw3_box = FancyBboxPatch((124, 15.5), 30, 4.2, boxstyle="round,pad=0.1,rounding_size=0.4",
+    sw3_box = FancyBboxPatch((124, 16.2), 30, 4.3, boxstyle="round,pad=0.1,rounding_size=0.4",
                              facecolor='#1E293B', edgecolor='#10B981', linewidth=0.8)
     ax.add_patch(sw3_box)
-    ax.text(125.5, 18.2, "SW3 [Right Button] → GP4", color='#6EE7B7', fontsize=7.2, fontweight='bold', fontfamily='Consolas')
-    ax.text(125.5, 16.2, "Navigates right / next mode | Active LOW", color='#9CA3AF', fontsize=6.5, fontfamily='Segoe UI')
+    ax.text(125.5, 18.8, "SW3 [Right Button] → GP4", color='#6EE7B7', fontsize=7.2, fontweight='bold', fontfamily='Consolas')
+    ax.text(125.5, 17.0, "Navigates right / next mode | Active LOW", color='#9CA3AF', fontsize=6.5, fontfamily='Segoe UI')
 
-    ax.text(125.5, 12.5, "• Internal Pull-Up Resistors (~50kΩ enabled in SW)", color='#D1D5DB', fontsize=6.8, fontfamily='Segoe UI')
-    ax.text(125.5, 10.8, "• Active LOW topology (Switch shorts pin to GND)", color='#9CA3AF', fontsize=6.8, fontfamily='Segoe UI')
+    ax.text(125.5, 13.5, "• Internal Pull-Up Resistors (~50kΩ enabled in SW)", color='#D1D5DB', fontsize=6.8, fontfamily='Segoe UI')
+    ax.text(125.5, 11.5, "• Active LOW topology (Switch shorts pin to GND)", color='#9CA3AF', fontsize=6.8, fontfamily='Segoe UI')
 
     # =========================================================================
     # ROUTING SIGNAL TRACES (BUSES & ARROWS)
     # =========================================================================
     # 1. I2C Bus to OLED
-    ax.plot([110, 116, 116, 122], [72, 72, 69, 69], color='#06B6D4', lw=2)
-    ax.plot([110, 118, 118, 122], [68, 68, 66, 66], color='#06B6D4', lw=2)
-    ax.annotate('', xy=(122, 69), xytext=(120, 69),
+    ax.plot([111, 116, 116, 122], [71, 71, 70, 70], color='#06B6D4', lw=2)
+    ax.plot([111, 117, 117, 122], [67, 67, 65, 65], color='#06B6D4', lw=2)
+    ax.annotate('', xy=(122, 70), xytext=(120, 70),
                 arrowprops=dict(arrowstyle="-|>", color='#06B6D4', lw=2, mutation_scale=10))
-    ax.annotate('', xy=(122, 66), xytext=(120, 66),
+    ax.annotate('', xy=(122, 65), xytext=(120, 65),
                 arrowprops=dict(arrowstyle="-|>", color='#06B6D4', lw=2, mutation_scale=10))
-    ax.text(115, 73.5, "I2C SDA (GP0)", color='#67E8F9', fontsize=6.8, fontfamily='Consolas')
-    ax.text(115, 64.5, "I2C SCL (GP1)", color='#67E8F9', fontsize=6.8, fontfamily='Consolas')
+    ax.text(116.5, 72.8, "I2C SDA (GP0)", color='#67E8F9', fontsize=6.5, fontfamily='Consolas', ha='center')
+    ax.text(116.5, 63.5, "I2C SCL (GP1)", color='#67E8F9', fontsize=6.5, fontfamily='Consolas', ha='center')
 
     # 2. PWM to Buzzer
-    ax.plot([110, 122], [51, 51], color='#EAB308', lw=2)
+    ax.plot([111, 122], [51, 51], color='#EAB308', lw=2)
     ax.annotate('', xy=(122, 51), xytext=(119, 51),
                 arrowprops=dict(arrowstyle="-|>", color='#EAB308', lw=2, mutation_scale=10))
-    ax.text(112, 52.2, "PWM Audio (GP5)", color='#FDE047', fontsize=6.8, fontfamily='Consolas')
+    ax.text(116.5, 52.6, "PWM Audio (GP5)", color='#FDE047', fontsize=6.5, fontfamily='Consolas', ha='center')
 
     # 3. Button inputs to RP2040
-    ax.plot([124, 116, 116, 110], [28.5, 28.5, 25, 25], color='#10B981', lw=2)
-    ax.plot([124, 118, 118, 110], [23.0, 23.0, 21, 21], color='#10B981', lw=2)
-    ax.plot([124, 120, 120, 110], [17.5, 17.5, 17, 17], color='#10B981', lw=2)
-    ax.annotate('', xy=(110, 25), xytext=(112, 25),
+    ax.plot([124, 117, 117, 111], [29.3, 29.3, 25, 25], color='#10B981', lw=2)
+    ax.plot([124, 118, 118, 111], [23.8, 23.8, 21, 21], color='#10B981', lw=2)
+    ax.plot([124, 119, 119, 111], [18.3, 18.3, 17, 17], color='#10B981', lw=2)
+    ax.annotate('', xy=(111, 25), xytext=(113, 25),
                 arrowprops=dict(arrowstyle="-|>", color='#10B981', lw=2, mutation_scale=10))
-    ax.annotate('', xy=(110, 21), xytext=(112, 21),
+    ax.annotate('', xy=(111, 21), xytext=(113, 21),
                 arrowprops=dict(arrowstyle="-|>", color='#10B981', lw=2, mutation_scale=10))
-    ax.annotate('', xy=(110, 17), xytext=(112, 17),
+    ax.annotate('', xy=(111, 17), xytext=(113, 17),
                 arrowprops=dict(arrowstyle="-|>", color='#10B981', lw=2, mutation_scale=10))
 
     # =========================================================================
@@ -261,7 +256,6 @@ def create_block_diagram(output_path):
                             facecolor='#111827', edgecolor='#1F2937', linewidth=1.2)
     ax.add_patch(footer)
 
-    # Legend items
     ax.text(7, 5.2, "SIGNAL LEGEND:", color='#9CA3AF', fontsize=7.5, fontweight='bold', fontfamily='Consolas', va='center')
 
     # Power rail
