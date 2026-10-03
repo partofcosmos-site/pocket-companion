@@ -2,7 +2,7 @@
   "status": "PASSED",
   "simulated_days": 1000,
   "simulated_total_hours": 24000.0,
-  "wallclock_seconds": 4.977,
+  "wallclock_seconds": 4.777,
   "total_active_hours": 2250.0,
   "expected_active_hours": 2250.0,
   "active_hours_error_pct": 0.0,

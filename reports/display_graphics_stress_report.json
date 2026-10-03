@@ -1,8 +1,8 @@
 {
   "status": "PASSED",
   "total_cycles": 10000,
-  "wallclock_seconds": 8.537,
-  "overall_fps": 1171.3,
+  "wallclock_seconds": 8.861,
+  "overall_fps": 1128.5,
   "framebuffer_overruns": 0,
   "text_clipping_events": 0,
   "visual_artifacts": 0,
@@ -23,7 +23,7 @@
   "checkpoints": [
     {
       "cycle": 1000,
-      "fps": 1060.9,
+      "fps": 1242.3,
       "cur_heap_kb": 19.15,
       "peak_heap_kb": 20.94,
       "delta_kb": 19.15,
@@ -34,7 +34,7 @@
     },
     {
       "cycle": 2000,
-      "fps": 1062.4,
+      "fps": 1179.6,
       "cur_heap_kb": 19.92,
       "peak_heap_kb": 21.68,
       "delta_kb": 19.92,
@@ -45,7 +45,7 @@
     },
     {
       "cycle": 3000,
-      "fps": 1109.5,
+      "fps": 1160.5,
       "cur_heap_kb": 20.43,
       "peak_heap_kb": 22.13,
       "delta_kb": 20.43,
@@ -56,7 +56,7 @@
     },
     {
       "cycle": 4000,
-      "fps": 1133.7,
+      "fps": 1155.4,
       "cur_heap_kb": 20.79,
       "peak_heap_kb": 22.58,
       "delta_kb": 20.79,
@@ -67,7 +67,7 @@
     },
     {
       "cycle": 5000,
-      "fps": 1153.0,
+      "fps": 1154.4,
       "cur_heap_kb": 21.28,
       "peak_heap_kb": 23.04,
       "delta_kb": 21.28,
@@ -78,7 +78,7 @@
     },
     {
       "cycle": 6000,
-      "fps": 1166.4,
+      "fps": 1134.6,
       "cur_heap_kb": 21.83,
       "peak_heap_kb": 23.52,
       "delta_kb": 21.83,
@@ -89,7 +89,7 @@
     },
     {
       "cycle": 7000,
-      "fps": 1176.1,
+      "fps": 1126.2,
       "cur_heap_kb": 22.18,
       "peak_heap_kb": 23.97,
       "delta_kb": 22.18,
@@ -100,7 +100,7 @@
     },
     {
       "cycle": 8000,
-      "fps": 1169.1,
+      "fps": 1126.1,
       "cur_heap_kb": 22.67,
       "peak_heap_kb": 24.43,
       "delta_kb": 22.67,
@@ -111,7 +111,7 @@
     },
     {
       "cycle": 9000,
-      "fps": 1168.4,
+      "fps": 1130.9,
       "cur_heap_kb": 23.18,
       "peak_heap_kb": 24.88,
       "delta_kb": 23.18,
@@ -122,7 +122,7 @@
     },
     {
       "cycle": 10000,
-      "fps": 1173.7,
+      "fps": 1131.8,
       "cur_heap_kb": 23.61,
       "peak_heap_kb": 25.39,
       "delta_kb": 23.61,
