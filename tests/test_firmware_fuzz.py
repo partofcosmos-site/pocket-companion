@@ -376,3 +376,67 @@ def test_profile_heap_fragmentation_under_20_percent():
     print(f"[HEAP PROFILE] Growth: {growth_bytes / 1024:.2f} KB | Fragmentation Index: {fragmentation_ratio:.2f}% (Limit: <20%)")
 
     assert fragmentation_ratio < 20.0, f"Heap fragmentation index {fragmentation_ratio:.2f}% exceeds 20% limit"
+
+
+def test_submillisecond_latency_under_battery_decay():
+    """Verify frame step and input response latency remain < 1.0ms down to 3.0V."""
+    import gc
+    fw, oled, buzzer, btn_l, btn_act, btn_r, vbat_pin = create_fuzz_firmware()
+
+    voltages = [4.20, 3.80, 3.40, 3.20, 3.00]
+    sim_time = 1000.0
+
+    gc.collect()
+    gc.disable()
+    try:
+        for v in voltages:
+            vbat_pin.set_voltage(v)
+            fw.update_battery()
+
+            # Measure 1,000 step cycles at this voltage
+            step_latencies = []
+            for _ in range(1000):
+                sim_time += 0.05
+                t0 = time.perf_counter()
+                fw.step(now=sim_time, dt=0.0)
+                t1 = time.perf_counter()
+                step_latencies.append((t1 - t0) * 1000.0)  # ms
+
+            p99_step_ms = sorted(step_latencies)[int(len(step_latencies) * 0.99)]
+            mean_step_ms = sum(step_latencies) / len(step_latencies)
+
+            # Sub-millisecond requirement: mean and p99 must be strictly below 1.0 ms
+            assert mean_step_ms < 1.0, f"Mean step latency {mean_step_ms:.4f}ms at {v}V exceeds 1.0ms"
+            assert p99_step_ms < 1.0, f"P99 step latency {p99_step_ms:.4f}ms at {v}V exceeds 1.0ms"
+
+            # Measure input button handling latency
+            btn_latencies = []
+            for _ in range(200):
+                sim_time += 0.5
+                fw.last_button_time = sim_time - 0.4
+                btn_act.press()
+                t0 = time.perf_counter()
+                fw.handle_buttons(sim_time)
+                t1 = time.perf_counter()
+                btn_act.release()
+                btn_latencies.append((t1 - t0) * 1000.0)
+
+            p99_btn_ms = sorted(btn_latencies)[int(len(btn_latencies) * 0.99)]
+            assert p99_btn_ms < 1.0, f"P99 button latency {p99_btn_ms:.4f}ms at {v}V exceeds 1.0ms"
+    finally:
+        gc.enable()
+
+
+def test_fuzz_100k_cycles_soak_continuous_memory_tracking():
+    """Execute 100,000 cycles across all 4 modes with continuous memory monitoring."""
+    from run_soak_100k import run_100k_soak
+    result = run_100k_soak()
+
+    assert result["status"] == "PASSED"
+    assert result["total_cycles"] == 100000
+    assert result["total_crashes"] == 0
+    assert result["memory_leak_detected"] is False
+    assert result["final_heap_delta_kb"] < 150.0
+    for mode_idx in (0, 1, 2, 3):
+        assert result["mode_distribution"][mode_idx] > 10000
+
