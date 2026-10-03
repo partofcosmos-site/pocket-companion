@@ -1,0 +1,126 @@
+{
+  "status": "PASSED",
+  "total_cycles": 10000,
+  "wallclock_seconds": 12.299,
+  "overall_fps": 813.1,
+  "crashes": 0,
+  "state_recoveries_verified": 10000,
+  "flash_fallbacks_verified": 200,
+  "adc_spikes_filtered": 500,
+  "baseline_heap_kb": 0.0,
+  "peak_heap_kb": 105.86,
+  "final_delta_kb": 24.13,
+  "zero_memory_leak": true,
+  "checkpoints": [
+    {
+      "cycle": 1000,
+      "fps": 825.1,
+      "cur_heap_kb": 40.2,
+      "peak_heap_kb": 51.42,
+      "delta_kb": 40.2,
+      "state_fixes": 1000,
+      "flash_fallbacks": 20,
+      "adc_spikes_filtered": 50,
+      "crashes": 0
+    },
+    {
+      "cycle": 2000,
+      "fps": 857.0,
+      "cur_heap_kb": 34.41,
+      "peak_heap_kb": 67.67,
+      "delta_kb": 34.41,
+      "state_fixes": 2000,
+      "flash_fallbacks": 40,
+      "adc_spikes_filtered": 100,
+      "crashes": 0
+    },
+    {
+      "cycle": 3000,
+      "fps": 860.0,
+      "cur_heap_kb": 55.23,
+      "peak_heap_kb": 67.67,
+      "delta_kb": 55.23,
+      "state_fixes": 3000,
+      "flash_fallbacks": 60,
+      "adc_spikes_filtered": 150,
+      "crashes": 0
+    },
+    {
+      "cycle": 4000,
+      "fps": 837.0,
+      "cur_heap_kb": 80.18,
+      "peak_heap_kb": 91.45,
+      "delta_kb": 80.18,
+      "state_fixes": 4000,
+      "flash_fallbacks": 80,
+      "adc_spikes_filtered": 200,
+      "crashes": 0
+    },
+    {
+      "cycle": 5000,
+      "fps": 810.4,
+      "cur_heap_kb": 57.11,
+      "peak_heap_kb": 91.45,
+      "delta_kb": 57.11,
+      "state_fixes": 5000,
+      "flash_fallbacks": 100,
+      "adc_spikes_filtered": 250,
+      "crashes": 0
+    },
+    {
+      "cycle": 6000,
+      "fps": 813.5,
+      "cur_heap_kb": 77.82,
+      "peak_heap_kb": 91.45,
+      "delta_kb": 77.82,
+      "state_fixes": 6000,
+      "flash_fallbacks": 120,
+      "adc_spikes_filtered": 300,
+      "crashes": 0
+    },
+    {
+      "cycle": 7000,
+      "fps": 799.9,
+      "cur_heap_kb": 53.52,
+      "peak_heap_kb": 100.82,
+      "delta_kb": 53.52,
+      "state_fixes": 7000,
+      "flash_fallbacks": 140,
+      "adc_spikes_filtered": 350,
+      "crashes": 0
+    },
+    {
+      "cycle": 8000,
+      "fps": 799.3,
+      "cur_heap_kb": 73.68,
+      "peak_heap_kb": 100.82,
+      "delta_kb": 73.68,
+      "state_fixes": 8000,
+      "flash_fallbacks": 160,
+      "adc_spikes_filtered": 400,
+      "crashes": 0
+    },
+    {
+      "cycle": 9000,
+      "fps": 806.5,
+      "cur_heap_kb": 94.5,
+      "peak_heap_kb": 105.86,
+      "delta_kb": 94.5,
+      "state_fixes": 9000,
+      "flash_fallbacks": 180,
+      "adc_spikes_filtered": 450,
+      "crashes": 0
+    },
+    {
+      "cycle": 10000,
+      "fps": 814.3,
+      "cur_heap_kb": 68.35,
+      "peak_heap_kb": 105.86,
+      "delta_kb": 68.35,
+      "state_fixes": 10000,
+      "flash_fallbacks": 200,
+      "adc_spikes_filtered": 500,
+      "crashes": 0
+    }
+  ]
+}

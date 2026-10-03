@@ -9,7 +9,7 @@ $fn = 64; // High-resolution circle rendering for 3D printing
 // 3D Printing Tolerances & Clearances
 // -----------------------------------------------------------------------------
 tol = 0.25;               // Standard FDM/SLA clearance tolerance
-slide_tol = 0.30;         // Clearance for sliding fit (buttons, switches)
+slide_tol = 0.25;         // 0.25mm print clearance for sliding fit (buttons, shafts)
 press_tol = 0.15;         // Interference/press fit tolerance
 
 // -----------------------------------------------------------------------------
@@ -56,7 +56,7 @@ lip_h = 1.6;              // Height of interlocking lip
 lip_w = wall_t / 2;       // 1.0 mm lip thickness
 snap_ridge_w = 0.30;      // 0.3mm snap-fit latching bead undercut
 snap_ridge_h = 0.80;      // Height of snap-fit latching ridge
-usbc_chamfer = 1.20;      // 45-degree chamfer for USB-C strain relief entry
+usbc_chamfer = 0.80;      // 45-degree chamfer for USB-C strain relief entry
 
 // -----------------------------------------------------------------------------
 // PCB Mounting Standoffs & Corner Bosses
@@ -129,10 +129,10 @@ pwr_slot_z = floor_t + standoff_z + pcb_t + 0.8; // Aligned with switch toggle
 // Mounted at the bottom or rear wall
 usbc_wall_y = 0;          // Cutout on bottom wall (Y=0)
 usbc_center_x = 26.0;     // Centered along X axis
-usbc_w = 10.2;            // USB-C connector cutout width
-usbc_h = 4.6;             // USB-C connector cutout height
+usbc_w = 11.5;            // USB-C connector cutout width (11.5mm x 6.5mm for head clearance)
+usbc_h = 6.5;             // USB-C connector cutout height
 usbc_r = 1.5;             // USB-C rounded pill corners
-usbc_z = floor_t + 1.2;   // Height from bottom floor
+usbc_z = floor_t + 0.2;   // Height from bottom floor (2.2mm, tops at 8.7mm, leaving 0.8mm bridge)
 
 // 6. 400mAh LiPo Battery Bay (on Base shell floor)
 lipo_bay_w = 38.0;        // Bay width for 400mAh pouch

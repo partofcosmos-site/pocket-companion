@@ -1153,6 +1153,7 @@ def test_benchmark_simulation_frame_execution_speed():
 def test_boundary_conditions_and_persistence_unit(tmp_path):
     """Verify state persistence, sanitization, boundary checks, and ADC noise filtering."""
     import code
+    import math
     fw, oled, _, _, _, _, vbat_pin = create_mock_firmware()
 
     # 1. _safe_val tests
