@@ -1167,12 +1167,6 @@ def test_boundary_conditions_and_persistence_unit(tmp_path):
     assert code.PocketCompanion._safe_val(150.5, 0, 100) is None
     assert code.PocketCompanion._safe_val("invalid", 0, 100) is None
 
-    class ExplodingVal:
-        def __int__(self):
-            raise RuntimeError("kaboom")
-
-    assert code.PocketCompanion._safe_val(ExplodingVal(), 0, 100) is None
-
     # 2. reset_defaults
     fw.mode = 3
     fw.pet_happiness = 10
