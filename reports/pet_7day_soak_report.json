@@ -1,0 +1,104 @@
+{
+  "status": "PASSED",
+  "total_sim_hours": 168.0,
+  "total_sim_seconds": 604800.0,
+  "steps_executed": 20160,
+  "wallclock_seconds": 5.071,
+  "speedup_factor": 119264.6,
+  "crashes": 0,
+  "feeding_events": 155,
+  "waking_events": 6,
+  "sleep_cycles_completed": 391,
+  "mood_distribution": {
+    "Super happy!": 668,
+    "Chillin'": 275,
+    "Sad & lonely": 0,
+    "Hungry! Feed me": 13652,
+    "Sleepy... yawn": 2306,
+    "Sleeping... zZz": 3104,
+    "Yum! Fed & Happy": 155
+  },
+  "baseline_heap_kb": 0.0,
+  "peak_heap_kb": 17.09,
+  "final_delta_kb": 16.74,
+  "zero_memory_leak": true,
+  "daily_checkpoints": [
+    {
+      "day": 2,
+      "hour": 24.1,
+      "hunger": 100,
+      "happiness": 5,
+      "sleepiness": 88,
+      "sleeping": true,
+      "mood": "Sleeping... zZz",
+      "cur_heap_kb": 11.52,
+      "peak_heap_kb": 11.68
+    },
+    {
+      "day": 3,
+      "hour": 48.1,
+      "hunger": 100,
+      "happiness": 5,
+      "sleepiness": 24,
+      "sleeping": false,
+      "mood": "Hungry! Feed me",
+      "cur_heap_kb": 13.5,
+      "peak_heap_kb": 13.66
+    },
+    {
+      "day": 4,
+      "hour": 72.1,
+      "hunger": 100,
+      "happiness": 5,
+      "sleepiness": 84,
+      "sleeping": false,
+      "mood": "Sleepy... yawn",
+      "cur_heap_kb": 14.04,
+      "peak_heap_kb": 14.22
+    },
+    {
+      "day": 5,
+      "hour": 96.1,
+      "hunger": 100,
+      "happiness": 5,
+      "sleepiness": 20,
+      "sleeping": false,
+      "mood": "Hungry! Feed me",
+      "cur_heap_kb": 14.56,
+      "peak_heap_kb": 14.76
+    },
+    {
+      "day": 6,
+      "hour": 120.1,
+      "hunger": 100,
+      "happiness": 14,
+      "sleepiness": 4,
+      "sleeping": false,
+      "mood": "Hungry! Feed me",
+      "cur_heap_kb": 15.29,
+      "peak_heap_kb": 15.46
+    },
+    {
+      "day": 7,
+      "hour": 144.1,
+      "hunger": 100,
+      "happiness": 5,
+      "sleepiness": 88,
+      "sleeping": true,
+      "mood": "Sleeping... zZz",
+      "cur_heap_kb": 15.83,
+      "peak_heap_kb": 16.04
+    },
+    {
+      "day": 8,
+      "hour": 168.1,
+      "hunger": 100,
+      "happiness": 5,
+      "sleepiness": 24,
+      "sleeping": false,
+      "mood": "Hungry! Feed me",
+      "cur_heap_kb": 16.37,
+      "peak_heap_kb": 16.55
+    }
+  ]
+}
