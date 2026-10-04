@@ -43,18 +43,18 @@ I chose each part specifically to fit inside an Altoids tin or 4×6 cm perfboard
 
 Easily stays well within the $30 Hack Club Half Life budget tier:
 
-| Component | Qty | Est. Price (USD) | Est. Price (INR) | Source / Link |
+| Component | Qty | Est. Price (USD) | Est. Price (INR) | Source / Verified Link |
 | :--- | :--- | :--- | :--- | :--- |
-| Waveshare RP2040-Zero | 1 | $4.20 | ₹350 | [Robu.in](https://robu.in/product/waveshare-rp2040-zero-mini-development-board/) |
-| 0.96" SSD1306 I2C OLED Display | 1 | $2.20 | ₹180 | [Robu.in](https://robu.in/product/0-96-inch-blue-oled-display-module/) |
-| 3.7V 400 mAh LiPo Battery (502535) | 1 | $3.00 | ₹250 | [Robu.in](https://robu.in/product/3-7v-400mah-lipo-battery/) |
-| TP4056 Type-C Charger Module | 1 | $0.50 | ₹40 | [Robu.in](https://robu.in/product/tp4056-type-c-usb-5v-1a-18650-lithium-battery-charger-module/) |
-| 6×6 mm Tactile Buttons (5-pack) | 1 | $0.40 | ₹30 | [Robu.in](https://robu.in/product/6x6x5mm-tactile-push-button-switch/) |
-| Mini SPDT Slide Switch | 1 | $0.20 | ₹15 | [Robu.in](https://robu.in/product/mini-spdt-slide-switch-on-on/) |
-| Mini Passive Piezo Buzzer | 1 | $0.30 | ₹25 | [Robu.in](https://robu.in/product/passive-piezo-buzzer/) |
-| Double-sided Perfboard (4×6 cm) | 1 | $0.70 | ₹60 | [Robu.in](https://robu.in/product/4x6-cm-double-sided-universal-perfboard/) |
-| 30 AWG Silicone Jumper Wire Spool | 1 | $1.20 | ₹100 | [Robu.in](https://robu.in/product/30-awg-flexible-silicone-wire-spool/) |
-| Pocket Metal Tin / Acrylic Case | 1 | $1.80 | ₹150 | [Amazon](https://amazon.in/dp/B08XYZ1234) |
+| Waveshare RP2040-Zero | 1 | $4.20 | ₹350 | [Amazon.in](https://www.amazon.in/dp/B09SBCKYSC) · [Waveshare](https://www.waveshare.com/rp2040-zero.htm) |
+| 0.96" SSD1306 I2C OLED Display | 1 | $2.20 | ₹180 | [Amazon.in](https://www.amazon.in/dp/B0HHWGRNFG) |
+| 3.7V 400 mAh LiPo Battery | 1 | $3.00 | ₹250 | [Amazon.in](https://www.amazon.in/400mAh-3-7V-LiPo-Cell-YXL-402025/dp/B0G9NL58LK) |
+| TP4056 Type-C Charger Module | 1 | $0.50 | ₹40 | [Amazon.in](https://www.amazon.in/TP4056-Module-Type-Battery-Protection/dp/B0CKPKZHH3) |
+| 6×6 mm Tactile Buttons (5-pack) | 1 | $0.40 | ₹30 | [Amazon.in](https://www.amazon.in/Tactile-Button-Horizontal-Momentary-6x6x5mm/dp/B0BM4MPXXJ) |
+| Mini SPDT Slide Switch | 1 | $0.20 | ₹15 | [Amazon.in](https://www.amazon.in/Mini-Micro-Slide-Switch-Breadboard/dp/B0DN69L9SG) |
+| Mini Passive Piezo Buzzer | 1 | $0.30 | ₹25 | [Amazon.in](https://www.amazon.in/Passive-Acoustic-Component-Speaker-electronic/dp/B07MR2KN97) |
+| Double-sided Perfboard (4×6 cm) | 1 | $0.70 | ₹60 | [Amazon.in](https://www.amazon.in/Universal-Prototype-Board-Double-Side-Green-2pcs/dp/B08XNVXX8R) |
+| 30 AWG Silicone Jumper Wire Spool | 1 | $1.20 | ₹100 | [Amazon.in](https://www.amazon.in/B-30-1000-Plated-Copper-Wire-Wrapping-Celsius/dp/B07L11CM8L) |
+| Pocket Metal Tin Enclosure | 1 | $1.80 | ₹150 | [Amazon.in](https://www.amazon.in/HASTHIP%C2%AE-Pcs-Silver-Aluminium-Small/dp/B0FM7YLYRP/) |
 | Shipping & Buffer | — | $3.50 | ₹300 | Local parts / shipping buffer |
 | **Total** | | **~$18.00** | **~₹1,500** | **Under $30 cap** |
 
