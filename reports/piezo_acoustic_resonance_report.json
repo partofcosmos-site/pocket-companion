@@ -415,8 +415,8 @@
     "consistent_volume_verified": true
   },
   "memory_metrics": {
-    "peak_heap_kb": 13.96,
-    "final_delta_kb": 13.34,
+    "peak_heap_kb": 14.2,
+    "final_delta_kb": 13.57,
     "zero_memory_leak": true
   }
 }
