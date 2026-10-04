@@ -3,8 +3,8 @@
   "benchmark_name": "Cycle 20: 200,000-Iteration Fuzz & 30 FPS V-Sync Render Latency",
   "fuzz_metrics": {
     "total_cycles": 200000,
-    "elapsed_seconds": 63.457,
-    "throughput_fps": 3151.7,
+    "elapsed_seconds": 80.877,
+    "throughput_fps": 2472.9,
     "total_crashes": 0,
     "mode_distribution": {
       "0": 39070,
@@ -17,7 +17,7 @@
         "cycle": 25000,
         "current_kb": 7.62,
         "delta_kb": 7.62,
-        "segment_fps": 3156.8,
+        "segment_fps": 2493.5,
         "mode_counts": {
           "0": 4740,
           "1": 5940,
@@ -29,7 +29,7 @@
         "cycle": 50000,
         "current_kb": 8.53,
         "delta_kb": 8.53,
-        "segment_fps": 3341.3,
+        "segment_fps": 2526.8,
         "mode_counts": {
           "0": 9980,
           "1": 12100,
@@ -41,7 +41,7 @@
         "cycle": 75000,
         "current_kb": 8.53,
         "delta_kb": 8.53,
-        "segment_fps": 3026.0,
+        "segment_fps": 2531.1,
         "mode_counts": {
           "0": 14800,
           "1": 18010,
@@ -53,7 +53,7 @@
         "cycle": 100000,
         "current_kb": 9.17,
         "delta_kb": 9.17,
-        "segment_fps": 2964.2,
+        "segment_fps": 2588.9,
         "mode_counts": {
           "0": 19460,
           "1": 24040,
@@ -65,7 +65,7 @@
         "cycle": 125000,
         "current_kb": 9.24,
         "delta_kb": 9.24,
-        "segment_fps": 3232.5,
+        "segment_fps": 2506.2,
         "mode_counts": {
           "0": 23950,
           "1": 30840,
@@ -77,7 +77,7 @@
         "cycle": 150000,
         "current_kb": 9.63,
         "delta_kb": 9.63,
-        "segment_fps": 3051.4,
+        "segment_fps": 2405.7,
         "mode_counts": {
           "0": 29000,
           "1": 37190,
@@ -89,7 +89,7 @@
         "cycle": 175000,
         "current_kb": 10.51,
         "delta_kb": 10.51,
-        "segment_fps": 3180.7,
+        "segment_fps": 2376.6,
         "mode_counts": {
           "0": 33970,
           "1": 42980,
@@ -101,7 +101,7 @@
         "cycle": 200000,
         "current_kb": 10.6,
         "delta_kb": 10.6,
-        "segment_fps": 3301.3,
+        "segment_fps": 2372.7,
         "mode_counts": {
           "0": 39070,
           "1": 49060,
@@ -114,14 +114,14 @@
   "render_latency_metrics": {
     "frames_profiled": 5000,
     "v_sync_budget_us": 33333.33,
-    "mean_latency_us": 342.32,
-    "median_latency_us": 305.6,
-    "p95_latency_us": 539.9,
-    "p99_latency_us": 605.6,
-    "min_latency_us": 274.0,
-    "max_latency_us": 1077.6,
-    "cpu_utilization_pct": 1.03,
-    "idle_margin_pct": 98.97,
+    "mean_latency_us": 455.18,
+    "median_latency_us": 500.0,
+    "p95_latency_us": 523.3,
+    "p99_latency_us": 582.3,
+    "min_latency_us": 273.6,
+    "max_latency_us": 2223.8,
+    "cpu_utilization_pct": 1.37,
+    "idle_margin_pct": 98.63,
     "sub_millisecond_verified": true
   },
   "memory_metrics": {
