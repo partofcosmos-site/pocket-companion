@@ -24,3 +24,4 @@ portal_sentry_daemon.py
 sentry_heartbeat.json
 sentry_status.log
 assets/ghost_frames/
+assets/ghost_recording_*.mp4
