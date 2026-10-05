@@ -24,13 +24,13 @@
 
 **3.5h**
 
-![01_system_architecture_block_diagram](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/71f1e30cb4aaa1d3645ea29fa7da0e0f4d5774497b45c4ee4927fcc0c868b50f.png)
+![01_system_architecture_block_diagram](assets/journal_media/01_system_architecture_block_diagram.png)
 
-![02_rp2040_pinout_peripheral_matrix](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/378cd39cac2fd3ea545bb6c8136c01ec41206b467dacadc1b29e9c29417083aa.png)
+![02_rp2040_pinout_peripheral_matrix](assets/journal_media/02_rp2040_pinout_peripheral_matrix.png)
 
-![03_power_budget_battery_discharge_curve](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/e187ecc97d25d935846136cca57cd152e7e2bf0f34cf15355a435de18d82b91f.png)
+![03_power_budget_battery_discharge_curve](assets/journal_media/03_power_budget_battery_discharge_curve.png)
 
-![04_breadboard_prototype_wiring](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/31ce3a0aad3344d69b94c5da8ff59737bd36d12a0cb56e4f1ae70f1bebac14dd.png)
+![04_breadboard_prototype_wiring](assets/journal_media/04_breadboard_prototype_wiring.png)
 
 # Bench Prototyping, Power Budgeting & Dialing In The Hardware
 
@@ -67,13 +67,13 @@ For the TP4056 charging module, the stock board comes with a 1.2k Rprog resistor
 
 **3.5h**
 
-![05_easyeda_schematic_capture](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/40a35485c4da3ae9c094347a21e765887886bd8506811d5f87424882b952a344.png)
+![05_easyeda_schematic_capture](assets/journal_media/05_easyeda_schematic_capture.png)
 
-![06_easyeda_erc_report](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/d814b9455769c4e7c8d6c3503dc198a8bcbbfe616ed28c84804c287e9412863d.png)
+![06_easyeda_erc_report](assets/journal_media/06_easyeda_erc_report.png)
 
-![07_easyeda_pcb_2d_layout](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/bc2db1c001d1d81bce4f2f16691ded51a47d57cbce4c1fcb1adfb49931ee5d99.png)
+![07_easyeda_pcb_2d_layout](assets/journal_media/07_easyeda_pcb_2d_layout.png)
 
-![08_pcb_3d_render_isometric](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/cae16ce9705a4287b5d016bb042c39e04f065694f9e1196ce56d5cf533009ca5.png)
+![08_pcb_3d_render_isometric](assets/journal_media/08_pcb_3d_render_isometric.png)
 
 # EasyEDA Schematic Capture, BOM Selection & Layout Planning
 
@@ -101,13 +101,13 @@ Before converting to PCB tracks, I visualized where fingers land when holding th
 
 **3.5h**
 
-![09_jlcpcb_drc_validation_pass](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/f4fd3f28e1eb4d983b4e0c02e1d72f5e47a18cd43a5570abfe2c30a984876071.png)
+![09_jlcpcb_drc_validation_pass](assets/journal_media/09_jlcpcb_drc_validation_pass.png)
 
-![10_gerber_manufacturing_stackup_preview](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/83ee80aaa95dd163d5ea2e2f3fed2f73f7b971ac7ab93308adfa669440d1617a.png)
+![10_gerber_manufacturing_stackup_preview](assets/journal_media/10_gerber_manufacturing_stackup_preview.png)
 
-![11_circuitpython_firmware_state_machine](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/8b0883b320b9a22ea11839199b1c6237220fbd59cfaa9dd3f0a876422835b96f.png)
+![11_circuitpython_firmware_state_machine](assets/journal_media/11_circuitpython_firmware_state_machine.png)
 
-![12_reaction_game_timing_oscilloscope](https://halflife.hackclub-assets.com/hackclub-half-life/sessions/gSMICPeKfFIX4r61sX8jLHHguUkM0Btr/663c98819a35280e7834c2e614e8f6ecaba066d9b0f043f7295a1e3015651059.png)
+![12_reaction_game_timing_oscilloscope](assets/journal_media/12_reaction_game_timing_oscilloscope.png)
 
 # PCB Routing, JLCPCB DRC, Soldering Clearance & Firmware Polish
 

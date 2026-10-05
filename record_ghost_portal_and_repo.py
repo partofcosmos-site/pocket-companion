@@ -128,8 +128,9 @@ async def record_portal_and_repo():
 
     # 2. Open / Navigate to GitHub repo in a background tab
     print("Navigating to GitHub repository page in background...")
-    create_tab_req = urllib.request.urlopen('http://127.0.0.1:9100/json/new?https://github.com/partofcosmos-site/pocket-companion')
-    repo_tab = json.loads(create_tab_req.read().decode())
+    req = urllib.request.Request('http://127.0.0.1:9100/json/new?https://github.com/partofcosmos-site/pocket-companion', method='PUT')
+    create_tab_resp = urllib.request.urlopen(req)
+    repo_tab = json.loads(create_tab_resp.read().decode())
     repo_ws_url = repo_tab['webSocketDebuggerUrl']
     repo_id = repo_tab['id']
 
@@ -184,8 +185,8 @@ async def record_portal_and_repo():
     finally:
         # Close the temporary background tab via CDP
         try:
-            close_url = f"http://127.0.0.1:9100/json/close/{repo_id}"
-            urllib.request.urlopen(close_url)
+            close_req = urllib.request.Request(f"http://127.0.0.1:9100/json/close/{repo_id}", method='PUT')
+            urllib.request.urlopen(close_req)
             print("Closed background GitHub tab cleanly.")
         except Exception as e:
             print("Note closing tab:", e)

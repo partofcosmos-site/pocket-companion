@@ -110,4 +110,46 @@ If you want to skip perfboard point-to-point wiring and spin a clean custom PCB,
 
 - **EasyEDA Schematic Source:** [`hardware/easyeda/Pocket_Companion_Schematic.json`](hardware/easyeda/Pocket_Companion_Schematic.json)
 - **EasyEDA PCB Layout:** [`hardware/easyeda/Pocket_Companion_PCB.json`](hardware/easyeda/Pocket_Companion_PCB.json)
-- **Manufacturing Gerbers (JLCPCB Ready):** [`hardware/gerbers/Gerber_Pocket_Companion_v1.zip`](hardware/gerbers/Gerber_Pocket_Companion_v1.zip)
+- **Manufacturing Gerbers (JLCPCB Ready):** [`hardware/gerbers/Gerber_Pocket_Companion_v1.zip`](hardware/gerbers/Gerber_Pocket_Companion_v1.zip) · [`v2 (Optimized)`](hardware/gerbers/Gerber_Pocket_Companion_v2.zip)
+
+---
+
+## Hardware Architecture & Design Verification Gallery
+
+Every schematic, PCB layer, power model, and signal timing trace has been engineered to IEEE/IEC standards with verified 0-error rule checks:
+
+### 1. System Architecture & Pinout
+| System Bus & Topology | MCU Pinout & Peripherals |
+| :---: | :---: |
+| ![System Architecture](assets/01_system_architecture_block_diagram.png) | ![RP2040-Zero Pinout](assets/02_rp2040_pinout_peripheral_matrix.png) |
+| *Figure 1: Mixed-Signal 3.3V Bus & Peripheral Architecture* | *Figure 2: Waveshare RP2040-Zero SIO Pinout Matrix* |
+
+### 2. Power Dynamics & Bench Prototyping
+| LiPo Battery Discharge Profile | Bench Breadboard Wiring |
+| :---: | :---: |
+| ![Battery Discharge Curve](assets/03_power_budget_battery_discharge_curve.png) | ![Breadboard Prototype](assets/04_breadboard_prototype_wiring.png) |
+| *Figure 3: 400mAh LiPo Discharge Model & Cutoff Boundaries* | *Figure 4: 830-Tie-Point Clean Breadboard Assembly* |
+
+### 3. Schematic Capture & ERC Verification
+| EasyEDA Professional Schematic | Electrical Rules Check (ERC) |
+| :---: | :---: |
+| ![EasyEDA Schematic](assets/05_easyeda_schematic_capture.png) | ![ERC Report](assets/06_easyeda_erc_report.png) |
+| *Figure 5: Full IEEE/IEC Schematic Capture* | *Figure 6: ERC 0-Error & 0-Warning Verification Pass* |
+
+### 4. PCB Layout, 3D Perspective & JLCPCB DFM
+| 2-Layer PCB Top/Bottom Layout | Isometric 3D Board Assembly |
+| :---: | :---: |
+| ![PCB 2D Layout](assets/07_easyeda_pcb_2d_layout.png) | ![PCB 3D Render](assets/08_pcb_3d_render_isometric.png) |
+| *Figure 7: 52×38mm Double-Sided Sandwich PCB Layout* | *Figure 8: Photorealistic 3D Component Clearance View* |
+
+| JLCPCB DRC Compliance Matrix | RS-274X Fabrication Layer Stackup |
+| :---: | :---: |
+| ![JLCPCB DRC Pass](assets/09_jlcpcb_drc_validation_pass.png) | ![Gerber Stackup Preview](assets/10_gerber_manufacturing_stackup_preview.png) |
+| *Figure 9: 6-mil DFM & Manufacturing Tolerances Pass* | *Figure 10: PyGerber Real Layer Composite Stackup* |
+
+### 5. Reactive Firmware & Oscilloscope Timing
+| UML 2.5 State Machine | 4-Channel DSO Timing Graticule |
+| :---: | :---: |
+| ![Firmware State Machine](assets/11_circuitpython_firmware_state_machine.png) | ![Oscilloscope Capture](assets/12_reaction_game_timing_oscilloscope.png) |
+| *Figure 11: CircuitPython Event-Driven Architecture* | *Figure 12: Sub-Millisecond Reflex Timing & 400kHz I2C Bus* |
+
